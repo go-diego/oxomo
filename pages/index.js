@@ -1,13 +1,30 @@
 import React from "react";
+import format from "date-fns/format";
 import Link from "next/link";
 
 import MainLayout from "../containers/MainLayout";
 
-const Home = () => (
+import NasaAPI from "../api/nasa.api";
+
+const nasa = new NasaAPI();
+
+const Home = ({apod, neosForToday}) => (
     <MainLayout>
-        <div className="hero">
+        <section className="hero">
             <h1 className="title">Welcome to Oxomo!</h1>
-        </div>
+            <div>
+                <h3>Picture of the Day</h3>
+                <img src={apod.hdurl} width="200" />
+                <small>{apod.title}</small>
+            </div>
+            <div>
+                <h3>Near Earth Objects</h3>
+                <p>
+                    Count for today: <b>{neosForToday.element_count}</b>
+                </p>
+            </div>
+            <div />
+        </section>
         <style jsx>{`
             .hero {
                 width: 100%;
@@ -24,37 +41,24 @@ const Home = () => (
             .description {
                 text-align: center;
             }
-            .row {
-                max-width: 880px;
-                margin: 80px auto 40px;
-                display: flex;
-                flex-direction: row;
-                justify-content: space-around;
-            }
-            .card {
-                padding: 18px 18px 24px;
-                width: 220px;
-                text-align: left;
-                text-decoration: none;
-                color: #434343;
-                border: 1px solid #9b9b9b;
-            }
-            .card:hover {
-                border-color: #067df7;
-            }
-            .card h3 {
-                margin: 0;
-                color: #067df7;
-                font-size: 18px;
-            }
-            .card p {
-                margin: 0;
-                padding: 12px 0 0;
-                font-size: 13px;
-                color: #333;
-            }
         `}</style>
     </MainLayout>
 );
+
+Home.getInitialProps = async ({req}) => {
+    const startDate = format(new Date(), "YYYY-MM-DD");
+    const endDate = startDate;
+
+    const apod = await nasa.getAstronomyPictureOfTheDay();
+    const neosForToday = await nasa.getNearEarthObjectsFeed(startDate, endDate);
+
+    //console.log("APPOD", apod);
+    //console.log("neosForToday", neosForToday);
+
+    return {
+        apod,
+        neosForToday
+    };
+};
 
 export default Home;
