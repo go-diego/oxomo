@@ -5,15 +5,15 @@ import Footer from "../components/Footer";
 import css from "../styles/site.scss";
 
 export default ({children, title = "This is the default title"}) => (
-    <div className={css.root}>
+    <div className="root">
         <Head>
             <title>{title}</title>
         </Head>
-        <header>
+        {/* <header>
             <Nav />
-        </header>
+        </header> */}
 
-        <main className={css.main}>{children}</main>
+        <main className="main">{children}</main>
 
         <Footer />
     </div>

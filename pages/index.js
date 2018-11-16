@@ -1,5 +1,7 @@
 import React from "react";
 import format from "date-fns/format";
+
+import HomeHero from "../components/HomeHero";
 import Link from "next/link";
 
 import MainLayout from "../containers/MainLayout";
@@ -10,8 +12,8 @@ const nasa = new NasaAPI();
 
 const Home = ({apod, neosForToday}) => (
     <MainLayout>
-        <section className="hero">
-            <h1 className="title">Welcome to Oxomo!</h1>
+        <HomeHero />
+        <section className="section">
             <div>
                 <h3>Picture of the Day</h3>
                 <img src={apod.hdurl} width="200" />
@@ -23,25 +25,7 @@ const Home = ({apod, neosForToday}) => (
                     Count for today: <b>{neosForToday.element_count}</b>
                 </p>
             </div>
-            <div />
         </section>
-        <style jsx>{`
-            .hero {
-                width: 100%;
-                color: #333;
-            }
-            .title {
-                margin: 0;
-                width: 100%;
-                padding-top: 80px;
-                line-height: 1.15;
-                font-size: 48px;
-            }
-            .title,
-            .description {
-                text-align: center;
-            }
-        `}</style>
     </MainLayout>
 );
 

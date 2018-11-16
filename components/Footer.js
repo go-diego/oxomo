@@ -1,8 +1,8 @@
-import React from "react";
+import "../styles/site.scss";
 
 export default function Footer() {
     return (
-        <footer>
+        <footer className="footer">
             <p>Footer</p>
         </footer>
     );
