@@ -1,5 +1,7 @@
-@import "~bulma/bulma";
+@import "./bulma";
+@import "./bootstrap";
 @import "./base";
+
 .root {
     display: flex;
     min-height: 100vh;

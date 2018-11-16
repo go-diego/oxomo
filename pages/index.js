@@ -15,12 +15,16 @@ const Home = ({apod, neosForToday}) => (
         <section className="section container">
             <div className="tile is-ancestor">
                 <div className="tile is-8 is-parent">
-                    <div className="tile is-child box">
-                        <p class="subtitle">Astronomy Picture of the Day</p>
-                        <p className="title">{apod.title}</p>
+                    <div className="tile is-child is-paddingless box position-relative">
                         <figure className="image is-3by2">
-                            <img src={apod.hdurl} />
+                            <img className="rounded" src={apod.hdurl} />
                         </figure>
+                        <div className="is-overlay p-3">
+                            <p className="subtitle has-text-white is-size-7-mobile">
+                                Astronomy Picture of the Day
+                            </p>
+                            <p className="title has-text-light is-size-6-mobile">{apod.title}</p>
+                        </div>
                     </div>
                 </div>
                 <div className="tile is-4 is-vertical" />
@@ -74,7 +78,7 @@ Home.getInitialProps = async ({req}) => {
     const apod = await nasa.getAstronomyPictureOfTheDay();
     const neosForToday = await nasa.getNearEarthObjectsFeed(startDate, endDate);
 
-    console.log("APPOD", apod);
+    //console.log("APPOD", apod);
     //console.log("neosForToday", neosForToday);
 
     return {
