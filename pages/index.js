@@ -30,7 +30,7 @@ const Home = ({apod, neosForToday, neoStatistics}) => (
                 <div className="tile is-4 is-parent is-vertical">
                     <div className="title is-child notification is-warning">
                         <p className="title is-size-4 is-size-6-mobile">Near Earth Objects</p>
-                        <div className="level">
+                        <div className="level is-mobile">
                             <div className="level-item has-text-centered">
                                 <div>
                                     <p className="heading">Today</p>
