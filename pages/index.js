@@ -9,7 +9,7 @@ import "../styles/site.scss";
 import NasaAPI from "../api/nasa.api";
 const nasa = new NasaAPI();
 
-const Home = ({apod, neosForToday}) => (
+const Home = ({apod, neosForToday, neoStatistics}) => (
     <MainLayout>
         <HomeHero />
         <section className="section container">
@@ -27,46 +27,39 @@ const Home = ({apod, neosForToday}) => (
                         </div>
                     </div>
                 </div>
-                <div className="tile is-4 is-vertical" />
-            </div>
-            {/* <div classNameName="card">
-                <header classNameName="card-header">
-                    <p classNameName="card-header-title">Astronomy Picture of the Day</p>
-                </header>
-                <div classNameName="card-image">
-                    <figure classNameName="image is-4by3">
-                        <img src={apod.hdurl} alt={apod.title} />
-                    </figure>
-                </div>
-                <div classNameName="card-content">
-                    <div classNameName="media">
-                        <div classNameName="media-left">
-                            <figure classNameName="image is-48x48">
-                                <img
-                                    src="https://bulma.io/images/placeholders/96x96.png"
-                                    alt="Placeholder image"
-                                />
-                            </figure>
-                        </div>
-                        <div classNameName="media-content">
-                            <p classNameName="title is-4">John Smith</p>
-                            <p classNameName="subtitle is-6">@johnsmith</p>
+                <div className="tile is-4 is-parent is-vertical">
+                    <div className="title is-child notification is-warning">
+                        <p className="title is-size-4 is-size-6-mobile">Near Earth Objects</p>
+                        <div className="level">
+                            <div className="level-item has-text-centered">
+                                <div>
+                                    <p className="heading">Today</p>
+                                    <p className="title">
+                                        {neosForToday.element_count.toLocaleString()}
+                                    </p>
+                                </div>
+                            </div>
+                            <div className="level-item has-text-centered">
+                                <div>
+                                    <p className="heading">All Time</p>
+                                    <p className="title">
+                                        {neoStatistics.near_earth_object_count.toLocaleString()}
+                                    </p>
+                                </div>
+                            </div>
+                            <div className="level-item has-text-centered">
+                                <div>
+                                    <p className="heading">Close Approaches</p>
+                                    {/* <p className="is-size-7 has-text-dark">As of Today</p> */}
+                                    <p className="title">
+                                        {neoStatistics.close_approach_count.toLocaleString()}
+                                    </p>
+                                </div>
+                            </div>
                         </div>
                     </div>
-
-                    <div classNameName="content">
-                       {apod.explanation}
-                        <br />
-                        <time dateTime="2016-1-1">11:09 PM - 1 Jan 2016</time>
-                    </div>
                 </div>
             </div>
-            <div>
-                <h3>Near Earth Objects</h3>
-                <p>
-                    Count for today: <b>{neosForToday.element_count}</b>
-                </p>
-            </div> */}
         </section>
     </MainLayout>
 );
@@ -77,13 +70,26 @@ Home.getInitialProps = async ({req}) => {
 
     const apod = await nasa.getAstronomyPictureOfTheDay();
     const neosForToday = await nasa.getNearEarthObjectsFeed(startDate, endDate);
+    const neoStatistics = await nasa.getNeoStatistics();
 
+    /**
+     * TODO: use this to get closest NEO
+     */
+    const neosWithNearApproaches = Object.values(neosForToday.near_earth_objects)[0].filter(
+        neo => neo.close_approach_data.length > 0
+    );
+
+    //const closestNeoT
+    //const neosWithNearApproaches = Object.values(neosForToday.near_earth_objects);
+    //console.log("neosWithNearApproaches", neosWithNearApproaches);
     //console.log("APPOD", apod);
     //console.log("neosForToday", neosForToday);
+    //console.log("neoStatistics", neoStatistics);
 
     return {
         apod,
-        neosForToday
+        neosForToday,
+        neoStatistics
     };
 };
 
