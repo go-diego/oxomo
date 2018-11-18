@@ -71,7 +71,6 @@ Home.getInitialProps = async ({req}) => {
     const apod = await nasa.getAstronomyPictureOfTheDay();
     const neosForToday = await nasa.getNearEarthObjectsFeed(startDate, endDate);
     const neoStatistics = await nasa.getNeoStatistics();
-
     /**
      * TODO: use this to get closest NEO
      */

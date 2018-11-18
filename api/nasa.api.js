@@ -1,7 +1,7 @@
 /**
  *  TODO:
  * check https://github.com/sindresorhus/ky/pull/46 to use ky without having to transpile dependencies
- * EXAMPLE: return await ky.post(`${this.APOD_BASE_URL}`, {searchParams: process.env.API_KEY}).json();
+ * EXAMPLE: return await ky.post(`${this.APOD_BASE_URL}`, {searchParams: process.env.NASA_API_KEY}).json();
  */
 
 //import ky from "ky";
@@ -9,7 +9,7 @@ import "isomorphic-unfetch";
 
 export default class Nasa {
     constructor() {
-        this.API_KEY = process.env.API_KEY;
+        this.NASA_API_KEY = process.env.NASA_API_KEY;
         this.APOD_BASE_URL = "https://api.nasa.gov/planetary/apod";
         this.NEO_BASE_URL = "https://api.nasa.gov/neo/rest/v1";
     }
@@ -19,7 +19,9 @@ export default class Nasa {
      */
     async getAstronomyPictureOfTheDay(date) {
         const res = await fetch(
-            `${this.APOD_BASE_URL}?hd=true&${date ? `date=${date}&` : ""}api_key=${this.API_KEY}`
+            `${this.APOD_BASE_URL}?hd=true&${date ? `date=${date}&` : ""}api_key=${
+                this.NASA_API_KEY
+            }`
         );
         return await res.json();
     }
@@ -32,7 +34,7 @@ export default class Nasa {
         const res = await fetch(
             `${this.NEO_BASE_URL}/feed?${startDate ? `start_date=${startDate}&` : ""}${
                 endDate ? `end_date=${endDate}&` : ""
-            }api_key=${this.API_KEY}`
+            }api_key=${this.NASA_API_KEY}`
         );
         return await res.json();
     }
@@ -45,7 +47,9 @@ export default class Nasa {
      * - id or neo_reference_id from neo feed
      */
     async getNearEarthObjectById(asteroidId) {
-        const res = await fetch(`${this.NEO_BASE_URL}/neo/${asteroidId}&api_key=${this.API_KEY}`);
+        const res = await fetch(
+            `${this.NEO_BASE_URL}/neo/${asteroidId}&api_key=${this.NASA_API_KEY}`
+        );
         return await res.json();
     }
 
@@ -57,7 +61,7 @@ export default class Nasa {
      * - etc
      */
     async getAllNearEarthObjects() {
-        const res = await fetch(`${this.NEO_BASE_URL}/neo/browse?api_key=${this.API_KEY}`);
+        const res = await fetch(`${this.NEO_BASE_URL}/neo/browse?api_key=${this.NASA_API_KEY}`);
         return await res.json();
     }
 
@@ -72,7 +76,7 @@ export default class Nasa {
      * - nasa_jpl_url
      */
     async getNeoStatistics() {
-        const res = await fetch(`${this.NEO_BASE_URL}/stats?api_key=${this.API_KEY}`);
+        const res = await fetch(`${this.NEO_BASE_URL}/stats?api_key=${this.NASA_API_KEY}`);
         return await res.json();
     }
 
@@ -82,7 +86,7 @@ export default class Nasa {
      */
     async getNeoSentryById(asteroidId) {
         const res = await fetch(
-            `${this.NEO_BASE_URL}/sentry/${asteroidId}?api_key=${this.API_KEY}`
+            `${this.NEO_BASE_URL}/sentry/${asteroidId}?api_key=${this.NASA_API_KEY}`
         );
         return await res.json();
     }
