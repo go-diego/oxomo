@@ -3,6 +3,7 @@ import "isomorphic-unfetch";
 export default class SpaceX {
     constructor() {
         this.LAUNCHES_URL = "https://api.spacexdata.com/v3/launches";
+        this.LAUNCH_PADS_URL = "https://api.spacexdata.com/v3/launchpads";
     }
 
     async getNextLaunch() {
@@ -17,6 +18,16 @@ export default class SpaceX {
 
     async getPastLaunches() {
         const res = await fetch(`${this.LAUNCHES_URL}/past`);
+        return await res.json();
+    }
+
+    async getUpcomingLaunches() {
+        const res = await fetch(`${this.LAUNCHES_URL}/upcoming`);
+        return await res.json();
+    }
+
+    async getLaunchPadById(launchSiteId) {
+        const res = await fetch(`${this.LAUNCH_PADS_URL}/${launchSiteId}`);
         return await res.json();
     }
 }
