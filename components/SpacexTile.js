@@ -5,7 +5,7 @@ export default function SpacexFile(props) {
     const {launches} = props;
     return (
         <Fragment>
-            <p className="title is-size-4 is-size-6-mobile">SpaceX</p>
+            <p className="title is-size-4 is-size-4-mobile">SpaceX</p>
             <div className="level is-mobile">
                 <div className="level-item has-text-centered">
                     <div>
@@ -31,7 +31,7 @@ export default function SpacexFile(props) {
                     <div>
                         <p className="heading">Next Launch</p>
                         <p className="title is-size-6 has-text-weight-semibold">
-                            {format(new Date(launches.next.launch_date_local), "MM-DD-YYYY")}
+                            {format(new Date(launches.next.launch_date_local), "MMM D, YYYY")}
                         </p>
                         <p className="is-size-6 has-text-weight-semibold">
                             {launches.next.site.location.name}
