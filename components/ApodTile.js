@@ -1,7 +1,7 @@
 export default function ApodTile(props) {
     const {hdurl, title} = props;
     return (
-        <div className="tile is-child is-paddingless box position-relative">
+        <div className="position-relative">
             <figure className="image is-3by2">
                 <img className="rounded" src={hdurl} />
             </figure>

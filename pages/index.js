@@ -20,16 +20,37 @@ const Home = ({apod, neos, spacexData}) => (
         <HomeHero />
         <section className="section container">
             <div className="tile is-ancestor">
-                <div className="tile is-8 is-parent">
-                    <ApodTile {...apod} />
+                <div className="tile is-vertical is-8">
+                    <div className="tile is-parent">
+                        <div className="tile is-child">
+                            <ApodTile {...apod} />
+                        </div>
+                    </div>
+                    <div className="tile">
+                        <div className="tile is-parent">
+                            <article className="tile is-child notification is-warning">
+                                <div className="content">
+                                    <NeoTile {...neos} />
+                                </div>
+                            </article>
+                        </div>
+                        <div className="tile is-parent">
+                            <article className="tile is-child notification is-danger">
+                                <div className="content">
+                                    <SpacexTile {...spacexData} />
+                                </div>
+                            </article>
+                        </div>
+                    </div>
                 </div>
-                <div className="tile is-4 is-parent is-vertical">
-                    <div className="title is-child notification is-warning">
-                        <NeoTile {...neos} />
-                    </div>
-                    <div className="title is-child notification is-danger">
-                        <SpacexTile {...spacexData} />
-                    </div>
+                <div className="tile is-parent">
+                    <article className="tile is-child notification is-info">
+                        <div className="content">
+                            <p className="title">Tall tile</p>
+                            <p className="subtitle">With even more content</p>
+                            <div className="content" />
+                        </div>
+                    </article>
                 </div>
             </div>
         </section>
