@@ -6,10 +6,20 @@ import MainLayout from "../containers/MainLayout";
 
 import "../styles/site.scss";
 
-import NasaAPI from "../api/nasa.api";
-const nasa = new NasaAPI();
+import NasaApi from "../api/nasa.api";
+import SpacexApi from "../api/spacex.api";
 
-const Home = ({apod, neosForToday, neoStatistics}) => (
+const nasa = new NasaApi();
+const spacex = new SpacexApi();
+
+const Home = ({
+    apod,
+    neosForToday,
+    neoStatistics,
+    spacexLaunchesCount,
+    spacexLaunchesSuccess,
+    spacexLaunchesFailed
+}) => (
     <MainLayout>
         <HomeHero />
         <section className="section container">
@@ -58,6 +68,38 @@ const Home = ({apod, neosForToday, neoStatistics}) => (
                             </div>
                         </div>
                     </div>
+                    <div className="title is-child notification is-danger">
+                        <p className="title is-size-4 is-size-6-mobile">SpaceX</p>
+                        <div className="level is-mobile">
+                            <div className="level-item has-text-centered">
+                                <div>
+                                    <p className="heading">Launches</p>
+                                    <p className="title">{spacexLaunchesCount.toLocaleString()}</p>
+                                </div>
+                            </div>
+                            <div className="level-item has-text-centered">
+                                <div>
+                                    <p className="heading">Success</p>
+                                    <p className="title">
+                                        {spacexLaunchesSuccess.toLocaleString()}
+                                    </p>
+                                </div>
+                            </div>
+                            <div className="level-item has-text-centered">
+                                <div>
+                                    <p className="heading">Failed</p>
+                                    {/* <p className="is-size-7 has-text-dark">As of Today</p> */}
+                                    <p className="title">{spacexLaunchesFailed.toLocaleString()}</p>
+                                </div>
+                            </div>
+                        </div>
+                        <div className="level is-mobile">
+                            <div className="level-item has-text-centered">
+                                <p className="heading">Next Launch</p>
+                                {/* <p></p> */}
+                            </div>
+                        </div>
+                    </div>
                 </div>
             </div>
         </section>
@@ -78,6 +120,12 @@ Home.getInitialProps = async ({req}) => {
         neo => neo.close_approach_data.length > 0
     );
 
+    const spacexLaunches = await spacex.getPastLaunches();
+    const spacexLaunchesCount = spacexLaunches.length;
+    const spacexLaunchesSuccess = spacexLaunches.filter(launch => launch.launch_success).length;
+    const spacexLaunchesFailed = spacexLaunches.filter(launch => !launch.launch_success).length;
+
+    console.log("spacexLaunches", spacexLaunches);
     //const closestNeoT
     //const neosWithNearApproaches = Object.values(neosForToday.near_earth_objects);
     //console.log("neosWithNearApproaches", neosWithNearApproaches);
@@ -88,7 +136,10 @@ Home.getInitialProps = async ({req}) => {
     return {
         apod,
         neosForToday,
-        neoStatistics
+        neoStatistics,
+        spacexLaunchesCount,
+        spacexLaunchesSuccess,
+        spacexLaunchesFailed
     };
 };
 
