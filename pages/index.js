@@ -1,4 +1,3 @@
-import format from "date-fns/format";
 import compareAsc from "date-fns/compare_asc";
 import Link from "next/link";
 import HomeHero from "../components/HomeHero";
@@ -60,18 +59,13 @@ const Home = ({apod, neos, spacexData}) => (
 
 Home.getInitialProps = async () => {
     const apod = await APODApi.get();
-    console.log("apod", apod);
+    //console.log("apod", apod);
 
     let neos = {};
     neos.today = await NEOApi.getFeed();
     neos.stats = await NEOApi.getStatistics();
-    /**
-     * TODO: use this to get closest NEO
-     */
-    // const neosWithNearApproaches = Object.values(neosForToday.near_earth_objects)[0].filter(
-    //     neo => neo.close_approach_data.length > 0
-    // );
-    // console.log("neos", neos);
+    neos.closestApproachToday = await NEOApi.getClosestApproachToday();
+    //console.log("neos", neos);
 
     let spacexData = {};
     spacexData.launches = {};
@@ -90,6 +84,7 @@ Home.getInitialProps = async () => {
     spacexData.launches.next.site = await SpacexApi.getLaunchPadById(
         spacexData.launches.next.launch_site.site_id
     );
+    console.log("spacexData", spacexData);
 
     // let spaceWeather = {};
     // spaceWeather.cme = await nasa.getCoronalMassEjection();

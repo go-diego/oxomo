@@ -51,6 +51,19 @@ export class NEO extends Nasa {
         return await res.json();
     }
 
+    async getClosestApproachToday() {
+        const feedForToday = await this.getFeed();
+        const allApproachesToday = Object.values(feedForToday.near_earth_objects)[0].filter(
+            neo => neo.close_approach_data.length > 0
+        );
+
+        return allApproachesToday.sort(
+            (a, b) =>
+                a.close_approach_data[0].miss_distance.lunar <
+                b.close_approach_data[0].miss_distance.lunar
+        )[0];
+    }
+
     /**
      * @returns
      * - near_earth_object_count
