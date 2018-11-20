@@ -44,9 +44,9 @@ const Home = ({apod, neos, spacexData}) => (
                     </div>
                 </div>
                 <div className="tile is-parent">
-                    <article className="tile is-child notification is-info">
+                    <article className="tile is-child notification has-background-grey-dark has-text-light">
                         <div className="content">
-                            <p className="title">Tall tile</p>
+                            <p className="title">Space Weather</p>
                             <p className="subtitle">With even more content</p>
                             <div className="content" />
                         </div>
@@ -90,6 +90,12 @@ Home.getInitialProps = async () => {
     spacexData.launches.next.site = await spacex.getLaunchPadById(
         spacexData.launches.next.launch_site.site_id
     );
+
+    let spaceWeather = {};
+    spaceWeather.cme = await nasa.getCoronalMassEjection();
+    spaceWeather.gms = await nasa.getGeomagneticStorm();
+    spaceWeather.flr = await nasa.getSolarFlare();
+    console.log("spaceWeather", spaceWeather);
 
     return {
         apod,

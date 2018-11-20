@@ -6,12 +6,14 @@
 
 //import ky from "ky";
 import "isomorphic-unfetch";
+import format from "date-fns/format";
 
 export default class Nasa {
     constructor() {
         this.NASA_API_KEY = process.env.NASA_API_KEY;
         this.APOD_BASE_URL = "https://api.nasa.gov/planetary/apod";
         this.NEO_BASE_URL = "https://api.nasa.gov/neo/rest/v1";
+        this.DONKI_BASE_URL = "https://api.nasa.gov/DONKI";
     }
 
     /**
@@ -89,5 +91,65 @@ export default class Nasa {
             `${this.NEO_BASE_URL}/sentry/${asteroidId}?api_key=${this.NASA_API_KEY}`
         );
         return await res.json();
+    }
+
+    async getCoronalMassEjection(
+        startDate = format(new Date(), "YYYY-MM-DD"),
+        endDate = format(new Date(), "YYYY-MM-DD")
+    ) {
+        const res = await fetch(
+            `${this.DONKI_BASE_URL}/CME?startDate=${startDate}&endDate=${endDate}&api_key=${
+                this.NASA_API_KEY
+            }`
+        );
+
+        let response = null;
+        try {
+            response = await res.json();
+        } catch (error) {
+            console.log("ERROR");
+        }
+
+        return response;
+    }
+
+    async getGeomagneticStorm(
+        startDate = format(new Date(), "YYYY-MM-DD"),
+        endDate = format(new Date(), "YYYY-MM-DD")
+    ) {
+        const res = await fetch(
+            `${this.DONKI_BASE_URL}/GMS?startDate=${startDate}&endDate=${endDate}&api_key=${
+                this.NASA_API_KEY
+            }`
+        );
+
+        let response = null;
+        try {
+            response = await res.json();
+        } catch (error) {
+            console.log("ERROR");
+        }
+
+        return response;
+    }
+
+    async getSolarFlare(
+        startDate = format(new Date(), "YYYY-MM-DD"),
+        endDate = format(new Date(), "YYYY-MM-DD")
+    ) {
+        const res = await fetch(
+            `${this.DONKI_BASE_URL}/FLR?startDate=${startDate}&endDate=${endDate}&api_key=${
+                this.NASA_API_KEY
+            }`
+        );
+
+        let response = null;
+        try {
+            response = await res.json();
+        } catch (error) {
+            console.log("ERROR");
+        }
+
+        return response;
     }
 }
