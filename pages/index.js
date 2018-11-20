@@ -9,11 +9,12 @@ import MainLayout from "../containers/MainLayout";
 
 import "../styles/site.scss";
 
-import NasaApi from "../api/nasa.api";
-import SpacexApi from "../api/spacex.api";
+import {NEO, APOD} from "../api/nasa.api";
+import SpaceXApi from "../api/spacex.api";
 
-const nasa = new NasaApi();
-const spacex = new SpacexApi();
+const NEOApi = new NEO();
+const APODApi = new APOD();
+const SpacexApi = new SpaceXApi();
 
 const Home = ({apod, neos, spacexData}) => (
     <MainLayout>
@@ -58,24 +59,23 @@ const Home = ({apod, neos, spacexData}) => (
 );
 
 Home.getInitialProps = async () => {
-    const startDate = format(new Date(), "YYYY-MM-DD");
-    const endDate = startDate;
-
-    const apod = await nasa.getAstronomyPictureOfTheDay();
+    const apod = await APODApi.get();
+    console.log("apod", apod);
 
     let neos = {};
-    neos.today = await nasa.getNearEarthObjectsFeed(startDate, endDate);
-    neos.stats = await nasa.getNeoStatistics();
+    neos.today = await NEOApi.getFeed();
+    neos.stats = await NEOApi.getStatistics();
     /**
      * TODO: use this to get closest NEO
      */
     // const neosWithNearApproaches = Object.values(neosForToday.near_earth_objects)[0].filter(
     //     neo => neo.close_approach_data.length > 0
     // );
+    // console.log("neos", neos);
 
     let spacexData = {};
     spacexData.launches = {};
-    const spacexLaunches = await spacex.getPastLaunches();
+    const spacexLaunches = await SpacexApi.getPastLaunches();
     spacexData.launches.count = spacexLaunches.length;
     spacexData.launches.success_count = spacexLaunches.filter(
         launch => launch.launch_success
@@ -83,19 +83,19 @@ Home.getInitialProps = async () => {
     spacexData.launches.failure_count = spacexLaunches.filter(
         launch => !launch.launch_success
     ).length;
-    const spacexUpcomingLaunches = await spacex.getUpcomingLaunches();
+    const spacexUpcomingLaunches = await SpacexApi.getUpcomingLaunches();
     spacexData.launches.next = spacexUpcomingLaunches.filter(
         launch => compareAsc(new Date(launch.launch_date_local), new Date()) > 0
     )[0];
-    spacexData.launches.next.site = await spacex.getLaunchPadById(
+    spacexData.launches.next.site = await SpacexApi.getLaunchPadById(
         spacexData.launches.next.launch_site.site_id
     );
 
-    let spaceWeather = {};
-    spaceWeather.cme = await nasa.getCoronalMassEjection();
-    spaceWeather.gms = await nasa.getGeomagneticStorm();
-    spaceWeather.flr = await nasa.getSolarFlare();
-    console.log("spaceWeather", spaceWeather);
+    // let spaceWeather = {};
+    // spaceWeather.cme = await nasa.getCoronalMassEjection();
+    // spaceWeather.gms = await nasa.getGeomagneticStorm();
+    // spaceWeather.flr = await nasa.getSolarFlare();
+    // console.log("spaceWeather", spaceWeather);
 
     return {
         apod,

@@ -1,6 +1,7 @@
 export default function ApodTile(props) {
-    const {hdurl, title} = props;
-    return (
+    const {hdurl, title, media_type, url} = props;
+
+    const pictureTile = (
         <div className="position-relative">
             <figure className="image is-3by2">
                 <img className="rounded" src={hdurl} />
@@ -13,4 +14,12 @@ export default function ApodTile(props) {
             </div>
         </div>
     );
+
+    const videoTile = (
+        <div className="embed-responsive embed-responsive-16by9">
+            <iframe className="rounded embed-responsive-item" src={url} allowFullScreen />
+        </div>
+    );
+
+    return (media_type === "video" && videoTile) || {pictureTile};
 }

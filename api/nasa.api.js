@@ -8,20 +8,43 @@
 import "isomorphic-unfetch";
 import format from "date-fns/format";
 
-export default class Nasa {
+class Nasa {
     constructor() {
         this.NASA_API_KEY = process.env.NASA_API_KEY;
-        this.APOD_BASE_URL = "https://api.nasa.gov/planetary/apod";
-        this.NEO_BASE_URL = "https://api.nasa.gov/neo/rest/v1";
-        this.DONKI_BASE_URL = "https://api.nasa.gov/DONKI";
+        this.TODAY = format(new Date(), "YYYY-MM-DD");
+    }
+}
+
+export class APOD extends Nasa {
+    constructor() {
+        super();
+        this.BASE_URL = "https://api.nasa.gov/planetary/apod";
     }
 
     /**
      * @param {string} date - defaults to today (YYYY-MM-DD)
      */
-    async getAstronomyPictureOfTheDay(date) {
+    async get(date = this.TODAY) {
         const res = await fetch(
-            `${this.APOD_BASE_URL}?hd=true&${date ? `date=${date}&` : ""}api_key=${
+            `${this.BASE_URL}?hd=true&date=${date}&api_key=${this.NASA_API_KEY}`
+        );
+        return await res.json();
+    }
+}
+
+export class NEO extends Nasa {
+    constructor() {
+        super();
+        this.BASE_URL = "https://api.nasa.gov/neo/rest/v1";
+    }
+
+    /**
+     * @param {string} startDate - defaults to today (YYYY-MM-DD)
+     * @param {string} endDate - defaults to today (YYYY-MM-DD)
+     */
+    async getFeed(startDate = this.TODAY, endDate = this.TODAY) {
+        const res = await fetch(
+            `${this.BASE_URL}/feed?start_date=${startDate}&end_date=${endDate}&api_key=${
                 this.NASA_API_KEY
             }`
         );
@@ -29,29 +52,15 @@ export default class Nasa {
     }
 
     /**
-     * @param {string} startDate - defaults to today (YYYY-MM-DD)
-     * @param {string} endDate - defaults to today + 7 (YYYY-MM-DD)
+     * @returns
+     * - near_earth_object_count
+     * - close_approach_count
+     * - last_updated
+     * - source
+     * - nasa_jpl_url
      */
-    async getNearEarthObjectsFeed(startDate = "", endDate = "") {
-        const res = await fetch(
-            `${this.NEO_BASE_URL}/feed?${startDate ? `start_date=${startDate}&` : ""}${
-                endDate ? `end_date=${endDate}&` : ""
-            }api_key=${this.NASA_API_KEY}`
-        );
-        return await res.json();
-    }
-
-    /**
-     * TODO: get how many times the object has passed and what was it's closest pass
-     *
-     * @param {int} asteroidId
-     * - Asteroid SPK-ID correlates to the NASA JPL small body
-     * - id or neo_reference_id from neo feed
-     */
-    async getNearEarthObjectById(asteroidId) {
-        const res = await fetch(
-            `${this.NEO_BASE_URL}/neo/${asteroidId}&api_key=${this.NASA_API_KEY}`
-        );
+    async getStatistics() {
+        const res = await fetch(`${this.BASE_URL}/stats?api_key=${this.NASA_API_KEY}`);
         return await res.json();
     }
 
@@ -62,23 +71,20 @@ export default class Nasa {
      * - get NEO that has come the closest
      * - etc
      */
-    async getAllNearEarthObjects() {
-        const res = await fetch(`${this.NEO_BASE_URL}/neo/browse?api_key=${this.NASA_API_KEY}`);
+    async getAll() {
+        const res = await fetch(`${this.BASE_URL}/neo/browse?api_key=${this.NASA_API_KEY}`);
         return await res.json();
     }
 
     /**
+     * TODO: get how many times the object has passed and what was it's closest pass
      *
-     *
-     * @returns
-     * - near_earth_object_count
-     * - close_approach_count
-     * - last_updated
-     * - source
-     * - nasa_jpl_url
+     * @param {int} asteroidId
+     * - Asteroid SPK-ID correlates to the NASA JPL small body
+     * - id or neo_reference_id from neo feed
      */
-    async getNeoStatistics() {
-        const res = await fetch(`${this.NEO_BASE_URL}/stats?api_key=${this.NASA_API_KEY}`);
+    async get(asteroidId) {
+        const res = await fetch(`${this.BASE_URL}/neo/${asteroidId}&api_key=${this.NASA_API_KEY}`);
         return await res.json();
     }
 
@@ -86,19 +92,23 @@ export default class Nasa {
      * @param {number} asteroidId
      * - can be NearEarth object ID, SPK_ID, Asteroid designation, or SentryID
      */
-    async getNeoSentryById(asteroidId) {
+    async getSentry(asteroidId) {
         const res = await fetch(
-            `${this.NEO_BASE_URL}/sentry/${asteroidId}?api_key=${this.NASA_API_KEY}`
+            `${this.BASE_URL}/sentry/${asteroidId}?api_key=${this.NASA_API_KEY}`
         );
         return await res.json();
     }
+}
 
-    async getCoronalMassEjection(
-        startDate = format(new Date(), "YYYY-MM-DD"),
-        endDate = format(new Date(), "YYYY-MM-DD")
-    ) {
+export class SpaceWeather extends Nasa {
+    constructor() {
+        super();
+        this.BASE_URL = "https://api.nasa.gov/DONKI";
+    }
+
+    async getCoronalMassEjection(startDate = this.TODAY, endDate = this.TODAY) {
         const res = await fetch(
-            `${this.DONKI_BASE_URL}/CME?startDate=${startDate}&endDate=${endDate}&api_key=${
+            `${this.BASE_URL}/CME?startDate=${startDate}&endDate=${endDate}&api_key=${
                 this.NASA_API_KEY
             }`
         );
@@ -113,12 +123,9 @@ export default class Nasa {
         return response;
     }
 
-    async getGeomagneticStorm(
-        startDate = format(new Date(), "YYYY-MM-DD"),
-        endDate = format(new Date(), "YYYY-MM-DD")
-    ) {
+    async getGeomagneticStorm(startDate = this.TODAY, endDate = this.TODAY) {
         const res = await fetch(
-            `${this.DONKI_BASE_URL}/GMS?startDate=${startDate}&endDate=${endDate}&api_key=${
+            `${this.BASE_URL}/GMS?startDate=${startDate}&endDate=${endDate}&api_key=${
                 this.NASA_API_KEY
             }`
         );
@@ -133,12 +140,9 @@ export default class Nasa {
         return response;
     }
 
-    async getSolarFlare(
-        startDate = format(new Date(), "YYYY-MM-DD"),
-        endDate = format(new Date(), "YYYY-MM-DD")
-    ) {
+    async getSolarFlare(startDate = this.TODAY, endDate = this.TODAY) {
         const res = await fetch(
-            `${this.DONKI_BASE_URL}/FLR?startDate=${startDate}&endDate=${endDate}&api_key=${
+            `${this.BASE_URL}/FLR?startDate=${startDate}&endDate=${endDate}&api_key=${
                 this.NASA_API_KEY
             }`
         );
