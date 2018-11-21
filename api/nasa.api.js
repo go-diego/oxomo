@@ -170,3 +170,27 @@ export class SpaceWeather extends Nasa {
         return response;
     }
 }
+
+export class Rovers extends Nasa {
+    constructor() {
+        super();
+        this.BASE_URL = "https://api.nasa.gov/mars-photos/api/v1";
+    }
+
+    async getAll() {
+        const res = await fetch(`${this.BASE_URL}/rovers?api_key=${this.NASA_API_KEY}`);
+        return await res.json();
+    }
+
+    async getManifest(rover) {
+        const res = await fetch(`${this.BASE_URL}/manifests/${rover}/`);
+        return await res.json();
+    }
+
+    async getLatestPhotos(rover) {
+        const res = await fetch(
+            `${this.BASE_URL}/rovers/${rover}/latest_photos?api_key=${this.NASA_API_KEY}`
+        );
+        return await res.json();
+    }
+}
