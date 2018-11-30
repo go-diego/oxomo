@@ -9,8 +9,8 @@ export default function HomeHero() {
             </div>
             <div className="hero-body has-text-centered">
                 <div className="container">
+                    <h2 className="subtitle">Greetings, Earthlings!</h2>
                     <h1 className="title">Welcome to Oxomo</h1>
-                    <h2 className="subtitle">Lorem Ipsum</h2>
                 </div>
             </div>
         </section>

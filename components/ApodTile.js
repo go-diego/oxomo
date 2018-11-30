@@ -21,5 +21,5 @@ export default function ApodTile(props) {
         </div>
     );
 
-    return (media_type === "video" && videoTile) || {pictureTile};
+    return (media_type === "video" && videoTile) || pictureTile;
 }
