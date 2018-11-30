@@ -5,6 +5,7 @@ import ApodTile from "../components/ApodTile";
 import NeoTile from "../components/NeoTile";
 import SpacexTile from "../components/SpacexTile";
 import MarsTile from "../components/MarsTile";
+import RoverTile from "../components/RoverTile";
 import MainLayout from "../containers/MainLayout";
 
 import "../styles/site.scss";
@@ -47,14 +48,19 @@ const Home = ({apod, neos, spacexData, marsData}) => (
                         </div>
                     </div>
                 </div>
-                <div className="tile is-parent">
-                    <article className="tile is-child notification has-background-grey-dark has-text-light">
+                <div className="tile is-parent is-vertical">
+                    {marsData.rovers.map((rover, i) => {
+                        return (
+                            <article key={i} className="tile is-child">
+                                <RoverTile {...rover} />
+                            </article>
+                        );
+                    })}
+                    {/* <article className="tile is-child notification has-background-grey-dark has-text-light">
                         <div className="content">
-                            <div className="content">
-                                <MarsTile {...marsData} />
-                            </div>
+                            <MarsTile {...marsData} />
                         </div>
-                    </article>
+                    </article> */}
                 </div>
             </div>
         </section>
@@ -66,7 +72,7 @@ Home.getInitialProps = async () => {
     marsData.sol = await MAASApi.getRecentSolData();
     const marsRovers = await RoversApi.getAll();
     marsData.rovers = marsRovers.rovers;
-    console.log("marsData", marsData);
+    //console.log("marsData", marsData);
 
     const apod = await APODApi.get();
     //console.log("apod", apod);

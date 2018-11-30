@@ -183,13 +183,22 @@ export class Rovers extends Nasa {
     }
 
     async getManifest(rover) {
-        const res = await fetch(`${this.BASE_URL}/manifests/${rover}/`);
+        const res = await fetch(`${this.BASE_URL}/manifests/${rover}?api_key=${this.NASA_API_KEY}`);
         return await res.json();
     }
 
     async getLatestPhotos(rover) {
         const res = await fetch(
             `${this.BASE_URL}/rovers/${rover}/latest_photos?api_key=${this.NASA_API_KEY}`
+        );
+        return await res.json();
+    }
+
+    async getPhotos(rover, sol, camera = null) {
+        const res = await fetch(
+            `${this.BASE_URL}/rovers/${rover}/photos?sol=${sol}${
+                camera ? `&camera=${camera}` : ""
+            }&api_key=${this.NASA_API_KEY}`
         );
         return await res.json();
     }
