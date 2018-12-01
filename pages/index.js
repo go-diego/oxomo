@@ -1,11 +1,13 @@
 import compareAsc from "date-fns/compare_asc";
 import Link from "next/link";
+
 import HomeHero from "../components/HomeHero";
 import ApodTile from "../components/ApodTile";
 import NeoTile from "../components/NeoTile";
 import SpacexTile from "../components/SpacexTile";
 import MarsTile from "../components/MarsTile";
 import RoverTile from "../components/RoverTile";
+import RoadsterTile from "../components/RoadsterTile";
 import MainLayout from "../containers/MainLayout";
 
 import "../styles/site.scss";
@@ -56,6 +58,9 @@ const Home = ({apod, neos, spacexData, marsData}) => (
                             </article>
                         );
                     })}
+                    <article className="tile is-child p-3 notification has-background-dark">
+                        <RoadsterTile />
+                    </article>
                     {/* <article className="tile is-child notification has-background-grey-dark has-text-light">
                         <div className="content">
                             <MarsTile {...marsData} />
