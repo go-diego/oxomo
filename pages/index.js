@@ -33,39 +33,27 @@ const Home = ({apod, neos, spacexData, marsData}) => (
                             <ApodTile {...apod} />
                         </div>
                     </div>
-                    <div className="tile">
-                        <div className="tile is-parent">
-                            <article className="tile is-child notification is-warning">
-                                <div className="content">
-                                    <NeoTile {...neos} />
-                                </div>
-                            </article>
-                        </div>
-                        <div className="tile is-parent">
-                            <article className="tile is-child notification is-danger">
-                                <div className="content">
-                                    <SpacexTile {...spacexData} />
-                                </div>
-                            </article>
-                        </div>
-                    </div>
                 </div>
                 <div className="tile is-parent is-vertical">
-                    {marsData.rovers.map((rover, i) => {
-                        return (
-                            <article key={i} className="tile is-child">
-                                <RoverTile {...rover} />
-                            </article>
-                        );
-                    })}
                     <article className="tile is-child p-3 notification has-background-dark">
                         <RoadsterTile />
                     </article>
-                    {/* <article className="tile is-child notification has-background-grey-dark has-text-light">
-                        <div className="content">
-                            <MarsTile {...marsData} />
-                        </div>
-                    </article> */}
+                    <article className="tile is-child notification is-danger">
+                        <SpacexTile {...spacexData} />
+                    </article>
+                </div>
+            </div>
+            <div className="tile is-ancestor">
+                <div className="tile is-12">
+                    {marsData.rovers.map((rover, i) => {
+                        return (
+                            <div className="tile is-parent">
+                                <article key={i} className="tile is-child">
+                                    <RoverTile {...rover} />
+                                </article>
+                            </div>
+                        );
+                    })}
                 </div>
             </div>
         </section>
@@ -122,3 +110,12 @@ Home.getInitialProps = async () => {
 };
 
 export default Home;
+
+{
+    /* <article className="tile is-child notification is-warning">
+        <NeoTile {...neos} />
+</article>
+<article className="tile is-child notification has-background-grey-dark has-text-light">
+        <MarsTile {...marsData} />
+</article>  */
+}
