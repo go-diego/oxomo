@@ -29,13 +29,13 @@ const Home = ({apod, neos, spacexData, marsData}) => (
             <div className="tile is-ancestor">
                 <div className="tile is-vertical is-8">
                     <div className="tile is-parent">
-                        <div className="tile is-child">
+                        <article className="tile is-child">
                             <ApodTile {...apod} />
-                        </div>
+                        </article>
                     </div>
                 </div>
                 <div className="tile is-parent is-vertical">
-                    <article className="tile is-child p-3 notification has-background-dark">
+                    <article className="tile is-child p-2 notification has-background-dark">
                         <RoadsterTile />
                     </article>
                     <article className="tile is-child notification is-danger">
@@ -47,8 +47,8 @@ const Home = ({apod, neos, spacexData, marsData}) => (
                 <div className="tile is-12">
                     {marsData.rovers.map((rover, i) => {
                         return (
-                            <div className="tile is-parent">
-                                <article key={i} className="tile is-child">
+                            <div key={i} className="tile is-parent">
+                                <article className="tile is-child">
                                     <RoverTile {...rover} />
                                 </article>
                             </div>

@@ -1,23 +1,38 @@
-const withSass = require("@zeit/next-sass");
-const withImages = require("next-images");
+const {PHASE_PRODUCTION_SERVER} =
+    process.env.NODE_ENV === "development"
+        ? require("next/constants")
+        : require("next-server/constants");
 
-module.exports = withImages(
-    withSass({
-        //cssModules: true,
-        webpack: config => {
-            // Fixes npm packages that depend on `fs` module
-            config.node = {
-                fs: "empty"
-            };
+module.exports = (phase, {defaultConfig}) => {
+    if (phase === PHASE_PRODUCTION_SERVER) {
+        return {
+            /* production only config */
+        };
+    }
 
-            config.module.rules = config.module.rules.map(rule => {
-                if (rule.loader === "babel-loader") {
-                    rule.options.cacheDirectory = false;
-                }
-                return rule;
-            });
+    const withPlugins = require("next-compose-plugins");
+    const withImages = require("next-images");
+    const withSass = require("@zeit/next-sass");
+    //   const withFonts = require("next-fonts");
+    //   const withPurgeCss = require("next-purgecss");
+    //   const withCSS = require("@zeit/next-css");
+    //   const path = require("path");
+    //   const glob = require("glob-all");
+    //   const PATHS = {
+    //     pages: path.join(__dirname, "pages"),
+    //     components: path.join(__dirname, "components"),
+    //     static: path.join(__dirname, "static")
+    //   };
 
-            return config;
-        }
-    })
-);
+    //   const purgeCssConf = {
+    //     purgeCss: {
+    //       paths: [
+    //         ...glob.sync(`${PATHS.pages}/**/*.{js,jsx,mjs}`),
+    //         ...glob.sync(`${PATHS.components}/**/*.{js,jsx,mjs}`),
+    //         ...glob.sync(`${PATHS.static}/js/**/*.{js,jsx,mjs}`, { nodir: true })
+    //       ]
+    //     }
+    //   };
+
+    return withPlugins([[withSass], [withImages]])(phase, defaultConfig);
+};
