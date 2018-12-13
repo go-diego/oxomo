@@ -1,38 +1,35 @@
 const {PHASE_PRODUCTION_SERVER} =
     process.env.NODE_ENV === "development"
-        ? require("next/constants")
-        : require("next-server/constants");
+        ? {} // We're never in "production server" phase when in development mode
+        : !process.env.NOW_REGION
+        ? require("next/constants") // Get values from `next` package when building locally
+        : require("next-server/constants"); // Get values from `next-server` package when building on now v2
+
+const nextConfig = {
+    webpack: config => {
+        // Fixes npm packages that depend on `fs` module
+        config.node = {
+            fs: "empty"
+        };
+
+        config.module.rules = config.module.rules.map(rule => {
+            if (rule.loader === "babel-loader") {
+                rule.options.cacheDirectory = false;
+            }
+            return rule;
+        });
+        return config;
+    }
+};
 
 module.exports = (phase, {defaultConfig}) => {
     if (phase === PHASE_PRODUCTION_SERVER) {
-        return {
-            /* production only config */
-        };
+        return {};
     }
 
-    const withPlugins = require("next-compose-plugins");
     const withImages = require("next-images");
     const withSass = require("@zeit/next-sass");
-    //   const withFonts = require("next-fonts");
-    //   const withPurgeCss = require("next-purgecss");
-    //   const withCSS = require("@zeit/next-css");
-    //   const path = require("path");
-    //   const glob = require("glob-all");
-    //   const PATHS = {
-    //     pages: path.join(__dirname, "pages"),
-    //     components: path.join(__dirname, "components"),
-    //     static: path.join(__dirname, "static")
-    //   };
+    const {withPlugins} = require("next-compose-plugins");
 
-    //   const purgeCssConf = {
-    //     purgeCss: {
-    //       paths: [
-    //         ...glob.sync(`${PATHS.pages}/**/*.{js,jsx,mjs}`),
-    //         ...glob.sync(`${PATHS.components}/**/*.{js,jsx,mjs}`),
-    //         ...glob.sync(`${PATHS.static}/js/**/*.{js,jsx,mjs}`, { nodir: true })
-    //       ]
-    //     }
-    //   };
-
-    return withPlugins([[withSass], [withImages]])(phase, defaultConfig);
+    return withPlugins([[withSass], [withImages]], nextConfig)(phase, defaultConfig);
 };

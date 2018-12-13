@@ -7,7 +7,7 @@ import NeoTile from "../components/NeoTile";
 import SpacexTile from "../components/SpacexTile";
 import MarsTile from "../components/MarsTile";
 import RoverTile from "../components/RoverTile";
-import RoadsterTile from "../components/RoadsterTile";
+import RoadsterTile from "../components/RoadsterTile/RoadsterTile";
 import MainLayout from "../containers/MainLayout";
 
 import "../styles/site.scss";
@@ -36,7 +36,7 @@ const Home = ({apod, neos, spacexData, marsData}) => (
                 </div>
                 <div className="tile is-parent is-vertical">
                     <article className="tile is-child p-2 notification has-background-dark">
-                        <RoadsterTile />
+                        <RoadsterTile {...spacexData.roadster} />
                     </article>
                     <article className="tile is-child notification is-danger">
                         <SpacexTile {...spacexData} />
@@ -93,6 +93,7 @@ Home.getInitialProps = async () => {
     spacexData.launches.next.site = await SpaceXApi.getLaunchPadById(
         spacexData.launches.next.launch_site.site_id
     );
+    spacexData.roadster = await SpaceXApi.getRoadsterData();
     //console.log("spacexData", spacexData);
 
     // let spaceWeather = {};
