@@ -44,6 +44,15 @@ const Home = ({apod, neos, spacexData, marsData}) => (
                 </div>
             </div>
             <div className="tile is-ancestor">
+                {/* <div className="tile is-12">
+                    <div className="tile is-parent">
+                        <article className="tile is-child notification has-background-grey-dark has-text-light">
+                            <MarsTile {...marsData} />
+                        </article>
+                    </div>
+                </div> */}
+            </div>
+            <div className="tile is-ancestor">
                 <div className="tile is-12">
                     {marsData.rovers.map((rover, i) => {
                         return (
