@@ -1,10 +1,11 @@
 import compareAsc from "date-fns/compare_asc";
+import format from "date-fns/format";
 import Link from "next/link";
-
 import HomeHero from "../components/HomeHero";
 import ApodTile from "../components/ApodTile";
 import NeoTile from "../components/NeoTile";
 import SpacexTile from "../components/SpacexTile";
+import SpaceXLatestLaunchTile from "../components/SpaceXLatestLaunchTile";
 import MarsTile from "../components/MarsTile";
 import RoverTile from "../components/RoverTile";
 import RoadsterTile from "../components/RoadsterTile/RoadsterTile";
@@ -25,44 +26,67 @@ const MAASApi = new MAAS();
 const Home = ({apod, neos, spacexData, marsData}) => (
     <MainLayout>
         <HomeHero />
-        <section className="section container">
-            <div className="tile is-ancestor">
-                <div className="tile is-vertical is-8">
-                    <div className="tile is-parent">
-                        <article className="tile is-child">
-                            <ApodTile {...apod} />
+        <section className="section">
+            <div className="container">
+                <h1 className="title">{format(new Date(), "ddd, MMM Do")}</h1>
+                <div className="tile is-ancestor">
+                    <div className="tile is-vertical is-8">
+                        <div className="tile is-parent">
+                            <article className="tile is-child">
+                                <ApodTile {...apod} />
+                            </article>
+                        </div>
+                    </div>
+                    <div className="tile is-parent is-vertical">
+                        <article className="tile is-child p-2 notification is-warning">
+                            <NeoTile {...neos} />
+                        </article>
+                        <article className="tile is-child notification is-danger">
+                            <p className="title">News</p>
+                            <p className="subtitle">Data</p>
                         </article>
                     </div>
                 </div>
-                <div className="tile is-parent is-vertical">
-                    <article className="tile is-child p-2 notification has-background-dark">
-                        <RoadsterTile {...spacexData.roadster} />
-                    </article>
-                    <article className="tile is-child notification is-danger">
-                        <SpacexTile {...spacexData} />
-                    </article>
+                <h2 className="title">Mars</h2>
+                <div className="tile is-ancestor">
+                    {/* <div className="tile is-12">
+                        <div className="tile is-parent">
+                            <article className="tile is-child notification has-background-grey-dark has-text-light">
+                                <MarsTile {...marsData} />
+                            </article>
+                        </div>
+                    </div> */}
                 </div>
-            </div>
-            <div className="tile is-ancestor">
-                {/* <div className="tile is-12">
-                    <div className="tile is-parent">
-                        <article className="tile is-child notification has-background-grey-dark has-text-light">
-                            <MarsTile {...marsData} />
+                <div className="tile is-ancestor">
+                    <div className="tile is-12">
+                        {marsData.rovers.map((rover, i) => {
+                            return (
+                                <div key={i} className="tile is-parent">
+                                    <article className="tile is-child">
+                                        <RoverTile {...rover} />
+                                    </article>
+                                </div>
+                            );
+                        })}
+                    </div>
+                </div>
+                <h2 className="title">SpaceX</h2>
+                <div className="tile is-ancestor">
+                    <div className="tile is-parent is-vertical is-4">
+                        <article className="tile is-child p-2 notification has-background-dark">
+                            <RoadsterTile {...spacexData.roadster} />
+                        </article>
+                        <article className="tile is-child notification is-danger">
+                            <SpacexTile {...spacexData} />
                         </article>
                     </div>
-                </div> */}
-            </div>
-            <div className="tile is-ancestor">
-                <div className="tile is-12">
-                    {marsData.rovers.map((rover, i) => {
-                        return (
-                            <div key={i} className="tile is-parent">
-                                <article className="tile is-child">
-                                    <RoverTile {...rover} />
-                                </article>
-                            </div>
-                        );
-                    })}
+                    <div className="tile is-vertical">
+                        <div className="tile is-parent">
+                            <article className="tile is-child notification is-info">
+                                <SpaceXLatestLaunchTile {...spacexData.launches.latest} />
+                            </article>
+                        </div>
+                    </div>
                 </div>
             </div>
         </section>
@@ -103,6 +127,8 @@ Home.getInitialProps = async () => {
         spacexData.launches.next.launch_site.site_id
     );
     spacexData.roadster = await SpaceXApi.getRoadsterData();
+    spacexData.launches.latest = await SpaceXApi.getLatestLaunch();
+
     //console.log("spacexData", spacexData);
 
     // let spaceWeather = {};
@@ -122,9 +148,7 @@ Home.getInitialProps = async () => {
 export default Home;
 
 {
-    /* <article className="tile is-child notification is-warning">
-        <NeoTile {...neos} />
-</article>
+    /* 
 <article className="tile is-child notification has-background-grey-dark has-text-light">
         <MarsTile {...marsData} />
 </article>  */

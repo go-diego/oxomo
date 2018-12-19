@@ -1,5 +1,5 @@
-const Parser = require("rss-parser");
-const parser = new Parser();
+//const Parser = require("rss-parser");
+//const parser = new Parser();
 
 // export async function curiosityFeed() {
 //     let feed = await parser.parseURL("");

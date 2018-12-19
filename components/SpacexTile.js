@@ -1,7 +1,7 @@
 import {Fragment} from "react";
 import format from "date-fns/format";
 
-export default function SpacexFile(props) {
+export default function SpacexTile(props) {
     const {launches} = props;
     return (
         <Fragment>

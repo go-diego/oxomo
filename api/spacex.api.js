@@ -12,6 +12,11 @@ export default class SpaceX {
         return await res.json();
     }
 
+    async getLatestLaunch() {
+        const res = await fetch(`${this.LAUNCHES_URL}/latest`);
+        return await res.json();
+    }
+
     async getAllLaunches() {
         const res = await fetch(`${this.LAUNCHES_URL}`);
         return await res.json();
