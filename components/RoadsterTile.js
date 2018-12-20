@@ -1,8 +1,8 @@
-import Roadster from "./roadster.svg";
+import Roadster from "../images/roadster.svg";
 
 export default function RoadsterTile(props) {
     return (
-        <div className="position-relative">
+        <div className="position-relative h-100">
             <figure className="image is-3by2">
                 <img className="rounded" src={Roadster} />
             </figure>

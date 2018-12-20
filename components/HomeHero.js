@@ -3,7 +3,7 @@ import "../styles/site.scss";
 
 export default function HomeHero() {
     return (
-        <section className="hero is-medium is-primary is-bold">
+        <section className="hero is-primary is-bold">
             <div className="hero-head">
                 <Nav />
             </div>

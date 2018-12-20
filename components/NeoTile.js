@@ -45,6 +45,3 @@ export default function NeoTile(props) {
         </Fragment>
     );
 }
-
-{
-}
