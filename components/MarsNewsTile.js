@@ -7,7 +7,7 @@ export default function MarsNewsTile(props) {
     const {title: feedTitle, items} = props;
     const mostRecentEntry = items[0];
     const {title: newsTitle} = mostRecentEntry;
-    const url = mostRecentEntry["media:content"][0]["$"].url;
+    const url = mostRecentEntry["media:content"]["$"].url;
     return (
         <div className="position-relative">
             <figure className="image is-3by2">
