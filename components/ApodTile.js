@@ -1,7 +1,6 @@
 export default function ApodTile(props) {
+    console.log("APOD", props);
     const {hdurl, title, media_type, url} = props;
-    console.log("hdurl", hdurl);
-    console.log("url", url);
     const pictureTile = (
         <div className="position-relative">
             <figure className="image is-3by2">
