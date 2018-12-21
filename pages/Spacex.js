@@ -28,3 +28,22 @@ export default function Spacex() {
         </MainLayout>
     );
 }
+
+// spacexData.launches = {};
+// const spacexLaunches = await SpaceXApi.getPastLaunches();
+// spacexData.launches.count = spacexLaunches.length;
+// spacexData.launches.success_count = spacexLaunches.filter(
+//     launch => launch.launch_success
+// ).length;
+// spacexData.launches.failure_count = spacexLaunches.filter(
+//     launch => !launch.launch_success
+// ).length;
+// const spacexUpcomingLaunches = await SpaceXApi.getUpcomingLaunches();
+// spacexData.launches.next = spacexUpcomingLaunches.filter(
+//     launch => compareAsc(new Date(launch.launch_date_local), new Date()) > 0
+// )[0];
+// spacexData.launches.next.site = await SpaceXApi.getLaunchPadById(
+//     spacexData.launches.next.launch_site.site_id
+// );
+//spacexData.roadster = await SpaceXApi.getRoadsterData();
+//spacexData.launches.latest = await SpaceXApi.getLatestLaunch();
