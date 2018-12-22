@@ -1,5 +1,6 @@
 import React from "react";
 import ErrorTile from "./ErrorTile";
+import format from "date-fns/format";
 
 import {NasaFeed} from "../api/feed.api";
 
@@ -34,20 +35,26 @@ export default class NasaNewsTile extends React.Component {
 
     render() {
         let feedTitle,
-            items,
-            mostRecentEntry,
             newsTitle,
-            url = null;
+            imageUrl,
+            pubdate,
+            enclosures,
+            publishDate = null;
 
         const {data, isLoading, hasError} = this.state;
 
         if (data) {
-            ({title: feedTitle, items} = data);
-            mostRecentEntry = items[0];
             ({
+                pubdate,
                 title: newsTitle,
-                enclosure: {url}
-            } = mostRecentEntry);
+                enclosures,
+                meta: {
+                    image: {title: feedTitle}
+                }
+            } = data[0]);
+
+            imageUrl = enclosures[0].url;
+            publishDate = format(new Date(pubdate), "ddd, MMM Do");
         }
 
         return (
@@ -55,11 +62,13 @@ export default class NasaNewsTile extends React.Component {
                 <article className="tile is-child">
                     <div className="position-relative">
                         <figure className="image is-3by2">
-                            <img className="rounded" src={url} />
+                            <img className="rounded" src={imageUrl} />
                         </figure>
                         <div className="is-overlay p-3  d-flex flex-column justify-content-between">
-                            <p className="title has-text-light is-size-6-mobile">{feedTitle}</p>
-                            <p className="subtitle has-text-white is-size-7-mobile">{newsTitle}</p>
+                            <p className="title is-4 has-text-light is-size-6-mobile">
+                                {newsTitle}
+                            </p>
+                            <p className="subtitle is-size-6 has-text-white">{publishDate}</p>
                         </div>
                     </div>
                 </article>

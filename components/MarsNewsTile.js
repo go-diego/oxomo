@@ -1,5 +1,6 @@
 import React from "react";
 import ErrorTile from "./ErrorTile";
+import format from "date-fns/format";
 
 import {MarsFeed} from "../api/feed.api";
 
@@ -26,27 +27,34 @@ export default class MarsNewsTile extends React.Component {
         const [error, response] = await to(marsNewsPromise);
         if (error) state.hasError = true;
 
+        console.log("RESPONSE", response);
+
         state.data = response;
         state.isLoading = false;
 
         this.setState({...state});
     }
 
-    //console.log("MARS NEWS PROPS", props);
     render() {
         let feedTitle,
-            items,
             newsTitle,
-            mostRecentEntry,
-            imageUrl = null;
+            imageUrl,
+            pubdate,
+            publishDate = null;
 
         const {data, isLoading, hasError} = this.state;
 
         if (data) {
-            ({title: feedTitle, items} = data);
-            mostRecentEntry = items[0];
-            ({title: newsTitle} = mostRecentEntry);
-            imageUrl = mostRecentEntry["media:content"]["$"].url;
+            ({
+                pubdate,
+                title: newsTitle,
+                image: {url: imageUrl},
+                meta: {
+                    image: {title: feedTitle}
+                }
+            } = data[0]);
+
+            publishDate = format(new Date(pubdate), "ddd, MMM Do");
         }
 
         return (
@@ -57,8 +65,10 @@ export default class MarsNewsTile extends React.Component {
                             <img className="rounded" src={imageUrl} />
                         </figure>
                         <div className="is-overlay p-3  d-flex flex-column justify-content-between">
-                            <p className="title has-text-light is-size-6-mobile">{feedTitle}</p>
-                            <p className="subtitle has-text-white is-size-7-mobile">{newsTitle}</p>
+                            <p className="title is-4 has-text-light is-size-6-mobile">
+                                {newsTitle}
+                            </p>
+                            <p className="subtitle is-size-6 has-text-white">{publishDate}</p>
                         </div>
                     </div>
                 </article>

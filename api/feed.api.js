@@ -2,6 +2,7 @@
 // https://www.spacex.com/press.xml
 // https://www.spacex.com/news.xml
 // https://www.nasa.gov/content/nasa-rss-feeds -- list of nasa rss
+import "isomorphic-unfetch";
 
 class Feed {
     constructor() {
@@ -11,6 +12,7 @@ class Feed {
                 item: ["media:content"]
             }
         });
+        this.RSS_PARSER_URL = process.env.RSS_PARSER_ENDPOINT;
     }
 }
 
@@ -28,8 +30,8 @@ export class NasaFeed extends Feed {
     }
 
     async getSolarSystemNews() {
-        let feed = await this.parser.parseURL(this.SOLAR_SYSTEM_NEWS_FEED_URL);
-        return feed;
+        const feed = await fetch(`${this.RSS_PARSER_URL}?url=${this.SOLAR_SYSTEM_NEWS_FEED_URL}`);
+        return feed.json();
     }
 
     async getJPLNews() {
@@ -47,8 +49,8 @@ export class MarsFeed extends Feed {
     }
 
     async getNews() {
-        let feed = await this.parser.parseURL(this.NEWS_FEED_URL);
-        return feed;
+        const feed = await fetch(`${this.RSS_PARSER_URL}?url=${this.NEWS_FEED_URL}`);
+        return feed.json();
     }
 
     async getCuriosityMissionUpdate() {
