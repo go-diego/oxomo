@@ -3,13 +3,13 @@ import ErrorTile from "./ErrorTile";
 import NewsTitle from "./NewsTile";
 import format from "date-fns/format";
 
-import {NasaFeed} from "../api/feed.api";
+import {MarsFeed} from "../api/feed.api";
 
 import to from "../utils/to";
 
-const NasaFeedApi = new NasaFeed();
+const MarsFeedApi = new MarsFeed();
 
-export default class NasaNewsTile extends React.Component {
+export default class CuriosityMissionTile extends React.Component {
     state = {
         data: null,
         isLoading: true,
@@ -19,9 +19,9 @@ export default class NasaNewsTile extends React.Component {
     async componentDidMount() {
         let state = {...this.state};
 
-        const nasaNewsPromise = NasaFeedApi.getSolarSystemNews();
+        const curiosityUpdatePromise = MarsFeedApi.getCuriosityMissionUpdate();
 
-        const [error, response] = await to(nasaNewsPromise);
+        const [error, response] = await to(curiosityUpdatePromise);
         if (error) state.hasError = true;
 
         state.data = response;
@@ -44,11 +44,12 @@ export default class NasaNewsTile extends React.Component {
             ({
                 pubdate,
                 title: newsTitle,
-                enclosures,
-                meta: {title: feedTitle}
+                image: {url: imageUrl},
+                meta: {
+                    image: {title: feedTitle}
+                }
             } = data[0]);
 
-            imageUrl = enclosures[0].url;
             publishDate = format(new Date(pubdate), "ddd, MMM Do");
         }
 

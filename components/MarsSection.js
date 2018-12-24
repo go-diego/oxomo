@@ -1,5 +1,6 @@
 import TileErrorBoundary from "./TileErrorBoundary";
 import MarsNewsTile from "../components/MarsNewsTile";
+import CuriosityMissionTile from "../components/CuriosityMissionTile";
 import MarsImage from "../images/mars-landscape.jpg";
 
 export default function MarsSection() {
@@ -29,7 +30,9 @@ export default function MarsSection() {
                             </TileErrorBoundary>
                         </div>
                         <div className="tile is-parent">
-                            <article className="tile is-child" />
+                            <TileErrorBoundary>
+                                <CuriosityMissionTile />
+                            </TileErrorBoundary>
                         </div>
                         <div className="tile is-parent">
                             <article className="tile is-child" />

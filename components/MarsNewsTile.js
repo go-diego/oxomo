@@ -1,5 +1,6 @@
 import React from "react";
 import ErrorTile from "./ErrorTile";
+import NewsTitle from "./NewsTile";
 import format from "date-fns/format";
 
 import {MarsFeed} from "../api/feed.api";
@@ -26,8 +27,6 @@ export default class MarsNewsTile extends React.Component {
 
         const [error, response] = await to(marsNewsPromise);
         if (error) state.hasError = true;
-
-        console.log("RESPONSE", response);
 
         state.data = response;
         state.isLoading = false;
@@ -59,19 +58,12 @@ export default class MarsNewsTile extends React.Component {
 
         return (
             (hasError && <ErrorTile />) || (
-                <article className="tile is-child">
-                    <div className="position-relative">
-                        <figure className="image is-3by2">
-                            <img className="rounded" src={imageUrl} />
-                        </figure>
-                        <div className="is-overlay p-3  d-flex flex-column justify-content-between">
-                            <p className="title is-4 has-text-light is-size-6-mobile">
-                                {newsTitle}
-                            </p>
-                            <p className="subtitle is-size-6 has-text-white">{publishDate}</p>
-                        </div>
-                    </div>
-                </article>
+                <NewsTitle
+                    title={feedTitle}
+                    subtitle={newsTitle}
+                    url={imageUrl}
+                    date={publishDate}
+                />
             )
         );
     }

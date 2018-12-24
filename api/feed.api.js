@@ -25,8 +25,8 @@ export class NasaFeed extends Feed {
     }
 
     async getBreakingNews() {
-        let feed = await this.parser.parseURL(this.BREAKING_NEWS_FEED_URL);
-        return feed;
+        const feed = await fetch(`${this.RSS_PARSER_URL}?url=${this.BREAKING_NEWS_FEED_URL}`);
+        return feed.json();
     }
 
     async getSolarSystemNews() {
@@ -35,8 +35,8 @@ export class NasaFeed extends Feed {
     }
 
     async getJPLNews() {
-        let feed = await this.parser.parseURL(this.JPL_NEWS_FEED_URL);
-        return feed;
+        const feed = await fetch(`${this.RSS_PARSER_URL}?url=${this.JPL_NEWS_FEED_URL}`);
+        return feed.json();
     }
 }
 
@@ -54,7 +54,9 @@ export class MarsFeed extends Feed {
     }
 
     async getCuriosityMissionUpdate() {
-        let feed = await this.parser.parseURL(this.CURIOSITY_MISSION_UPDATES_FEED_URL);
-        return feed;
+        const feed = await fetch(
+            `${this.RSS_PARSER_URL}?url=${this.CURIOSITY_MISSION_UPDATES_FEED_URL}`
+        );
+        return feed.json();
     }
 }
