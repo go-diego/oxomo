@@ -73,7 +73,7 @@ export default class SpaceXLatestLaunchTile extends React.Component {
 
                     <p className="my-3">{`${rocketName} from ${launchSiteName}`}</p>
 
-                    <div className="embed-responsive embed-responsive-4by3">
+                    <div className="embed-responsive embed-responsive-1by1">
                         <iframe
                             className="rounded embed-responsive-item"
                             src={normalizedYoutubeVideUrl}
