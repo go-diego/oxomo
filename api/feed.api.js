@@ -2,6 +2,8 @@
 // https://www.spacex.com/press.xml
 // https://www.spacex.com/news.xml
 // https://www.nasa.gov/content/nasa-rss-feeds -- list of nasa rss
+// https://www.space.com/home/feed/site.xml - for mars, filter source.title by "mars" ?
+// https://www.sciencedaily.com/rss/space_time/mars.xml
 import "isomorphic-unfetch";
 
 class Feed {
@@ -46,6 +48,7 @@ export class MarsFeed extends Feed {
         this.NEWS_FEED_URL = "https://mars.nasa.gov/rss/api/?feed=news&category=all&feedtype=rss";
         this.CURIOSITY_MISSION_UPDATES_FEED_URL =
             "https://mars.nasa.gov/rss/missionupdates.cfm?s=msl";
+        this.SCIENCE_DAILY_MARS_NEWS = "https://www.sciencedaily.com/rss/space_time/mars.xml";
     }
 
     async getNews() {
@@ -57,6 +60,11 @@ export class MarsFeed extends Feed {
         const feed = await fetch(
             `${this.RSS_PARSER_URL}?url=${this.CURIOSITY_MISSION_UPDATES_FEED_URL}`
         );
+        return feed.json();
+    }
+
+    async getScienceDailyMarsNews() {
+        const feed = await fetch(`${this.RSS_PARSER_URL}?url=${this.SCIENCE_DAILY_MARS_NEWS}`);
         return feed.json();
     }
 }

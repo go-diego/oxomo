@@ -76,7 +76,7 @@ export default class SpaceXNextLaunchTile extends React.Component {
                                 <p className="heading is-marginless is-size-6">
                                     {format(new Date(launch_date_local), "MMMM")}
                                 </p>
-                                <p className="title is-display-2">
+                                <p className="title is-display-1">
                                     {format(new Date(launch_date_local), "DD")}
                                 </p>
                             </div>
