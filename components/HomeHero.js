@@ -1,4 +1,5 @@
 import Nav from "../components/Nav";
+import HeroImg from "../images/hero.png";
 import "../styles/site.scss";
 
 export default function HomeHero() {
@@ -9,8 +10,7 @@ export default function HomeHero() {
             </div>
             <div className="hero-body has-text-centered">
                 <div className="container">
-                    <h2 className="subtitle">Greetings, Earthlings!</h2>
-                    <h1 className="title">Welcome to Oxomo</h1>
+                    <img src={HeroImg} />
                 </div>
             </div>
         </section>

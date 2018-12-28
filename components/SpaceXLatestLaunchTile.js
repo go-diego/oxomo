@@ -1,4 +1,5 @@
 import React from "react";
+//import ReactPlayer from "react-player";
 import ErrorTile from "./ErrorTile";
 import to from "../utils/to";
 import format from "date-fns/format";
@@ -76,7 +77,7 @@ export default class SpaceXLatestLaunchTile extends React.Component {
                     <div className="embed-responsive embed-responsive-16by9">
                         <iframe
                             className="rounded embed-responsive-item"
-                            src={normalizedYoutubeVideUrl}
+                            src={`${normalizedYoutubeVideUrl}?rel=0`}
                             allowFullScreen
                         />
                     </div>
