@@ -1,4 +1,6 @@
 import React from "react";
+import ErrorTile from "./ErrorTile";
+
 import {APOD} from "../api/nasa.api";
 
 import to from "../utils/to";
@@ -34,7 +36,7 @@ export default class ApodTile extends React.Component {
             media_type,
             url = null;
 
-        const {isLoading, data} = this.state;
+        const {data, hasError, isLoading} = this.state;
 
         if (data) {
             ({hdurl, title, media_type, url} = data);
@@ -60,9 +62,11 @@ export default class ApodTile extends React.Component {
         }
 
         return (
-            <article className="tile is-child">
-                {(media_type === "video" && videoTile) || pictureTile}
-            </article>
+            (hasError && <ErrorTile />) || (
+                <article className="tile is-child">
+                    {(media_type === "video" && videoTile) || pictureTile}
+                </article>
+            )
         );
     }
 }

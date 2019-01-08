@@ -9,13 +9,14 @@ export default function MarsSection() {
         <section
             className="section"
             style={{
-                backgroundImage: `url(${MarsImage})`,
-                backgroundSize: "cover",
-                backgroundRepeat: "no-repeat",
-                backgroundPosition: "center"
+                background: "#eb5757" /* fallback for old browsers */,
+                background:
+                    "-webkit-linear-gradient(to left, #eb5757, #000000)" /* Chrome 10-25, Safari 5.1-6 */,
+                background:
+                    "linear-gradient(to left, #eb5757, #000000)" /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */
             }}>
             <div className="container">
-                <h2 className="title">Mars Memo</h2>
+                <h2 className="title has-text-light">Mars Memo</h2>
                 <div className="tile is-ancestor">
                     {/* <div className="tile is-12">
                     <div className="tile is-parent">
