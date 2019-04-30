@@ -1,3 +1,15 @@
+/**
+ * --Refactor as static app + move to netlify
+ * redesign ui
+ * --remove rss-parser
+ * --upgrade dependecies
+ * --remove bootstrap dependency
+ * --define bulma palette
+ * --add styled-components
+ * --add google analytics
+ * refactor code
+ */
+
 import format from "date-fns/format";
 import Link from "next/link";
 import HomeHero from "../components/HomeHero";
@@ -11,7 +23,9 @@ import "../styles/site.scss";
 const Home = () => (
     <MainLayout>
         <HomeHero />
-        <h1 className="is-display-4 py-3 has-text-centered">{format(new Date(), "ddd, MMM Do")}</h1>
+        <h1 className="is-display-4 py-3 has-text-centered">
+            {format(new Date(), "ddd, MMM Do")}
+        </h1>
         <NasaSection />
         <MarsSection />
         <SpacexSection />
