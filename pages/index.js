@@ -11,21 +11,29 @@
  */
 
 import Link from "next/link";
+import styled from "styled-components";
 import Hero from "../components/Hero";
+import Section from "../components/Section";
 import NasaSection from "../components/NasaSection";
 import SpacexSection from "../components/SpacexSection";
 import MarsSection from "../components/MarsSection";
 import MainLayout from "../containers/MainLayout";
 
-const Home = () => (
-    <MainLayout>
-        <Hero />
-        {/* <NasaSection />
-        <MarsSection />
-        <SpacexSection /> */}
-    </MainLayout>
+const Content = styled(Section)`
+    margin-top: -7rem;
+`;
 
-    //{/* <a href='https://www.freepik.com/free-vector/colorful-mars-background-with-flat-design_3231758.htm'>Designed by Freepik</a> */}
-);
+function Home() {
+    return (
+        <MainLayout>
+            <Hero />
+            <Content>
+                <NasaSection />
+            </Content>
+        </MainLayout>
+    );
+}
+
+//{/* <a href='https://www.freepik.com/free-vector/colorful-mars-background-with-flat-design_3231758.htm'>Designed by Freepik</a> */}
 
 export default Home;

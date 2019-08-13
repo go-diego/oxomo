@@ -1,15 +1,36 @@
 import styled from "styled-components";
-import {APOD} from "../api/nasa.api";
+import Nav from "../components/Nav";
+import { APOD } from "../api/nasa.api";
 
 const nasaApodApi = new APOD();
 
+// const img =
+//     "https://apod.nasa.gov/apod/image/1908/PerseidsSlovakia_Horalek_1089.jpg";
+// const title = "Perseid Meteors over Slovakia";
+// const copyright = "Petr Horálek";
+
 const Hero = styled.section`
+    min-height: 50vh;
     ${"" /* background-color: #ffffff;
     background-image: url(${props => props.backgroundImage});
-    min-height: 50vh;
     background-position: center;
     background-repeat: no-repeat;
     background-size: cover; */}
+`;
+
+const AttributionWrapper = styled.div`
+    display: flex;
+    justify-content: end;
+`;
+
+const Attribution = styled.div`
+    border-top-left-radius: 8px;
+    text-align: right;
+    padding: 5px;
+    font-size: 10px;
+    display: flex;
+    flex-direction: column;
+    background-color: rgba(0, 0, 0, 0.25);
 `;
 
 // const Box = styled.div`
@@ -18,38 +39,31 @@ const Hero = styled.section`
 //     z-index: 1;
 // `;
 
-const Figure = styled.figure`
-    min-height: 50vh;
-`;
-
 export default function HomeHero() {
-    const [backgroundImage, setBackgroundImage] = React.useState(null);
+    const [pictureOfTheDay, setPictureOfTheDay] = React.useState({});
 
     React.useEffect(() => {
         async function getData() {
             const response = await nasaApodApi.get();
-            console.log("IMAGE", response);
-            setBackgroundImage(response.hdurl || response.url);
+            console.log("IMAGE", pictureOfTheDay);
+            setPictureOfTheDay(response);
         }
         getData();
     }, []);
 
     return (
-        <Hero className="hero is-medium">
-            <Figure class="image">
-                <img src={backgroundImage} />
-            </Figure>
-            {/* <div className="hero-body">
-                <div className="container has-text-centered">
-                    <h1 className="is-family-secondary title">Diego Bernal</h1>
-                    <h2 className="subtitle is-uppercase">
-                        Front-End Developer
-                    </h2>
-                    <h2 className="subtitle is-5">
-                        Coachella Valley, California
-                    </h2>
-                </div>
-            </div> */}
+        <Hero
+            backgroundImage={pictureOfTheDay.hdurl || pictureOfTheDay.url}
+            className="hero is-medium is-dark">
+            <div className="hero-head">
+                <Nav />
+            </div>
+            {/* <AttributionWrapper>
+                <Attribution className="has-text-light">
+                    <small>{pictureOfTheDay.title}</small>
+                    <small>{pictureOfTheDay.copyright}</small>
+                </Attribution>
+            </AttributionWrapper> */}
         </Hero>
     );
 }
