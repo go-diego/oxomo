@@ -1,6 +1,8 @@
+// https://mars.nasa.gov/rss/api/?feed=weather&category=insight&feedtype=json&ver=1.0
 export default class MAAS {
     constructor() {
-        this.URL = "http://cab.inta-csic.es/rems/wp-content/plugins/marsweather-widget/api.php";
+        this.URL =
+            "http://cab.inta-csic.es/rems/wp-content/plugins/marsweather-widget/api.php";
     }
 
     async getData() {

@@ -10,7 +10,7 @@ const nasaApodApi = new APOD();
 // const copyright = "Petr Horálek";
 
 const Hero = styled.section`
-    min-height: 50vh;
+    min-height: 33vh;
     ${"" /* background-color: #ffffff;
     background-image: url(${props => props.backgroundImage});
     background-position: center;
@@ -45,7 +45,6 @@ export default function HomeHero() {
     React.useEffect(() => {
         async function getData() {
             const response = await nasaApodApi.get();
-            console.log("IMAGE", pictureOfTheDay);
             setPictureOfTheDay(response);
         }
         getData();
