@@ -53,7 +53,8 @@ export default function PostCard({
     subtitle,
     description,
     link,
-    isTargetBlank
+    isTargetBlank,
+    children
 }) {
     return (
         <Article className="box is-paddingless is-clipped">
@@ -73,11 +74,7 @@ export default function PostCard({
                                             </p>
                                         )}
                                     </div>
-                                    {description && (
-                                        <p className="is-size-6 is-hidden-mobile">
-                                            {description}
-                                        </p>
-                                    )}
+                                    {children}
                                 </PostCardContent>
                             </div>
                             <div className="column">
@@ -115,11 +112,7 @@ export default function PostCard({
                                             </p>
                                         )}
                                     </div>
-                                    {description && (
-                                        <p className="is-size-6 is-hidden-mobile">
-                                            {description}
-                                        </p>
-                                    )}
+                                    {children}
                                 </PostCardContent>
                             </div>
                         </React.Fragment>

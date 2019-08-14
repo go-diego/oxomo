@@ -2,6 +2,7 @@
 import React from "react";
 import { to } from "await-to-js";
 import PostCard from "./PostCard";
+import NeoTile from "./NeoTile";
 import NasaNewsCard from "./NasaNewsCard";
 import { APOD, NEO } from "../api/nasa.api";
 import { NasaFeed } from "../api/feed.api";
@@ -18,7 +19,7 @@ export default function NasaSection() {
     ] = React.useState(true);
     const [nasaNews, setNasaNews] = React.useState([]);
     const [isNasaNewsLoading, setIsNasaNewsLoading] = React.useState(true);
-    const [nearEarthObject, setNearEarthObject] = React.useState({});
+    const [nearEarthObject, setNearEarthObject] = React.useState(null);
     const [isNEOLoading, setIsNEOLoading] = React.useState(true);
 
     React.useEffect(() => {
@@ -102,7 +103,8 @@ export default function NasaSection() {
             </div>
             <div className="columns">
                 <div className="column">
-                    <PostCard
+                    <NeoTile isLoading={isNEOLoading} data={nearEarthObject} />
+                    {/* <PostCard
                         isReversed
                         src="https://www.jpl.nasa.gov/images/asteroid/20180723/main-animation-16.gif"
                         isLoading={isNEOLoading}
@@ -110,7 +112,7 @@ export default function NasaSection() {
                         title="Near Earth Objects"
                         subtitle="Closest Approach Today"
                         description={nearEarthObject.name}
-                    />
+                    /> */}
                 </div>
             </div>
         </React.Fragment>
