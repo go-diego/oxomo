@@ -1,5 +1,20 @@
 import React from "react";
 import styled from "styled-components";
+import ContentLoader from "react-content-loader";
+
+const Skeleton = () => (
+    <ContentLoader
+        height={280}
+        width={280}
+        speed={1}
+        primaryColor={"#333"}
+        secondaryColor={"#212121"}>
+        <rect x="3" y="3" rx="10" ry="10" width="98%" height="180" />
+        <rect x="6" y="190" rx="0" ry="0" width="98%" height="20" />
+        <rect x="4" y="215" rx="0" ry="0" width="98%" height="20" />
+        <rect x="4" y="242" rx="0" ry="0" width="98%" height="20" />
+    </ContentLoader>
+);
 
 const Figure = styled.figure`
     overflow: hidden;
@@ -82,7 +97,7 @@ export default function NewsCard({
                         )}
                     </CardContent>
                 </React.Fragment>
-            )) || <p>Loading...</p>}
+            )) || <Skeleton />}
         </Article>
     );
 }

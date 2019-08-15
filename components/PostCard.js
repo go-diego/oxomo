@@ -1,5 +1,19 @@
 import React from "react";
 import styled from "styled-components";
+import ContentLoader from "react-content-loader";
+
+const Skeleton = () => (
+    <ContentLoader
+        height={70}
+        width={280}
+        speed={1}
+        primaryColor={"#333"}
+        secondaryColor={"#212121"}>
+        <rect x="3" y="3" rx="10" ry="10" width="50%" height="67" />
+        <rect x="150" y="5" rx="0" ry="0" width="45%" height="15" />
+        <rect x="150" y="25" rx="0" ry="0" width="45%" height="10" />
+    </ContentLoader>
+);
 
 const PostCardContent = styled.div`
     padding: 1rem;
@@ -41,6 +55,7 @@ const StretchedLink = styled.a`
 `;
 
 const Article = styled.article`
+    min-height: 300px;
     position: relative;
 `;
 
@@ -118,7 +133,7 @@ export default function PostCard({
                         </React.Fragment>
                     )}
                 </div>
-            )) || <p>Loading...</p>}
+            )) || <Skeleton />}
         </Article>
     );
 }
