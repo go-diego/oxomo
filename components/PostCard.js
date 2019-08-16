@@ -2,16 +2,52 @@ import React from "react";
 import styled from "styled-components";
 import ContentLoader from "react-content-loader";
 
-const Skeleton = () => (
+// const Skeleton = ({ isReversed }) =>
+//     (!isReversed && (
+//         <ContentLoader
+//             height={70}
+//             width={280}
+//             speed={1}
+//             primaryColor={"#333"}
+//             secondaryColor={"#212121"}>
+//             <rect x="3" y="3" rx="0" ry="0" width="50%" height="100%" />
+//             <rect x="150" y="5" rx="0" ry="0" width="45%" height="15" />
+//             <rect x="150" y="25" rx="0" ry="0" width="45%" height="10" />
+//         </ContentLoader>
+//     )) || (
+//         <ContentLoader
+//             height={70}
+//             width={280}
+//             speed={1}
+//             primaryColor={"#333"}
+//             secondaryColor={"#212121"}>
+//             <rect x="150" y="3" rx="0" ry="0" width="45%" height="100%" />
+//             <rect x="3" y="5" rx="0" ry="0" width="50%" height="15" />
+//             <rect x="3" y="25" rx="0" ry="0" width="50%" height="10" />
+//         </ContentLoader>
+//     );
+
+const ContentSkeleton = () => (
     <ContentLoader
-        height={70}
-        width={280}
+        height={150}
+        width={300}
         speed={1}
         primaryColor={"#333"}
         secondaryColor={"#212121"}>
-        <rect x="3" y="3" rx="10" ry="10" width="50%" height="67" />
-        <rect x="150" y="5" rx="0" ry="0" width="45%" height="15" />
-        <rect x="150" y="25" rx="0" ry="0" width="45%" height="10" />
+        <rect x="6" y="5" rx="0" ry="0" width="95%" height="30" />
+        <rect x="6" y="40" rx="0" ry="0" width="95%" height="15" />
+        <rect x="6" y="60" rx="0" ry="0" width="95%" height="15" />
+    </ContentLoader>
+);
+
+const ImageSkeleton = () => (
+    <ContentLoader
+        height={150}
+        width={300}
+        speed={1}
+        primaryColor={"#333"}
+        secondaryColor={"#212121"}>
+        <rect x="3" y="3" rx="0" ry="0" width="98%" height="95%" />
     </ContentLoader>
 );
 
@@ -19,8 +55,14 @@ const PostCardContent = styled.div`
     padding: 1rem;
     display: flex;
     flex-direction: column;
-    justify-content: space-between;
     height: 100%;
+`;
+
+const Content = styled.div`
+    padding-top: 1rem;
+    display: flex;
+    flex-direction: column;
+    flex-grow: 1;
 `;
 
 const Figure = styled.figure`
@@ -73,11 +115,11 @@ export default function PostCard({
 }) {
     return (
         <Article className="box is-paddingless is-clipped">
-            {(!isLoading && (
-                <div className="columns">
-                    {(isReversed && (
-                        <React.Fragment>
-                            <div className="column is-two-fifths">
+            <div className="columns">
+                {(isReversed && (
+                    <React.Fragment>
+                        <div className="column is-two-fifths">
+                            {(!isLoading && (
                                 <PostCardContent>
                                     <div>
                                         <p className="title is-size-4-mobile">
@@ -89,10 +131,12 @@ export default function PostCard({
                                             </p>
                                         )}
                                     </div>
-                                    {children}
+                                    <Content>{children}</Content>
                                 </PostCardContent>
-                            </div>
-                            <div className="column">
+                            )) || <ContentSkeleton />}
+                        </div>
+                        <div className="column">
+                            {(!isLoading && (
                                 <StretchedLink
                                     title={title}
                                     target={isTargetBlank ? "_blank" : null}
@@ -101,11 +145,13 @@ export default function PostCard({
                                         <Img alt={alt} src={src} />
                                     </Figure>
                                 </StretchedLink>
-                            </div>
-                        </React.Fragment>
-                    )) || (
-                        <React.Fragment>
-                            <div className="column is-three-fifths">
+                            )) || <ImageSkeleton />}
+                        </div>
+                    </React.Fragment>
+                )) || (
+                    <React.Fragment>
+                        <div className="column is-three-fifths">
+                            {(!isLoading && (
                                 <StretchedLink
                                     title={title}
                                     target={isTargetBlank ? "_blank" : null}
@@ -114,8 +160,10 @@ export default function PostCard({
                                         <Img alt={alt} src={src} />
                                     </Figure>
                                 </StretchedLink>
-                            </div>
-                            <div className="column">
+                            )) || <ImageSkeleton />}
+                        </div>
+                        <div className="column">
+                            {(!isLoading && (
                                 <PostCardContent>
                                     <div>
                                         <p className="title is-size-4-mobile">
@@ -127,13 +175,13 @@ export default function PostCard({
                                             </p>
                                         )}
                                     </div>
-                                    {children}
+                                    <Content>{children}</Content>
                                 </PostCardContent>
-                            </div>
-                        </React.Fragment>
-                    )}
-                </div>
-            )) || <Skeleton />}
+                            )) || <ContentSkeleton />}
+                        </div>
+                    </React.Fragment>
+                )}
+            </div>
         </Article>
     );
 }

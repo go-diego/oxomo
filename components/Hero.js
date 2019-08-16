@@ -53,7 +53,7 @@ export default function HomeHero() {
     return (
         <Hero
             backgroundImage={pictureOfTheDay.hdurl || pictureOfTheDay.url}
-            className="hero is-medium is-dark">
+            className="hero is-medium is-dark is-bold">
             <div className="hero-head">
                 <Nav />
             </div>

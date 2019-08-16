@@ -20,7 +20,7 @@ import MarsSection from "../components/MarsSection";
 import MainLayout from "../containers/MainLayout";
 
 const Content = styled(Section)`
-    margin-top: -7rem;
+    margin-top: -8rem;
 `;
 
 function Home() {
@@ -29,6 +29,7 @@ function Home() {
             <Hero />
             <Content>
                 <NasaSection />
+                <MarsSection />
             </Content>
         </MainLayout>
     );

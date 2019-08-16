@@ -30,7 +30,7 @@ export default function NasaSection() {
             if (error) console.log("APOD ERROR", error);
             setPictureOfTheDay(pictureOfTheDayResponse);
             setIsPictureOfTheDayLoading(false);
-            console.log("pictureOfTheDayResponse", pictureOfTheDayResponse);
+            //console.log("pictureOfTheDayResponse", pictureOfTheDayResponse);
         }
         getAstronomyPictureOfTheDay();
     }, []);
@@ -43,7 +43,7 @@ export default function NasaSection() {
             if (error) console.log("NASA NEWS ERROR", error);
             setNasaNews(nasaNewsResponse);
             setIsNasaNewsLoading(false);
-            console.log("nasaNewsResponse", nasaNewsResponse);
+            //console.log("nasaNewsResponse", nasaNewsResponse);
         }
         getNasaNews();
     }, []);
@@ -56,7 +56,7 @@ export default function NasaSection() {
             if (error) console.log("NEOS ERROR", error);
             setNearEarthObject(neoResponse);
             setIsNEOLoading(false);
-            console.log("neoResponse", neoResponse);
+            //console.log("neoResponse", neoResponse);
         }
         getNeo();
     }, []);
@@ -71,14 +71,18 @@ export default function NasaSection() {
                         alt={pictureOfTheDay.title}
                         src={pictureOfTheDay.hdurl || pictureOfTheDay.url}
                         title={pictureOfTheDay.title}
-                        subtitle="Astronomy Picture of the Day"
-                        // description={pictureOfTheDay.explanation}
-                        // description={
-                        //     pictureOfTheDay.copyrights
-                        //         ? `by ${pictureOfTheDay.copyrights}`
-                        //         : null
-                        // }
-                    />
+                        subtitle="Astronomy Picture of the Day">
+                        {pictureOfTheDay.copyright && (
+                            <p className="content">
+                                by {pictureOfTheDay.copyright}
+                            </p>
+                        )}
+                        <p>
+                            Each day a different image or photograph of our
+                            fascinating universe is featured, along with a brief
+                            explanation written by a professional astronomer.{" "}
+                        </p>
+                    </PostCard>
                 </div>
             </div>
             <div className="columns">

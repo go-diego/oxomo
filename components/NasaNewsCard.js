@@ -10,6 +10,7 @@ export default function NasaNewsCard({ isLoading, data }) {
                 pubdate,
                 title: newsTitle,
                 enclosures,
+                image,
                 link,
                 meta: { title: feedTitle }
             } = data;
@@ -17,7 +18,7 @@ export default function NasaNewsCard({ isLoading, data }) {
             const news = {
                 title: newsTitle,
                 subtitle: feedTitle,
-                src: enclosures[0].url,
+                src: enclosures.length > 0 ? enclosures[0].url : image.url,
                 link,
                 description: format(new Date(pubdate), "ddd, MMM Do")
             };
