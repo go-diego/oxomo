@@ -30,7 +30,7 @@ export default function NasaSection() {
             if (error) console.log("APOD ERROR", error);
             setPictureOfTheDay(pictureOfTheDayResponse);
             setIsPictureOfTheDayLoading(false);
-            //console.log("pictureOfTheDayResponse", pictureOfTheDayResponse);
+            // console.log("pictureOfTheDayResponse", pictureOfTheDayResponse);
         }
         getAstronomyPictureOfTheDay();
     }, []);
@@ -61,12 +61,12 @@ export default function NasaSection() {
         getNeo();
     }, []);
 
-    // TODO: handle when media type is video
     return (
         <React.Fragment>
             <div className="columns">
                 <div className="column">
                     <PostCard
+                        mediaType={pictureOfTheDay.media_type}
                         isLoading={isPictureOfTheDayLoading}
                         alt={pictureOfTheDay.title}
                         src={pictureOfTheDay.hdurl || pictureOfTheDay.url}
@@ -108,15 +108,6 @@ export default function NasaSection() {
             <div className="columns">
                 <div className="column">
                     <NeoTile isLoading={isNEOLoading} data={nearEarthObject} />
-                    {/* <PostCard
-                        isReversed
-                        src="https://www.jpl.nasa.gov/images/asteroid/20180723/main-animation-16.gif"
-                        isLoading={isNEOLoading}
-                        alt="Near Earth Objects"
-                        title="Near Earth Objects"
-                        subtitle="Closest Approach Today"
-                        description={nearEarthObject.name}
-                    /> */}
                 </div>
             </div>
         </React.Fragment>

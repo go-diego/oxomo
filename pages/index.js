@@ -30,6 +30,7 @@ function Home() {
             <Content>
                 <NasaSection />
                 <MarsSection />
+                <SpacexSection />
             </Content>
         </MainLayout>
     );

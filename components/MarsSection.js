@@ -6,10 +6,6 @@ import { MarsFeed } from "../api/feed.api";
 const marsFeedApi = new MarsFeed();
 
 // import TileErrorBoundary from "./TileErrorBoundary";
-// import MarsNewsTile from "../components/MarsNewsTile"; //delete
-// import CuriosityMissionTile from "../components/CuriosityMissionTile"; //delete
-// import ScienceDailyMarsNews from "../components/ScienceDailyMarsNews"; //delete
-// import MarsImage from "../images/mars-landscape.jpg";
 
 export default function MarsSection() {
     const [marsNews, setMarsNews] = React.useState([]);
@@ -62,27 +58,25 @@ export default function MarsSection() {
     }, []);
 
     return (
-        <React.Fragment>
-            <div className="columns">
-                <div className="column">
-                    <NasaNewsCard
-                        isLoading={isMarsNewsLoading}
-                        data={marsNews[0]}
-                    />
-                </div>
-                <div className="column">
-                    <NasaNewsCard
-                        isLoading={isCuriosityNewsLoading}
-                        data={curiosityNews[0]}
-                    />
-                </div>
-                <div className="column">
-                    <NasaNewsCard
-                        isLoading={isScienceDailyNewsLoading}
-                        data={scienceDailyNews[0]}
-                    />
-                </div>
+        <div className="columns">
+            <div className="column">
+                <NasaNewsCard
+                    isLoading={isMarsNewsLoading}
+                    data={marsNews[0]}
+                />
             </div>
-        </React.Fragment>
+            <div className="column">
+                <NasaNewsCard
+                    isLoading={isCuriosityNewsLoading}
+                    data={curiosityNews[0]}
+                />
+            </div>
+            <div className="column">
+                <NasaNewsCard
+                    isLoading={isScienceDailyNewsLoading}
+                    data={scienceDailyNews[0]}
+                />
+            </div>
+        </div>
     );
 }

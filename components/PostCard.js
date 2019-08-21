@@ -2,31 +2,6 @@ import React from "react";
 import styled from "styled-components";
 import ContentLoader from "react-content-loader";
 
-// const Skeleton = ({ isReversed }) =>
-//     (!isReversed && (
-//         <ContentLoader
-//             height={70}
-//             width={280}
-//             speed={1}
-//             primaryColor={"#333"}
-//             secondaryColor={"#212121"}>
-//             <rect x="3" y="3" rx="0" ry="0" width="50%" height="100%" />
-//             <rect x="150" y="5" rx="0" ry="0" width="45%" height="15" />
-//             <rect x="150" y="25" rx="0" ry="0" width="45%" height="10" />
-//         </ContentLoader>
-//     )) || (
-//         <ContentLoader
-//             height={70}
-//             width={280}
-//             speed={1}
-//             primaryColor={"#333"}
-//             secondaryColor={"#212121"}>
-//             <rect x="150" y="3" rx="0" ry="0" width="45%" height="100%" />
-//             <rect x="3" y="5" rx="0" ry="0" width="50%" height="15" />
-//             <rect x="3" y="25" rx="0" ry="0" width="50%" height="10" />
-//         </ContentLoader>
-//     );
-
 const ContentSkeleton = () => (
     <ContentLoader
         height={150}
@@ -99,9 +74,26 @@ const StretchedLink = styled.a`
 const Article = styled.article`
     min-height: 300px;
     position: relative;
+    display: flex;
+    flex-direction: column;
+`;
+
+const EmbedItem = styled.iframe`
+    top: 0;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    border: 0;
+    min-height: 300px;
+`;
+
+const Row = styled.div`
+    flex-grow: 1;
 `;
 
 export default function PostCard({
+    mediaType,
     isReversed,
     isLoading,
     src,
@@ -115,7 +107,7 @@ export default function PostCard({
 }) {
     return (
         <Article className="box is-paddingless is-clipped">
-            <div className="columns">
+            <Row className="columns is-marginless">
                 {(isReversed && (
                     <React.Fragment>
                         <div className="column is-two-fifths">
@@ -135,31 +127,45 @@ export default function PostCard({
                                 </PostCardContent>
                             )) || <ContentSkeleton />}
                         </div>
-                        <div className="column">
+                        <div className="column is-paddingless">
                             {(!isLoading && (
                                 <StretchedLink
                                     title={title}
                                     target={isTargetBlank ? "_blank" : null}
                                     href={link}>
-                                    <Figure className="image">
-                                        <Img alt={alt} src={src} />
-                                    </Figure>
+                                    {mediaType !== "video" && (
+                                        <Figure className="image">
+                                            <Img alt={alt} src={src} />
+                                        </Figure>
+                                    )}
+                                    {mediaType === "video" && (
+                                        <EmbedItem src={src} allowFullScreen />
+                                    )}
                                 </StretchedLink>
                             )) || <ImageSkeleton />}
                         </div>
                     </React.Fragment>
                 )) || (
                     <React.Fragment>
-                        <div className="column is-three-fifths">
+                        <div className="column is-three-fifths is-paddingless">
                             {(!isLoading && (
-                                <StretchedLink
-                                    title={title}
-                                    target={isTargetBlank ? "_blank" : null}
-                                    href={link}>
-                                    <Figure className="image">
-                                        <Img alt={alt} src={src} />
-                                    </Figure>
-                                </StretchedLink>
+                                <React.Fragment>
+                                    {mediaType !== "video" && (
+                                        <StretchedLink
+                                            title={title}
+                                            target={
+                                                isTargetBlank ? "_blank" : null
+                                            }
+                                            href={link}>
+                                            <Figure className="image">
+                                                <Img alt={alt} src={src} />
+                                            </Figure>
+                                        </StretchedLink>
+                                    )}
+                                    {mediaType === "video" && (
+                                        <EmbedItem src={src} allowFullScreen />
+                                    )}
+                                </React.Fragment>
                             )) || <ImageSkeleton />}
                         </div>
                         <div className="column">
@@ -181,7 +187,7 @@ export default function PostCard({
                         </div>
                     </React.Fragment>
                 )}
-            </div>
+            </Row>
         </Article>
     );
 }
