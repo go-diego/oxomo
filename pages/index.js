@@ -20,7 +20,12 @@ import MarsSection from "../components/MarsSection";
 import MainLayout from "../containers/MainLayout";
 
 const Content = styled(Section)`
-    margin-top: -8rem;
+    margin-top: -6rem;
+`;
+
+const Nav = styled.nav`
+    display: flex;
+    justify-content: end;
 `;
 
 function Home() {
@@ -28,6 +33,9 @@ function Home() {
         <MainLayout>
             <Hero />
             <Content>
+                {/* <Nav>
+                    <p className="heading has-text-white">Show some love</p>
+                </Nav> */}
                 <NasaSection />
                 <MarsSection />
                 <SpacexSection />
@@ -35,7 +43,5 @@ function Home() {
         </MainLayout>
     );
 }
-
-//{/* <a href='https://www.freepik.com/free-vector/colorful-mars-background-with-flat-design_3231758.htm'>Designed by Freepik</a> */}
 
 export default Home;

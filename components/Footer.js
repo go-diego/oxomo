@@ -21,7 +21,7 @@ export default function Footer() {
             <small>
                 By{" "}
                 <a
-                    className="has-text-weight-bold has-text-light"
+                    className="has-text-weight-bold"
                     href="https://www.godiego.me"
                     target="_blank">
                     Diego Bernal
