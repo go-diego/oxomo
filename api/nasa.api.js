@@ -4,7 +4,7 @@
  * EXAMPLE: return await ky.post(`${this.APOD_BASE_URL}`, {searchParams: process.env.NASA_API_KEY}).json();
  */
 
-//import ky from "ky";
+//import ky from "ky/umd";
 import "isomorphic-unfetch";
 import format from "date-fns/format";
 
@@ -44,18 +44,16 @@ export class NEO extends Nasa {
      */
     async getFeed(startDate = this.TODAY, endDate = this.TODAY) {
         const res = await fetch(
-            `${this.BASE_URL}/feed?start_date=${startDate}&end_date=${endDate}&api_key=${
-                this.NASA_API_KEY
-            }`
+            `${this.BASE_URL}/feed?start_date=${startDate}&end_date=${endDate}&api_key=${this.NASA_API_KEY}`
         );
         return await res.json();
     }
 
     async getClosestApproachToday() {
         const feedForToday = await this.getFeed();
-        const allApproachesToday = Object.values(feedForToday.near_earth_objects)[0].filter(
-            neo => neo.close_approach_data.length > 0
-        );
+        const allApproachesToday = Object.values(
+            feedForToday.near_earth_objects
+        )[0].filter(neo => neo.close_approach_data.length > 0);
 
         return allApproachesToday.sort(
             (a, b) =>
@@ -73,7 +71,9 @@ export class NEO extends Nasa {
      * - nasa_jpl_url
      */
     async getStatistics() {
-        const res = await fetch(`${this.BASE_URL}/stats?api_key=${this.NASA_API_KEY}`);
+        const res = await fetch(
+            `${this.BASE_URL}/stats?api_key=${this.NASA_API_KEY}`
+        );
         return await res.json();
     }
 
@@ -85,7 +85,9 @@ export class NEO extends Nasa {
      * - etc
      */
     async getAll() {
-        const res = await fetch(`${this.BASE_URL}/neo/browse?api_key=${this.NASA_API_KEY}`);
+        const res = await fetch(
+            `${this.BASE_URL}/neo/browse?api_key=${this.NASA_API_KEY}`
+        );
         return await res.json();
     }
 
@@ -97,7 +99,9 @@ export class NEO extends Nasa {
      * - id or neo_reference_id from neo feed
      */
     async get(asteroidId) {
-        const res = await fetch(`${this.BASE_URL}/neo/${asteroidId}&api_key=${this.NASA_API_KEY}`);
+        const res = await fetch(
+            `${this.BASE_URL}/neo/${asteroidId}&api_key=${this.NASA_API_KEY}`
+        );
         return await res.json();
     }
 
@@ -121,9 +125,7 @@ export class SpaceWeather extends Nasa {
 
     async getCoronalMassEjection(startDate = this.TODAY, endDate = this.TODAY) {
         const res = await fetch(
-            `${this.BASE_URL}/CME?startDate=${startDate}&endDate=${endDate}&api_key=${
-                this.NASA_API_KEY
-            }`
+            `${this.BASE_URL}/CME?startDate=${startDate}&endDate=${endDate}&api_key=${this.NASA_API_KEY}`
         );
 
         let response = null;
@@ -138,9 +140,7 @@ export class SpaceWeather extends Nasa {
 
     async getGeomagneticStorm(startDate = this.TODAY, endDate = this.TODAY) {
         const res = await fetch(
-            `${this.BASE_URL}/GMS?startDate=${startDate}&endDate=${endDate}&api_key=${
-                this.NASA_API_KEY
-            }`
+            `${this.BASE_URL}/GMS?startDate=${startDate}&endDate=${endDate}&api_key=${this.NASA_API_KEY}`
         );
 
         let response = null;
@@ -155,9 +155,7 @@ export class SpaceWeather extends Nasa {
 
     async getSolarFlare(startDate = this.TODAY, endDate = this.TODAY) {
         const res = await fetch(
-            `${this.BASE_URL}/FLR?startDate=${startDate}&endDate=${endDate}&api_key=${
-                this.NASA_API_KEY
-            }`
+            `${this.BASE_URL}/FLR?startDate=${startDate}&endDate=${endDate}&api_key=${this.NASA_API_KEY}`
         );
 
         let response = null;
@@ -178,12 +176,16 @@ export class Rovers extends Nasa {
     }
 
     async getAll() {
-        const res = await fetch(`${this.BASE_URL}/rovers?api_key=${this.NASA_API_KEY}`);
+        const res = await fetch(
+            `${this.BASE_URL}/rovers?api_key=${this.NASA_API_KEY}`
+        );
         return await res.json();
     }
 
     async getManifest(rover) {
-        const res = await fetch(`${this.BASE_URL}/manifests/${rover}?api_key=${this.NASA_API_KEY}`);
+        const res = await fetch(
+            `${this.BASE_URL}/manifests/${rover}?api_key=${this.NASA_API_KEY}`
+        );
         return await res.json();
     }
 

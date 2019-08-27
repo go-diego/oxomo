@@ -4,12 +4,14 @@ import { to } from "await-to-js";
 import PostCard from "./PostCard";
 import NeoTile from "./NeoTile";
 import NasaNewsCard from "./NasaNewsCard";
-import { APOD, NEO } from "../api/nasa.api";
+import RoverTile from "./RoverTile";
+import { APOD, NEO, Rovers } from "../api/nasa.api";
 import { NasaFeed } from "../api/feed.api";
 
 const nasaApodApi = new APOD();
 const nasaFeedApi = new NasaFeed();
 const nasaNeoApi = new NEO();
+const roversApi = new Rovers();
 
 export default function NasaSection() {
     const [pictureOfTheDay, setPictureOfTheDay] = React.useState({});
@@ -21,6 +23,8 @@ export default function NasaSection() {
     const [isNasaNewsLoading, setIsNasaNewsLoading] = React.useState(true);
     const [nearEarthObject, setNearEarthObject] = React.useState(null);
     const [isNEOLoading, setIsNEOLoading] = React.useState(true);
+    const [rovers, setRovers] = React.useState([]);
+    const [isRoversLoading, setIsRoversLoading] = React.useState(true);
 
     React.useEffect(() => {
         async function getAstronomyPictureOfTheDay() {
@@ -61,6 +65,20 @@ export default function NasaSection() {
         getNeo();
     }, []);
 
+    React.useEffect(() => {
+        async function getRovers() {
+            const [error, roversResponse] = await to(roversApi.getAll());
+            if (error) console.log("ROVERS ERROR", error);
+            const activeRovers = roversResponse.rovers.reduce((acc, rover) => {
+                if (rover.status === "active") acc.push(rover.name);
+                return acc;
+            }, []);
+            setIsRoversLoading(false);
+            setRovers(activeRovers);
+        }
+        getRovers();
+    }, []);
+
     return (
         <React.Fragment>
             <div className="columns">
@@ -99,10 +117,7 @@ export default function NasaSection() {
                     />
                 </div>
                 <div className="column">
-                    <NasaNewsCard
-                        isLoading={isNasaNewsLoading}
-                        data={nasaNews[2]}
-                    />
+                    <RoverTile isLoading={isRoversLoading} name={rovers[0]} />
                 </div>
             </div>
             <div className="columns">

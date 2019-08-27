@@ -36,7 +36,7 @@ export default function SpacexSection() {
             if (error) console.log("LATEST LAUNCH ERROR", error);
             setLatestLaunch(latestLaunchResponse);
             setIsLatestLaunchLoading(false);
-            console.log("latestLaunchResponse", latestLaunchResponse);
+            // console.log("latestLaunchResponse", latestLaunchResponse);
         }
         getLatestLaunch();
     }, []);
@@ -54,7 +54,7 @@ export default function SpacexSection() {
             )[0];
             setNextLaunch(nextLaunch);
             setIsNextLaunchLoading(false);
-            console.log("upcomingLaunchesResponse", upcomingLaunchesResponse);
+            // console.log("upcomingLaunchesResponse", upcomingLaunchesResponse);
         }
         getNextLaunch();
     }, []);
@@ -67,7 +67,7 @@ export default function SpacexSection() {
             if (error) console.log("DOADSTER DATA ERROR", error);
             setRoadsterData(roadsterDataResponse);
             setIsRoadsterDataLoading(false);
-            console.log("roadsterDataResponse", roadsterDataResponse);
+            // console.log("roadsterDataResponse", roadsterDataResponse);
         }
         getRoadsterData();
     }, []);

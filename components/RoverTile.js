@@ -1,48 +1,60 @@
 import React from "react";
-import {Rovers} from "../api/nasa.api";
+import { to } from "await-to-js";
+import format from "date-fns/format";
+import NewsCard from "./NewsCard";
+import { Rovers } from "../api/nasa.api";
+
 const RoversApi = new Rovers();
 
-export default class RoverTile extends React.Component {
-    state = {
-        latestPhoto: [],
-        manifest: {}
-    };
+export default function RoverTile({ isLoading, name }) {
+    const [manifest, setManifest] = React.useState(null);
+    const [photo, setPhoto] = React.useState(null);
+    const [isDataLoading, setIsDataLoading] = React.useState(true);
 
-    async componentDidMount() {
-        const {name} = this.props;
-        const manifestResponse = await RoversApi.getManifest(name);
-        const navcamPictures = manifestResponse.photo_manifest.photos.filter(photo =>
-            photo.cameras.includes("FHAZ")
-        );
-        const sol = navcamPictures[navcamPictures.length - 1].sol;
-        const photosResponse = await RoversApi.getPhotos(name, sol, "fhaz");
-        this.setState({
-            latestPhoto:
-                photosResponse.photos[Math.floor(Math.random() * photosResponse.photos.length)],
-            manifest: manifestResponse.photo_manifest
-        });
-    }
+    React.useEffect(() => {
+        if (name) {
+            async function getData() {
+                const [error, manifestResponse] = await to(
+                    RoversApi.getManifest(name)
+                );
+                if (error) console.log("ROVER ERROR", error);
+                setManifest(manifestResponse.photo_manifest);
+                const navcamPictures = manifestResponse.photo_manifest.photos.filter(
+                    photo => photo.cameras.includes("FHAZ")
+                );
+                const sol = navcamPictures[navcamPictures.length - 1].sol;
+                const [photoError, photosResponse] = await to(
+                    RoversApi.getPhotos(name, sol, "fhaz")
+                );
+                if (photoError) console.log("ROVER ERROR", error);
+                setPhoto(
+                    photosResponse.photos[
+                        Math.floor(Math.random() * photosResponse.photos.length)
+                    ]
+                );
+            }
+            getData();
+        }
+    }, [name]);
 
-    render() {
-        const {name} = this.props;
-        const {latestPhoto, manifest} = this.state;
+    React.useEffect(() => {
+        if (manifest && photo) setIsDataLoading(false);
+    }, [manifest, photo]);
 
-        return (
-            <div className="position-relative">
-                <figure className="image is-3by2">
-                    {latestPhoto && (
-                        <img alt={latestPhoto.id} className="rounded" src={latestPhoto.img_src} />
-                    )}
-                </figure>
-                <div className="is-overlay p-3">
-                    <p className="title has-text-white is-size-5-mobile">{name}</p>
-                    {manifest && (
-                        <p className="subtitle has-text-light is-uppercase is-size-7-mobile">
-                            {manifest.status}
-                        </p>
-                    )}
-                </div>
-            </div>
-        );
-    }
+    return (
+        <NewsCard
+            isTargetBlank
+            isLoading={isLoading && isDataLoading}
+            title={name}
+            subtitle={`From ${
+                photo && photo.camera ? photo.camera.full_name : ""
+            }`}
+            alt="Latest from Curiosity"
+            src={photo && photo.img_src}
+            // link={photo.link}
+            description={
+                photo && format(new Date(photo.earth_date), "ddd, MMM Do")
+            }
+        />
+    );
 }

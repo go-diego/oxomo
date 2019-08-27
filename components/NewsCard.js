@@ -78,14 +78,21 @@ export default function NewsCard({
             {(!isLoading && (
                 <React.Fragment>
                     <CardImage className="card-image">
-                        <StretchedLink
-                            title={title}
-                            target={isTargetBlank ? "_blank" : null}
-                            href={link}>
+                        {link && (
+                            <StretchedLink
+                                title={title}
+                                target={isTargetBlank ? "_blank" : null}
+                                href={link}>
+                                <Figure className="image">
+                                    <Img alt={alt} src={src} />
+                                </Figure>
+                            </StretchedLink>
+                        )}
+                        {!link && (
                             <Figure className="image">
                                 <Img alt={alt} src={src} />
                             </Figure>
-                        </StretchedLink>
+                        )}
                     </CardImage>
                     <CardContent className="card-content">
                         <p className="title is-6">{title}</p>
