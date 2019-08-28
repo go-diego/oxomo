@@ -32,6 +32,13 @@ const Head = props => (
         <meta property="og:image" content={props.ogImage || defaultOGImage} />
         <meta property="og:image:width" content="1200" />
         <meta property="og:image:height" content="630" />
+        <script
+            key="fontawesome"
+            defer
+            src="https://use.fontawesome.com/releases/v5.6.3/js/all.js"
+            integrity="sha384-EIHISlAOj4zgYieurP0SdoiBYfGJKkgWedPHH4jCzpCXLmzVsw1ouK59MuUtP4a1"
+            crossOrigin="anonymous"
+        />
     </NextHead>
 );
 

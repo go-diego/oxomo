@@ -66,7 +66,7 @@ const StretchedLink = styled.a`
     &:hover {
         img {
             transition: all 0.4s ease;
-            transform: translate3D(0, -1px, 0) scale(1.1);
+            transform: translate3d(0, -1px, 0) scale(1.1);
         }
     }
 `;

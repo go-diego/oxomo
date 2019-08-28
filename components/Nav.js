@@ -15,14 +15,13 @@ export default function Nav() {
             aria-label="main navigation">
             <div className="navbar-brand">
                 <Link href="/">
-                    <a className="navbar-item is-family-secondary">
-                        {/* <img src={Logo} alt="Logo" /> */}
-                        LOGO
+                    <a className="navbar-item is-family-secondary has-text-white has-text-weight-bold">
+                        X
                     </a>
                 </Link>
             </div>
             <div className="navbar-end">
-                <Link href="/">
+                <Link href="/what-is-this">
                     <a className="navbar-item is-family-secondary">
                         WHAT IS THIS?
                     </a>
