@@ -16,15 +16,10 @@ function Home() {
                 <div className="content box">
                     <h2>What is this?</h2>
                     <p>
-                        Oxomo is a web project that collects the latest in space
-                        news from several different digital sources and
-                        summarizes it on one web page.
-                    </p>
-                    <p>
-                        At the moment, Oxomo is a side-project that I work on in
-                        my spare time. Mainly, it serves as practice,
-                        experimentation, and as a way to showcase my skills as a
-                        front-end engineer.
+                        At the moment, Oxomo is an unofficial side-project. It
+                        serves to experiment with API and data scraping from
+                        these different space news sources as a way to showcase
+                        my skills as a front-end engineer.
                     </p>
                     <p>
                         Have any feedback? Have any questions? Are you a
@@ -44,6 +39,14 @@ function Home() {
                             Facebook
                         </a>
                         .
+                    </p>
+                    <h2>Why Oxomo?</h2>
+                    <p>
+                        Oxomoco, or Oxomo for short, is the Aztec goddess of
+                        night, who, along with her husband Cipactonal, is in
+                        charge of the Aztec calendar. So, she’s the perfect
+                        figure for a web app that collects daily space news from
+                        across the web seamlessly in one place.
                     </p>
                 </div>
             </Content>

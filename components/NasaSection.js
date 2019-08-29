@@ -15,6 +15,7 @@ const roversApi = new Rovers();
 
 export default function NasaSection() {
     const [pictureOfTheDay, setPictureOfTheDay] = React.useState({});
+    const [hasErrorApod, setHasErrorApod] = React.useState(false);
     const [
         isPictureOfTheDayLoading,
         setIsPictureOfTheDayLoading
@@ -31,7 +32,10 @@ export default function NasaSection() {
             const [error, pictureOfTheDayResponse] = await to(
                 nasaApodApi.get()
             );
-            if (error) console.log("APOD ERROR", error);
+            if (error) {
+                console.log("APOD ERROR", error);
+                setHasErrorApod(true);
+            }
             setPictureOfTheDay(pictureOfTheDayResponse);
             setIsPictureOfTheDayLoading(false);
             // console.log("pictureOfTheDayResponse", pictureOfTheDayResponse);
@@ -81,28 +85,31 @@ export default function NasaSection() {
 
     return (
         <React.Fragment>
-            <div className="columns">
-                <div className="column">
-                    <PostCard
-                        mediaType={pictureOfTheDay.media_type}
-                        isLoading={isPictureOfTheDayLoading}
-                        alt={pictureOfTheDay.title}
-                        src={pictureOfTheDay.hdurl || pictureOfTheDay.url}
-                        title={pictureOfTheDay.title}
-                        subtitle="Astronomy Picture of the Day">
-                        {pictureOfTheDay.copyright && (
-                            <p className="content">
-                                by {pictureOfTheDay.copyright}
+            {!hasErrorApod && (
+                <div className="columns">
+                    <div className="column">
+                        <PostCard
+                            mediaType={pictureOfTheDay.media_type}
+                            isLoading={isPictureOfTheDayLoading}
+                            alt={pictureOfTheDay.title}
+                            src={pictureOfTheDay.hdurl || pictureOfTheDay.url}
+                            title={pictureOfTheDay.title}
+                            subtitle="Astronomy Picture of the Day">
+                            {pictureOfTheDay.copyright && (
+                                <p className="content">
+                                    by {pictureOfTheDay.copyright}
+                                </p>
+                            )}
+                            <p>
+                                Each day a different image or photograph of our
+                                fascinating universe is featured, along with a
+                                brief explanation written by a professional
+                                astronomer.{" "}
                             </p>
-                        )}
-                        <p>
-                            Each day a different image or photograph of our
-                            fascinating universe is featured, along with a brief
-                            explanation written by a professional astronomer.{" "}
-                        </p>
-                    </PostCard>
+                        </PostCard>
+                    </div>
                 </div>
-            </div>
+            )}
             <div className="columns">
                 <div className="column">
                     <NasaNewsCard
