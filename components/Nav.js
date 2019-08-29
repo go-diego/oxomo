@@ -1,22 +1,32 @@
 import Link from "next/link";
-import "../styles/site.scss";
 import Logo from "../images/logo-white.png";
+import styled from "styled-components";
+
+const Navbar = styled.nav`
+    display: flex;
+    justify-content: space-between;
+`;
 
 export default function Nav() {
     return (
-        <nav className="navbar" role="navigation" aria-label="main navigation">
+        <Navbar
+            className="navbar"
+            role="navigation"
+            aria-label="main navigation">
             <div className="navbar-brand">
                 <Link href="/">
-                    <a className="navbar-item">
-                        <img src={Logo} alt="Logo" />
+                    <a className="navbar-item is-family-secondary has-text-white has-text-weight-bold">
+                        X
                     </a>
                 </Link>
-                <a role="button" className="navbar-burger" aria-label="menu" aria-expanded="false">
-                    <span aria-hidden="true" />
-                    <span aria-hidden="true" />
-                    <span aria-hidden="true" />
-                </a>
             </div>
-        </nav>
+            <div className="navbar-end">
+                <Link href="/what-is-this">
+                    <a className="navbar-item is-family-secondary">
+                        WHAT IS THIS?
+                    </a>
+                </Link>
+            </div>
+        </Navbar>
     );
 }

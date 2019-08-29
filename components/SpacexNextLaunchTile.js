@@ -1,90 +1,114 @@
 import React from "react";
-import ErrorTile from "./ErrorTile";
-import to from "../utils/to";
 import format from "date-fns/format";
-import compareAsc from "date-fns/compare_asc";
+import styled from "styled-components";
+import ContentLoader from "react-content-loader";
+import InfoCard from "./InfoCard";
 
-import SpaceX from "../api/spacex.api";
-const SpacexApi = new SpaceX();
+const CardTitle = styled.div`
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding-bottom: 1rem;
+`;
 
-export default class SpaceXNextLaunchTile extends React.Component {
-    state = {
-        data: null,
-        isLoading: true,
-        hasError: false
-    };
+const Skeleton = () => (
+    <ContentLoader
+        height={150}
+        width={300}
+        speed={1}
+        primaryColor={"#333"}
+        secondaryColor={"#212121"}>
+        <rect x="6" y="5" rx="0" ry="0" width="95%" height="30" />
+        <rect x="6" y="40" rx="0" ry="0" width="95%" height="15" />
+        <rect x="6" y="80" rx="0" ry="0" width="95%" height="5" />
+        <rect x="6" y="90" rx="0" ry="0" width="95%" height="5" />
+        <rect x="6" y="100" rx="0" ry="0" width="95%" height="5" />
+    </ContentLoader>
+);
 
-    async componentDidMount() {
-        let state = {...this.state};
+export default function SpaceXNextLaunchTile({ data, isLoading }) {
+    let links,
+        rocket,
+        launch_site,
+        mission_name,
+        launch_date_local,
+        mission_patch_small,
+        rocketName,
+        siteLocationName,
+        article_link,
+        details,
+        wikipedia = null;
 
-        const latestLaunchPromise = SpacexApi.getUpcomingLaunches();
-
-        const [error, response] = await to(latestLaunchPromise);
-        if (error) state.hasError = true;
-
-        state.data = response.filter(
-            launch => compareAsc(new Date(launch.launch_date_local), new Date()) > 0
-        )[0];
-        state.isLoading = false;
-
-        this.setState({...state});
-    }
-
-    render() {
-        let links,
-            rocket,
+    if (data) {
+        ({
+            links,
             launch_site,
+            rocket,
             mission_name,
             launch_date_local,
-            mission_patch_small,
-            rocketName,
-            siteLocationName,
-            article_link,
-            wikipedia = null;
+            details
+        } = data);
+        ({ mission_patch_small, article_link, wikipedia } = links);
+        rocketName = rocket.rocket_name;
+        siteLocationName = launch_site.site_name_long;
+    }
 
-        const {data, isLoading, hasError} = this.state;
-        if (data) {
-            ({links, launch_site, rocket, mission_name, launch_date_local} = data);
-            ({mission_patch_small, article_link, wikipedia} = links);
-            rocketName = rocket.rocket_name;
-            siteLocationName = launch_site.site_name_long;
-        }
-
-        return (
-            (hasError && <ErrorTile />) || (
-                <article className="tile is-child notification is-danger">
-                    <div className="d-flex flex-column justify-content-between">
-                        <div className="d-flex flex-column justify-content-between">
-                            <p className="subtitle is-size-7 is-uppercase is-marginless is-size-7-mobile">
-                                Next Launch
-                            </p>
-                        </div>
-                        <div className="d-flex align-items-center py-3">
-                            <figure className="image is-48x48">
-                                <img className="is-rounded" src={mission_patch_small} />
-                            </figure>
+    return (
+        <InfoCard isLoading={isLoading} className="is-danger">
+            {(!isLoading && (
+                <React.Fragment>
+                    <CardTitle>
+                        <p className="subtitle is-size-7 is-uppercase is-marginless is-size-7-mobile">
+                            Next Launch
+                        </p>
+                        <div>
+                            {mission_patch_small && (
+                                <figure className="image is-48x48">
+                                    <img
+                                        className="is-rounded"
+                                        src={mission_patch_small}
+                                    />
+                                </figure>
+                            )}
                             <h2 className="title">{mission_name}</h2>
                         </div>
-                    </div>
-
-                    <div className="level is-mobile  is-marginless">
-                        <div className="level-item has-text-centered">
-                            <div>
-                                <p className="heading is-marginless is-size-3">
-                                    {format(new Date(launch_date_local), "ddd")}
-                                </p>
-                                <p className="heading is-marginless is-size-6">
-                                    {format(new Date(launch_date_local), "MMMM")}
-                                </p>
-                                <p className="title is-display-1">
-                                    {format(new Date(launch_date_local), "DD")}
-                                </p>
+                    </CardTitle>
+                    <div className="columns">
+                        <div className="column">
+                            <div className="level is-mobile is-marginless">
+                                <div className="level-item has-text-centered">
+                                    <div>
+                                        <p className="heading is-marginless is-size-3">
+                                            {format(
+                                                new Date(launch_date_local),
+                                                "ddd"
+                                            )}
+                                        </p>
+                                        <p className="heading is-marginless is-size-6">
+                                            {format(
+                                                new Date(launch_date_local),
+                                                "MMMM"
+                                            )}
+                                        </p>
+                                        <p className="title is-display-1">
+                                            {format(
+                                                new Date(launch_date_local),
+                                                "DD"
+                                            )}
+                                        </p>
+                                    </div>
+                                </div>
                             </div>
                         </div>
                     </div>
-                    <p className="has-text-centered">{`${rocketName} from ${siteLocationName}`}</p>
-                </article>
-            )
-        );
-    }
+                    <div className="columns">
+                        <div className="column">
+                            <p>{details}</p>
+                        </div>
+                    </div>
+                    <p className="has-text-centered">{`Blast off from ${siteLocationName} on ${rocketName}`}</p>
+                </React.Fragment>
+            )) || <Skeleton />}
+        </InfoCard>
+    );
 }

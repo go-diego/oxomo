@@ -1,84 +1,106 @@
-import React from "react";
-import ErrorTile from "./ErrorTile";
+import styled from "styled-components";
+import Emoji from "react-emoji-render";
+import PostCard from "./PostCard";
 
-import {NEO} from "../api/nasa.api";
+const LevelItem = styled.div`
+    flex-grow: 0 !important;
+`;
 
-import to from "../utils/to";
+const Content = styled.div`
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    flex-grow: 1;
+`;
 
-const NEOApi = new NEO();
+const Alert = styled.span`
+    z-index: 5;
+    position: relative;
+    cursor: pointer;
+`;
 
-export default class NeoTile extends React.Component {
-    state = {
-        data: null,
-        isLoading: true,
-        hasError: false
-    };
+const InfoIcon = styled.span`
+    z-index: 5;
+    position: relative;
+    cursor: pointer;
+    font-size: 1.25rem;
+`;
 
-    async componentDidMount() {
-        let state = {...this.state};
+export default function NeoTile({ isLoading, data }) {
+    let velocityInMilesPerSecond,
+        distanceInMiles,
+        diameter,
+        isPotentiallyHazardous,
+        formattedName = null;
 
-        const neosCloseApproachTodayPromise = NEOApi.getClosestApproachToday();
-
-        const [error, response] = await to(neosCloseApproachTodayPromise);
-        if (error) state.hasError = true;
-
-        state.data = response;
-        state.isLoading = false;
-
-        this.setState({...state});
-    }
-
-    render() {
-        let name,
+    if (data) {
+        const {
+            name,
             close_approach_data,
-            velocityInKmPerS,
-            distanceInMiles,
-            formattedName = null;
-
-        const {data, hasError, isLoading} = this.state;
-
-        if (data) {
-            ({name, close_approach_data} = data);
-            formattedName = name.replace("(", "").replace(")", "");
-            velocityInKmPerS = close_approach_data[0].relative_velocity.kilometers_per_second;
-            distanceInMiles = close_approach_data[0].miss_distance.miles;
-        }
-        return (
-            (hasError && <ErrorTile />) || (
-                <article className="tile is-child p-2 notification is-warning">
-                    <p className="title is-size-4">Near Earth Objects</p>
-                    <p className="subtitle is-6">Closest Approach Today</p>
-                    <div className="d-flex flex-column pt-4">
-                        <div className="level is-mobile">
-                            <div className="level-item has-text-centered">
-                                <div>
-                                    <p className="heading mb-1">Name</p>
-                                    <p className="title is-size-6">{formattedName}</p>
-                                </div>
-                            </div>
-                            <div className="level-item has-text-centered">
-                                <div>
-                                    <p className="heading mb-1">Velocity</p>
-                                    <p className="title is-size-6">
-                                        {`${parseFloat(velocityInKmPerS)
-                                            .toPrecision(3)
-                                            .toLocaleString()} `}
-                                        <sup>km</sup>&frasl;<sub>s</sub>
-                                    </p>
-                                </div>
-                            </div>
-                            <div className="level-item has-text-centered">
-                                <div>
-                                    <p className="heading mb-1">Distance</p>
-                                    <p className="title is-size-6">
-                                        {`${Math.ceil(distanceInMiles).toLocaleString()} mi`}
-                                    </p>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </article>
-            )
-        );
+            estimated_diameter,
+            is_potentially_hazardous_asteroid
+        } = data;
+        isPotentiallyHazardous = is_potentially_hazardous_asteroid;
+        diameter = estimated_diameter.meters.estimated_diameter_min;
+        formattedName = name.replace("(", "").replace(")", "");
+        velocityInMilesPerSecond =
+            close_approach_data[0].relative_velocity.miles_per_hour / 60 / 60;
+        distanceInMiles = close_approach_data[0].miss_distance.miles;
     }
+    return (
+        <PostCard
+            isReversed
+            src="https://www.jpl.nasa.gov/images/asteroid/20180723/main-animation-16.gif"
+            isLoading={isLoading && !data}
+            alt="Near Earth Objects"
+            title="Near Earth Objects"
+            subtitle="Closest Approach Today">
+            <Content>
+                <p className="title is-5 ">
+                    {isPotentiallyHazardous && (
+                        <Alert title="Because of its distance and size, this NEO has been classified as Potentially Hazardous">
+                            <Emoji text=":rotating_light:" />
+                        </Alert>
+                    )}
+                    {formattedName}
+                </p>
+                <div className="level is-mobile">
+                    <LevelItem className="level-item ">
+                        <div>
+                            <p className="heading mb-1">Diameter</p>
+                            <p className="title is-size-6">
+                                {`${Math.ceil(diameter).toLocaleString()} m`}
+                            </p>
+                        </div>
+                    </LevelItem>
+                    <LevelItem className="level-item ">
+                        <div>
+                            <p className="heading mb-1">Velocity</p>
+                            <p className="title is-size-6">
+                                {`${parseFloat(velocityInMilesPerSecond)
+                                    .toPrecision(3)
+                                    .toLocaleString()} `}
+                                <sup>mi</sup>&frasl;
+                                <sub>s</sub>
+                            </p>
+                        </div>
+                    </LevelItem>
+                    <LevelItem className="level-item ">
+                        <div>
+                            <p className="heading mb-1">Distance</p>
+                            <p className="title is-size-6">
+                                {`${Math.ceil(
+                                    distanceInMiles
+                                ).toLocaleString()} mi`}
+                            </p>
+                        </div>
+                    </LevelItem>
+                </div>
+                <p>
+                    <InfoIcon title="Did you know?">&#9432;</InfoIcon> The
+                    distance between Earth and the Moon? <b>238,900 mi</b>
+                </p>
+            </Content>
+        </PostCard>
+    );
 }

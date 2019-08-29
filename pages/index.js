@@ -1,23 +1,47 @@
-import format from "date-fns/format";
+/**
+ * --Refactor as static app + move to netlify
+ * redesign ui
+ * --remove rss-parser
+ * --upgrade dependecies
+ * --remove bootstrap dependency
+ * --define bulma palette
+ * --add styled-components
+ * --add google analytics
+ * refactor code
+ */
+
 import Link from "next/link";
-import HomeHero from "../components/HomeHero";
+import styled from "styled-components";
+import Hero from "../components/Hero";
+import Section from "../components/Section";
 import NasaSection from "../components/NasaSection";
 import SpacexSection from "../components/SpacexSection";
 import MarsSection from "../components/MarsSection";
 import MainLayout from "../containers/MainLayout";
 
-import "../styles/site.scss";
+const Content = styled(Section)`
+    margin-top: -6rem;
+`;
 
-const Home = () => (
-    <MainLayout>
-        <HomeHero />
-        <h1 className="is-display-4 py-3 has-text-centered">{format(new Date(), "ddd, MMM Do")}</h1>
-        <NasaSection />
-        <MarsSection />
-        <SpacexSection />
-    </MainLayout>
+const Nav = styled.nav`
+    display: flex;
+    justify-content: end;
+`;
 
-    //{/* <a href='https://www.freepik.com/free-vector/colorful-mars-background-with-flat-design_3231758.htm'>Designed by Freepik</a> */}
-);
+function Home() {
+    return (
+        <MainLayout>
+            <Hero />
+            <Content>
+                {/* <Nav>
+                    <p className="heading has-text-white">Show some love</p>
+                </Nav> */}
+                <NasaSection />
+                <MarsSection />
+                <SpacexSection />
+            </Content>
+        </MainLayout>
+    );
+}
 
 export default Home;
