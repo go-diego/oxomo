@@ -1,19 +1,19 @@
-import App, {Container} from "next/app";
+import App, { Container } from "next/app";
 import Router from "next/router";
 import withGoogleAnalytics from "next-ga";
 import css from "../styles/site.scss";
 
 class Site extends App {
-    static async getInitialProps({Component, ctx}) {
+    static async getInitialProps({ Component, ctx }) {
         const pageProps = Component.getInitialProps
             ? await Component.getInitialProps(ctx)
             : {};
 
-        return {pageProps};
+        return { pageProps };
     }
 
     render() {
-        const {Component, pageProps} = this.props;
+        const { Component, pageProps } = this.props;
         return (
             <Container>
                 <Component {...pageProps} />
@@ -22,4 +22,4 @@ class Site extends App {
     }
 }
 
-export default withGoogleAnalytics("UA-xxxxx", Router)(Site);
+export default withGoogleAnalytics("UA-146663930-1", Router)(Site);
