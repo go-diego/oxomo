@@ -1,20 +1,19 @@
 import React from "react";
 import { to } from "await-to-js";
-import NasaNewsCard from "./NasaNewsCard";
+// import TileErrorBoundary from "./TileErrorBoundary";
+import FeedCard from "./FeedCard";
 import { MarsFeed } from "../api/feed.api";
 
 const marsFeedApi = new MarsFeed();
 
-// import TileErrorBoundary from "./TileErrorBoundary";
-
 export default function MarsSection() {
-    const [marsNews, setMarsNews] = React.useState([]);
+    const [marsNews, setMarsNews] = React.useState(null);
     const [isMarsNewsLoading, setIsMarsNewsLoading] = React.useState(true);
-    const [curiosityNews, setCuriosityNews] = React.useState([]);
+    const [curiosityNews, setCuriosityNews] = React.useState(null);
     const [isCuriosityNewsLoading, setIsCuriosityNewsLoading] = React.useState(
         true
     );
-    const [scienceDailyNews, setScienceDailyNews] = React.useState([]);
+    const [scienceDailyNews, setScienceDailyNews] = React.useState(null);
     const [
         isScienceDailyNewsLoading,
         setIsScienceDailyNewsLoading
@@ -60,21 +59,18 @@ export default function MarsSection() {
     return (
         <div className="columns">
             <div className="column">
-                <NasaNewsCard
-                    isLoading={isMarsNewsLoading}
-                    data={marsNews[0]}
-                />
+                <FeedCard isLoading={isMarsNewsLoading} data={marsNews} />
             </div>
             <div className="column">
-                <NasaNewsCard
+                <FeedCard
                     isLoading={isCuriosityNewsLoading}
-                    data={curiosityNews[0]}
+                    data={curiosityNews}
                 />
             </div>
             <div className="column">
-                <NasaNewsCard
+                <FeedCard
                     isLoading={isScienceDailyNewsLoading}
-                    data={scienceDailyNews[0]}
+                    data={scienceDailyNews}
                 />
             </div>
         </div>

@@ -1,6 +1,7 @@
 import React from "react";
 import styled from "styled-components";
 import ContentLoader from "react-content-loader";
+import TextTruncate from "react-text-truncate";
 
 const Skeleton = () => (
     <ContentLoader
@@ -95,12 +96,22 @@ export default function NewsCard({
                         )}
                     </CardImage>
                     <CardContent className="card-content">
-                        <p className="title is-6">{title}</p>
+                        <p className="title is-5">{title}</p>
                         {subtitle && (
                             <p className="subtitle is-6">{subtitle}</p>
                         )}
                         {description && (
-                            <div className="content">{description}</div>
+                            <div className="content">
+                                <TextTruncate
+                                    line={4}
+                                    element="div"
+                                    truncateText="…"
+                                    text={description}
+                                    // textTruncateChild={
+                                    //     <a href="#">View Full Story</a>
+                                    // }
+                                />
+                            </div>
                         )}
                     </CardContent>
                 </React.Fragment>

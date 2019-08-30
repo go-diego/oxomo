@@ -4,7 +4,10 @@
 // https://www.nasa.gov/content/nasa-rss-feeds -- list of nasa rss
 // https://www.space.com/home/feed/site.xml - for mars, filter source.title by "mars" ?
 // https://www.sciencedaily.com/rss/space_time/mars.xml
+// https://phys.org/feeds/
+// https://www.livescience.com/feeds/all"  NOTE: cant filter by space topic
 import "isomorphic-unfetch";
+import ky from "ky/umd";
 
 class Feed {
     constructor() {
@@ -71,9 +74,7 @@ export class MarsFeed extends Feed {
 
     async getCuriosityMissionUpdate() {
         const feed = await fetch(
-            `${this.RSS_PARSER_URL}?url=${
-                this.CURIOSITY_MISSION_UPDATES_FEED_URL
-            }`
+            `${this.RSS_PARSER_URL}?url=${this.CURIOSITY_MISSION_UPDATES_FEED_URL}`
         );
         return feed.json();
     }
@@ -84,4 +85,16 @@ export class MarsFeed extends Feed {
         );
         return feed.json();
     }
+}
+
+export function LiveScienceFeed() {
+    const feedUrl = "https://www.livescience.com/feeds/all";
+
+    function getAll() {
+        return ky(`${process.env.RSS_PARSER_ENDPOINT}?url=${feedUrl}`).json();
+    }
+
+    return Object.freeze({
+        getAll
+    });
 }

@@ -20,6 +20,7 @@
         "react-content-loader": "^4.2.2",
         "react-dom": "^16.8.6",
         "react-emoji-render": "^1.0.0",
+        "react-text-truncate": "^0.15.0",
         "styled-components": "^4.2.0"
     },
     "devDependencies": {

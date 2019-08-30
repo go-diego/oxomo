@@ -4,6 +4,7 @@ import { to } from "await-to-js";
 import PostCard from "./PostCard";
 import NeoTile from "./NeoTile";
 import NasaNewsCard from "./NasaNewsCard";
+import FeedCard from "./FeedCard";
 import RoverTile from "./RoverTile";
 import { APOD, NEO, Rovers } from "../api/nasa.api";
 import { NasaFeed } from "../api/feed.api";
@@ -20,7 +21,7 @@ export default function NasaSection() {
         isPictureOfTheDayLoading,
         setIsPictureOfTheDayLoading
     ] = React.useState(true);
-    const [nasaNews, setNasaNews] = React.useState([]);
+    const [nasaNews, setNasaNews] = React.useState(null);
     const [isNasaNewsLoading, setIsNasaNewsLoading] = React.useState(true);
     const [nearEarthObject, setNearEarthObject] = React.useState(null);
     const [isNEOLoading, setIsNEOLoading] = React.useState(true);
@@ -112,15 +113,13 @@ export default function NasaSection() {
             )}
             <div className="columns">
                 <div className="column">
-                    <NasaNewsCard
-                        isLoading={isNasaNewsLoading}
-                        data={nasaNews[0]}
-                    />
+                    <FeedCard isLoading={isNasaNewsLoading} data={nasaNews} />
                 </div>
                 <div className="column">
-                    <NasaNewsCard
+                    <FeedCard
                         isLoading={isNasaNewsLoading}
-                        data={nasaNews[1]}
+                        data={nasaNews}
+                        index={1}
                     />
                 </div>
                 <div className="column">

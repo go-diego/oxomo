@@ -1,15 +1,3 @@
-/**
- * --Refactor as static app + move to netlify
- * redesign ui
- * --remove rss-parser
- * --upgrade dependecies
- * --remove bootstrap dependency
- * --define bulma palette
- * --add styled-components
- * --add google analytics
- * refactor code
- */
-
 import Link from "next/link";
 import styled from "styled-components";
 import Hero from "../components/Hero";
@@ -18,6 +6,7 @@ import NasaSection from "../components/NasaSection";
 import SpacexSection from "../components/SpacexSection";
 import MarsSection from "../components/MarsSection";
 import MainLayout from "../containers/MainLayout";
+import PhysOrgNews from "../components/PhysOrgNews";
 
 const Content = styled(Section)`
     margin-top: -6rem;
@@ -39,6 +28,17 @@ function Home() {
                 <NasaSection />
                 <MarsSection />
                 <SpacexSection />
+                <div className="columns">
+                    <div className="column">
+                        <PhysOrgNews type="space-exploration" />
+                    </div>
+                    <div className="column">
+                        <PhysOrgNews type="astrobiology" />
+                    </div>
+                    <div className="column">
+                        <PhysOrgNews type="astronomy" />
+                    </div>
+                </div>
             </Content>
         </MainLayout>
     );
