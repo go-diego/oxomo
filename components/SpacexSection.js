@@ -83,7 +83,7 @@ export default function SpacexSection() {
                 </div>
             </div>
             <div className="columns">
-                <Column className="column is-one-third">
+                <Column className="column">
                     <SpacexNextLaunchTile
                         isLoading={isNextLaunchLoading}
                         data={nextLaunch}

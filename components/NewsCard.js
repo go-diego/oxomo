@@ -2,6 +2,7 @@ import React from "react";
 import styled from "styled-components";
 import ContentLoader from "react-content-loader";
 import TextTruncate from "react-text-truncate";
+import format from "date-fns/format";
 
 const Skeleton = () => (
     <ContentLoader
@@ -64,6 +65,11 @@ const CardContent = styled.div`
     flex-direction: column;
 `;
 
+const CardFooter = styled.footer`
+    display: flex;
+    padding: 0.5rem 1.5rem;
+`;
+
 export default function NewsCard({
     isLoading,
     src,
@@ -72,7 +78,9 @@ export default function NewsCard({
     subtitle,
     description,
     link,
-    isTargetBlank
+    isTargetBlank,
+    publicationDate,
+    copyrights
 }) {
     return (
         <Article className="card box is-paddingless is-clipped">
@@ -114,6 +122,12 @@ export default function NewsCard({
                             </div>
                         )}
                     </CardContent>
+                    <CardFooter>
+                        {copyrights && <span>{copyrights}</span>}
+                        <span>
+                            {format(new Date(publicationDate), "ddd, MMM Do")}
+                        </span>
+                    </CardFooter>
                 </React.Fragment>
             )) || <Skeleton />}
         </Article>

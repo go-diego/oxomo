@@ -1,5 +1,6 @@
 import React from "react";
 import { to } from "await-to-js";
+import format from "date-fns/format";
 import PostCard from "./PostCard";
 import NeoTile from "./NeoTile";
 import FeedCard from "./FeedCard";
@@ -88,6 +89,14 @@ export default function NasaSection() {
                 <div className="columns">
                     <div className="column">
                         <PostCard
+                            link={`/astronomy-picture-of-the-day?date=${format(
+                                new Date(),
+                                "YYYY-MM-DD"
+                            )}`}
+                            asPath={`/astronomy-picture-of-the-day/${format(
+                                new Date(),
+                                "YYYY-MM-DD"
+                            )}`}
                             mediaType={pictureOfTheDay.media_type}
                             isLoading={isPictureOfTheDayLoading}
                             alt={pictureOfTheDay.title}

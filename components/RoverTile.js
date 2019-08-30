@@ -52,9 +52,8 @@ export default function RoverTile({ isLoading, name }) {
             alt="Latest from Curiosity"
             src={photo && photo.img_src}
             // link={photo.link}
-            description={
-                photo && format(new Date(photo.earth_date), "ddd, MMM Do")
-            }
+            description="Latest picture from Curiosity rover."
+            publicationDate={photo && photo.earth_date}
         />
     );
 }

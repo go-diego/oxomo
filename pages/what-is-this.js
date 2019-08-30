@@ -1,4 +1,3 @@
-import Link from "next/link";
 import styled from "styled-components";
 import Hero from "../components/Hero";
 import Section from "../components/Section";
@@ -8,7 +7,7 @@ const Content = styled(Section)`
     margin-top: -6rem;
 `;
 
-function Home() {
+function WhatIsThisPage() {
     return (
         <MainLayout>
             <Hero />
@@ -54,4 +53,4 @@ function Home() {
     );
 }
 
-export default Home;
+export default WhatIsThisPage;

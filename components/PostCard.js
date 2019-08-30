@@ -1,4 +1,5 @@
 import React from "react";
+import Link from "next/link";
 import styled from "styled-components";
 import ContentLoader from "react-content-loader";
 
@@ -102,6 +103,7 @@ export default function PostCard({
     subtitle,
     description,
     link,
+    asPath,
     isTargetBlank,
     children
 }) {
@@ -129,19 +131,25 @@ export default function PostCard({
                         </div>
                         <div className="column is-paddingless">
                             {(!isLoading && (
-                                <StretchedLink
-                                    title={title}
-                                    target={isTargetBlank ? "_blank" : null}
-                                    href={link}>
-                                    {mediaType !== "video" && (
-                                        <Figure className="image">
-                                            <Img alt={alt} src={src} />
-                                        </Figure>
-                                    )}
-                                    {mediaType === "video" && (
-                                        <EmbedItem src={src} allowFullScreen />
-                                    )}
-                                </StretchedLink>
+                                <Link href={link} asPath={asPath}>
+                                    <StretchedLink
+                                        title={title}
+                                        target={
+                                            isTargetBlank ? "_blank" : null
+                                        }>
+                                        {mediaType !== "video" && (
+                                            <Figure className="image">
+                                                <Img alt={alt} src={src} />
+                                            </Figure>
+                                        )}
+                                        {mediaType === "video" && (
+                                            <EmbedItem
+                                                src={src}
+                                                allowFullScreen
+                                            />
+                                        )}
+                                    </StretchedLink>
+                                </Link>
                             )) || <ImageSkeleton />}
                         </div>
                     </React.Fragment>

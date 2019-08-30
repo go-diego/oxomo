@@ -1,4 +1,3 @@
-import format from "date-fns/format";
 import NewsCard from "./NewsCard";
 
 export default function NasaNewsCard({ isLoading, data, index }) {
@@ -17,8 +16,8 @@ export default function NasaNewsCard({ isLoading, data, index }) {
                     (data.image && data.image.url) ||
                     null,
                 link: item.link,
-                description: item.contentSnippet
-                //description: format(new Date(pubdate), "ddd, MMM Do")
+                description: item.contentSnippet,
+                publication_date: item.publication_date || item.isoDate
             };
             setArticle(news);
         }
@@ -34,6 +33,7 @@ export default function NasaNewsCard({ isLoading, data, index }) {
             src={article.src}
             link={article.link}
             description={article.description}
+            publicationDate={article.publication_date}
         />
     );
 }
