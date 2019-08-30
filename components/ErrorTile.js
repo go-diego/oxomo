@@ -1,7 +1,17 @@
+import styled from "styled-components";
+
+const Container = styled.div`
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    width: 100%;
+`;
+
 export default function ErrorTile(props) {
     return (
-        <article className="tile is-child notification has-background-danger">
-            <h1 className="title">Error</h1>
-        </article>
+        <Container className="box">
+            <span className="heading">Error</span>
+        </Container>
     );
 }

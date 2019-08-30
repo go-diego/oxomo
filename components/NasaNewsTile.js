@@ -3,7 +3,7 @@ import ErrorTile from "./ErrorTile";
 import NewsTitle from "./NewsTile";
 import format from "date-fns/format";
 
-import {NasaFeed} from "../api/feed.api";
+import { NasaFeed } from "../api/feeds.api";
 
 import to from "../utils/to";
 
@@ -17,7 +17,7 @@ export default class NasaNewsTile extends React.Component {
     };
 
     async componentDidMount() {
-        let state = {...this.state};
+        let state = { ...this.state };
 
         const nasaNewsPromise = NasaFeedApi.getSolarSystemNews();
 
@@ -27,7 +27,7 @@ export default class NasaNewsTile extends React.Component {
         state.data = response;
         state.isLoading = false;
 
-        this.setState({...state});
+        this.setState({ ...state });
     }
 
     render() {
@@ -38,14 +38,14 @@ export default class NasaNewsTile extends React.Component {
             enclosures,
             publishDate = null;
 
-        const {data, isLoading, hasError} = this.state;
+        const { data, isLoading, hasError } = this.state;
 
         if (data) {
             ({
                 pubdate,
                 title: newsTitle,
                 enclosures,
-                meta: {title: feedTitle}
+                meta: { title: feedTitle }
             } = data[0]);
 
             imageUrl = enclosures[0].url;

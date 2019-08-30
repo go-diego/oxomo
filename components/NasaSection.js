@@ -1,13 +1,11 @@
-// import TileErrorBoundary from "./TileErrorBoundary";
 import React from "react";
 import { to } from "await-to-js";
 import PostCard from "./PostCard";
 import NeoTile from "./NeoTile";
-import NasaNewsCard from "./NasaNewsCard";
 import FeedCard from "./FeedCard";
 import RoverTile from "./RoverTile";
 import { APOD, NEO, Rovers } from "../api/nasa.api";
-import { NasaFeed } from "../api/feed.api";
+import { NasaFeed } from "../api/feeds.api";
 
 const nasaApodApi = new APOD();
 const nasaFeedApi = new NasaFeed();

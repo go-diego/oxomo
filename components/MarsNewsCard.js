@@ -2,11 +2,11 @@ import React from "react";
 import to from "await-to-js";
 import ErrorTile from "./ErrorTile";
 import FeedCard from "./FeedCard";
-import { PhysOrgFeed } from "../api/feeds.api";
+import { MarsFeed } from "../api/feeds.api";
 
-const physOrgFeedApi = new PhysOrgFeed();
+const marsFeedApi = new MarsFeed();
 
-export default function PhysOrgNews({ type }) {
+export default function MarsNewsCard({ type }) {
     const [feedData, setFeedData] = React.useState(null);
     const [isLoading, setIsLoading] = React.useState(true);
     const [isError, setIsError] = React.useState(false);
@@ -16,27 +16,19 @@ export default function PhysOrgNews({ type }) {
             async function getData() {
                 let action;
                 switch (type) {
-                    case "space-exploration":
-                        action = physOrgFeedApi.getSpaceExplorationNews;
+                    case "curiosity":
+                        action = marsFeedApi.getCuriosityMissionUpdate;
                         break;
-                    case "astronomy":
-                        action = physOrgFeedApi.getAstronomyNews;
+                    case "science-daily":
+                        action = marsFeedApi.getScienceDailyMarsNews;
                         break;
-                    case "astrobiology":
-                        action = physOrgFeedApi.getAstrobiologyNews;
+                    case "mars-news":
+                        action = marsFeedApi.getNews;
                         break;
                 }
                 const [error, response] = await to(action(true));
+                console.log("ERROR", error);
                 if (error) setIsError(true);
-
-                response.items = response.items.map(item => {
-                    return {
-                        ...item,
-                        media_thumbnail: {
-                            url: item.media_thumbnail.url.replace("tmb", "500")
-                        }
-                    };
-                });
 
                 setFeedData(response);
                 setIsLoading(false);

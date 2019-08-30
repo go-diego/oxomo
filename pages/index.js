@@ -17,6 +17,10 @@ const Nav = styled.nav`
     justify-content: end;
 `;
 
+const Column = styled.div`
+    display: flex;
+`;
+
 function Home() {
     return (
         <MainLayout>
@@ -29,15 +33,15 @@ function Home() {
                 <MarsSection />
                 <SpacexSection />
                 <div className="columns">
-                    <div className="column">
+                    <Column className="column">
                         <PhysOrgNews type="space-exploration" />
-                    </div>
-                    <div className="column">
+                    </Column>
+                    <Column className="column">
                         <PhysOrgNews type="astrobiology" />
-                    </div>
-                    <div className="column">
+                    </Column>
+                    <Column className="column">
                         <PhysOrgNews type="astronomy" />
-                    </div>
+                    </Column>
                 </div>
             </Content>
         </MainLayout>

@@ -1,10 +1,3 @@
-/**
- *  TODO:
- * check https://github.com/sindresorhus/ky/pull/46 to use ky without having to transpile dependencies
- * EXAMPLE: return await ky.post(`${this.APOD_BASE_URL}`, {searchParams: process.env.NASA_API_KEY}).json();
- */
-
-//import ky from "ky/umd";
 import "isomorphic-unfetch";
 import format from "date-fns/format";
 
