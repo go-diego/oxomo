@@ -1,5 +1,5 @@
 import styled from "styled-components";
-import Hero from "../components/Hero";
+import Nav from "../components/Nav";
 import Section from "../components/Section";
 import MainLayout from "../containers/MainLayout";
 
@@ -7,10 +7,26 @@ const Content = styled(Section)`
     margin-top: -6rem;
 `;
 
+const Body = styled.div`
+    padding-top: 2.5rem;
+    padding-bottom: 6rem;
+`;
+
 function WhatIsThisPage() {
     return (
         <MainLayout>
-            <Hero />
+            <div className="hero is-medium is-dark is-bold">
+                <div className="hero-head">
+                    <Nav />
+                </div>
+                <Body className="hero-body">
+                    <div className="container">
+                        <h1 className="is-family-secondary has-text-centered title is-size-4-mobile">
+                            What is OXOMO?
+                        </h1>
+                    </div>
+                </Body>
+            </div>
             <Content>
                 <div className="content box">
                     <h2>What is this?</h2>

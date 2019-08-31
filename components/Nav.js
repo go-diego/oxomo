@@ -10,7 +10,7 @@ const Navbar = styled.nav`
 export default function Nav() {
     return (
         <Navbar
-            className="navbar"
+            className="navbar is-dark"
             role="navigation"
             aria-label="main navigation">
             <div className="navbar-brand">

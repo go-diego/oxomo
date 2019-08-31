@@ -103,10 +103,22 @@ export default function PostCard({
     subtitle,
     description,
     link,
-    asPath,
+    linkAs,
     isTargetBlank,
     children
 }) {
+    // const StretchedLinkWithRef = React.forwardRef((props, ref) => {
+    //     <StretchedLink ref={ref}>{props.children}</StretchedLink>;
+    // });
+
+    const StretchedLinkWithRef = React.forwardRef(
+        ({ children, href, title, target }, ref) => (
+            <StretchedLink ref={ref} href={href} title={title} target={target}>
+                {children}
+            </StretchedLink>
+        )
+    );
+
     return (
         <Article className="box is-paddingless is-clipped">
             <Row className="columns is-marginless">
@@ -131,7 +143,7 @@ export default function PostCard({
                         </div>
                         <div className="column is-paddingless">
                             {(!isLoading && (
-                                <Link href={link} asPath={asPath}>
+                                <Link href={link} as={linkAs}>
                                     <StretchedLink
                                         title={title}
                                         target={
@@ -157,23 +169,25 @@ export default function PostCard({
                     <React.Fragment>
                         <div className="column is-three-fifths is-paddingless">
                             {(!isLoading && (
-                                <React.Fragment>
-                                    {mediaType !== "video" && (
-                                        <StretchedLink
-                                            title={title}
-                                            target={
-                                                isTargetBlank ? "_blank" : null
-                                            }
-                                            href={link}>
+                                <Link href={link} as={linkAs} passHref>
+                                    <StretchedLinkWithRef
+                                        title={title}
+                                        target={
+                                            isTargetBlank ? "_blank" : null
+                                        }>
+                                        {mediaType !== "video" && (
                                             <Figure className="image">
                                                 <Img alt={alt} src={src} />
                                             </Figure>
-                                        </StretchedLink>
-                                    )}
-                                    {mediaType === "video" && (
-                                        <EmbedItem src={src} allowFullScreen />
-                                    )}
-                                </React.Fragment>
+                                        )}
+                                        {mediaType === "video" && (
+                                            <EmbedItem
+                                                src={src}
+                                                allowFullScreen
+                                            />
+                                        )}
+                                    </StretchedLinkWithRef>
+                                </Link>
                             )) || <ImageSkeleton />}
                         </div>
                         <div className="column">
