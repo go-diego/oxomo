@@ -2,4 +2,4 @@
     publish = "out"
     command = "npm run export"
 [context.development]
-    environment: {NODE_ENV="development"}
+    environment: { NODE_ENV = "development" }
