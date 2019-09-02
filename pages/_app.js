@@ -11,6 +11,6 @@ class Site extends App {
 }
 
 export default withGoogleAnalytics(
-    process.env.NODE_ENV === "production" ? process.env.GA_ID : null,
+    process.env.CONTEXT === "production" ? process.env.GA_ID : null,
     Router
 )(Site);
