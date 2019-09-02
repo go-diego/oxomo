@@ -1,4 +1,4 @@
-import App, { Container } from "next/app";
+import App from "next/app";
 import Router from "next/router";
 import withGoogleAnalytics from "next-ga";
 import css from "../styles/site.scss";
@@ -10,4 +10,7 @@ class Site extends App {
     }
 }
 
-export default withGoogleAnalytics("UA-146663930-1", Router)(Site);
+export default withGoogleAnalytics(
+    process.env.NODE_ENV === "production" ? process.env.GA_ID : null,
+    Router
+)(Site);

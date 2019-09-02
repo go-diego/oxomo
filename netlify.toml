@@ -1,3 +1,5 @@
 [build]
     publish = "out"
     command = "npm run export"
+[context.development]
+    NODE_ENV=develpoment
