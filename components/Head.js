@@ -2,7 +2,6 @@ import React from "react";
 import NextHead from "next/head";
 import { string } from "prop-types";
 
-//TODO: use env variables for url
 const defaultDescription = "";
 const defaultOGURL =
     process.env.CONTEXT === "production"

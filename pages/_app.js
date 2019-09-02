@@ -3,6 +3,7 @@ import Router from "next/router";
 import withGoogleAnalytics from "next-ga";
 import css from "../styles/site.scss";
 
+const GA_ID = process.env.CONTEXT === "production" ? process.env.GA_ID : null;
 class Site extends App {
     render() {
         const { Component, pageProps } = this.props;
@@ -10,7 +11,4 @@ class Site extends App {
     }
 }
 
-export default withGoogleAnalytics(
-    process.env.CONTEXT === "production" ? process.env.GA_ID : null,
-    Router
-)(Site);
+export default withGoogleAnalytics(GA_ID, Router)(Site);
