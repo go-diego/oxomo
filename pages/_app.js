@@ -11,4 +11,4 @@ class Site extends App {
     }
 }
 
-export default withGoogleAnalytics(GA_ID, Router)(Site);
+export default withGoogleAnalytics(process.env.GA_ID, Router)(Site);
