@@ -10,10 +10,10 @@ import React from "react";
 import { useRouter } from "next/router";
 import styled from "styled-components";
 import { to } from "await-to-js";
-import Section from "../../components/Section";
-import Nav from "../../components/Nav";
-import MainLayout from "../../containers/MainLayout";
-import { APOD } from "../../api/nasa.api";
+import Section from "../components/Section";
+import Nav from "../components/Nav";
+import MainLayout from "../containers/MainLayout";
+import { APOD } from "../api/nasa.api";
 
 const nasaApodApi = new APOD();
 

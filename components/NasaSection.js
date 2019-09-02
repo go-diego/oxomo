@@ -89,11 +89,14 @@ export default function NasaSection() {
                 <div className="columns">
                     <div className="column">
                         <PostCard
-                            link={"/astronomy-picture-of-the-day/[date]"}
-                            linkAs={`/astronomy-picture-of-the-day/${format(
+                            link={`/apod?date=${format(
                                 new Date(),
                                 "YYYY-MM-DD"
                             )}`}
+                            // linkAs={`/astronomy-picture-of-the-day/${format(
+                            //     new Date(),
+                            //     "YYYY-MM-DD"
+                            // )}`}
                             mediaType={pictureOfTheDay.media_type}
                             isLoading={isPictureOfTheDayLoading}
                             alt={pictureOfTheDay.title}

@@ -1,6 +1,7 @@
-const ENV_PATH = process.env.NODE_ENV === "production" ? "./.env.production" : "./.env.development";
+const ENV_PATH =
+    process.env.NODE_ENV === "production" ? "./.env" : "./.env.development";
 
-require("dotenv").config({path: ENV_PATH});
+require("dotenv").config({ path: ENV_PATH });
 
 module.exports = {
     "process.env.NASA_API_KEY": process.env.NASA_API_KEY,
