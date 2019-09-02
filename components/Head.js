@@ -24,7 +24,7 @@ const Head = props => (
         <link rel="mask-icon" href="/static/favicon-mask.svg" color="#49B882" />
         <link rel="icon" href="/static/favicon.ico" />
         <meta property="og:url" content={props.url || defaultOGURL} />
-        <meta property="og:title" content={props.title || ""} />
+        <meta property="og:title" content={props.title || "OXOMO"} />
         <meta
             property="og:description"
             content={props.description || defaultDescription}
