@@ -4,7 +4,10 @@ import { string } from "prop-types";
 
 //TODO: use env variables for url
 const defaultDescription = "";
-const defaultOGURL = "https://development.oxomo.co";
+const defaultOGURL =
+    process.env.NODE_ENV === "production"
+        ? "https://www.oxomo.co"
+        : "https://development.oxomo.co";
 const defaultOGImage = "./static/thumbnail.png";
 
 const Head = props => (
