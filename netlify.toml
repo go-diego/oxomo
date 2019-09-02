@@ -1,6 +1,5 @@
 [build]
     publish = "out"
     command = "npm run export"
-[context.development.environment]
-    NODE_ENV = "development"
-    GA_ID = "0"
+[context.development]
+    environment = { NODE_ENV = "development",  GA_ID = "0" }
