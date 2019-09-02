@@ -10,9 +10,4 @@ class Site extends App {
     }
 }
 
-const mySite =
-    process.env.CONTEXT === "production"
-        ? withGoogleAnalytics(process.env.GA_ID, Router)(Site)
-        : Site;
-
-export default mySite;
+export default withGoogleAnalytics(process.env.GA_ID, Router)(Site);

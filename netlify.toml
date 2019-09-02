@@ -3,3 +3,4 @@
     command = "npm run export"
 [context.development.environment]
     NODE_ENV = "development"
+    GA_ID = ""
