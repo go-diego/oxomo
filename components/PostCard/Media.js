@@ -81,7 +81,7 @@ export default function Media({
                     {mediaType === "video" && (
                         <EmbedItem src={src} allowFullScreen />
                     )}
-                    {mediaType !== "video" && (
+                    {mediaType !== "video" && link && (
                         <Link href={link} as={linkAs} passHref>
                             <StretchedLinkWithRef
                                 title={title}
@@ -91,6 +91,11 @@ export default function Media({
                                 </Figure>
                             </StretchedLinkWithRef>
                         </Link>
+                    )}
+                    {mediaType !== "video" && !link && (
+                        <Figure className="image">
+                            <Img alt={alt} src={src} />
+                        </Figure>
                     )}
                 </React.Fragment>
             )}

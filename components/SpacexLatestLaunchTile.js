@@ -1,6 +1,6 @@
 import format from "date-fns/format";
 import styled from "styled-components";
-import PostCard from "./PostCard";
+import PostCard from "./PostCard/index";
 import Youtube from "../utils/youtube";
 
 const MissionTitle = styled.div`

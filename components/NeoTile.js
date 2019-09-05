@@ -1,6 +1,6 @@
 import styled from "styled-components";
 import Emoji from "react-emoji-render";
-import PostCard from "./PostCard";
+import PostCard from "./PostCard/index";
 
 const LevelItem = styled.div`
     flex-grow: 0 !important;
