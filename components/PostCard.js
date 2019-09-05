@@ -1,92 +1,15 @@
+// TODO: use isReversed props to add classes instead of conditionally rendering
+
 import React from "react";
-import Link from "next/link";
 import styled from "styled-components";
-import ContentLoader from "react-content-loader";
-
-const ContentSkeleton = () => (
-    <ContentLoader
-        height={150}
-        width={300}
-        speed={1}
-        primaryColor={"#333"}
-        secondaryColor={"#212121"}>
-        <rect x="6" y="5" rx="0" ry="0" width="95%" height="30" />
-        <rect x="6" y="40" rx="0" ry="0" width="95%" height="15" />
-        <rect x="6" y="60" rx="0" ry="0" width="95%" height="15" />
-    </ContentLoader>
-);
-
-const ImageSkeleton = () => (
-    <ContentLoader
-        height={150}
-        width={300}
-        speed={1}
-        primaryColor={"#333"}
-        secondaryColor={"#212121"}>
-        <rect x="3" y="3" rx="0" ry="0" width="98%" height="95%" />
-    </ContentLoader>
-);
-
-const PostCardContent = styled.div`
-    padding: 1rem;
-    display: flex;
-    flex-direction: column;
-    height: 100%;
-`;
-
-const Content = styled.div`
-    padding-top: 1rem;
-    display: flex;
-    flex-direction: column;
-    flex-grow: 1;
-`;
-
-const Figure = styled.figure`
-    overflow: hidden;
-    height: 300px;
-`;
-
-const Img = styled.img`
-    transition: all 0.4s ease;
-    width: 100% !important;
-    height: 100% !important;
-    object-fit: cover;
-`;
-
-const StretchedLink = styled.a`
-    &::after {
-        position: absolute;
-        top: 0;
-        right: 0;
-        bottom: 0;
-        left: 0;
-        z-index: 1;
-        content: "";
-    }
-
-    &:hover {
-        img {
-            transition: all 0.4s ease;
-            transform: translate3d(0, -1px, 0) scale(1.1);
-        }
-    }
-`;
+import Content from "./PostCard/Content";
+import Media from "./PostCard/Media";
 
 const Article = styled.article`
     min-height: 300px;
     position: relative;
     display: flex;
     flex-direction: column;
-`;
-
-const EmbedItem = styled.iframe`
-    top: 0;
-    bottom: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    border: 0;
-    min-height: 300px;
 `;
 
 const Row = styled.div`
@@ -107,105 +30,51 @@ export default function PostCard({
     isTargetBlank,
     children
 }) {
-    // const StretchedLinkWithRef = React.forwardRef((props, ref) => {
-    //     <StretchedLink ref={ref}>{props.children}</StretchedLink>;
-    // });
-
-    const StretchedLinkWithRef = React.forwardRef(
-        ({ children, href, title, target }, ref) => (
-            <StretchedLink ref={ref} href={href} title={title} target={target}>
-                {children}
-            </StretchedLink>
-        )
-    );
-
     return (
         <Article className="box is-paddingless is-clipped">
             <Row className="columns is-marginless">
                 {(isReversed && (
                     <React.Fragment>
                         <div className="column is-two-fifths">
-                            {(!isLoading && (
-                                <PostCardContent>
-                                    <div>
-                                        <p className="title is-size-4-mobile">
-                                            {title}
-                                        </p>
-                                        {subtitle && (
-                                            <p className="subtitle is-size-6-mobile">
-                                                {subtitle}
-                                            </p>
-                                        )}
-                                    </div>
-                                    <Content>{children}</Content>
-                                </PostCardContent>
-                            )) || <ContentSkeleton />}
+                            <Content
+                                isLoading={isLoading}
+                                title={title}
+                                subtitle={subtitle}>
+                                {children}
+                            </Content>
                         </div>
                         <div className="column is-paddingless">
-                            {(!isLoading && (
-                                <Link href={link} as={linkAs}>
-                                    <StretchedLink
-                                        title={title}
-                                        target={
-                                            isTargetBlank ? "_blank" : null
-                                        }>
-                                        {mediaType !== "video" && (
-                                            <Figure className="image">
-                                                <Img alt={alt} src={src} />
-                                            </Figure>
-                                        )}
-                                        {mediaType === "video" && (
-                                            <EmbedItem
-                                                src={src}
-                                                allowFullScreen
-                                            />
-                                        )}
-                                    </StretchedLink>
-                                </Link>
-                            )) || <ImageSkeleton />}
+                            <Media
+                                link={link}
+                                src={src}
+                                alt={alt}
+                                isTargetBlank={isTargetBlank}
+                                title={title}
+                                isLoading={isLoading}
+                                mediaType={mediaType}
+                            />
                         </div>
                     </React.Fragment>
                 )) || (
                     <React.Fragment>
                         <div className="column is-three-fifths is-paddingless">
-                            {(!isLoading && (
-                                <Link href={link} as={linkAs} passHref>
-                                    <StretchedLinkWithRef
-                                        title={title}
-                                        target={
-                                            isTargetBlank ? "_blank" : null
-                                        }>
-                                        {mediaType !== "video" && (
-                                            <Figure className="image">
-                                                <Img alt={alt} src={src} />
-                                            </Figure>
-                                        )}
-                                        {mediaType === "video" && (
-                                            <EmbedItem
-                                                src={src}
-                                                allowFullScreen
-                                            />
-                                        )}
-                                    </StretchedLinkWithRef>
-                                </Link>
-                            )) || <ImageSkeleton />}
+                            <Media
+                                link={link}
+                                src={src}
+                                alt={alt}
+                                isTargetBlank={isTargetBlank}
+                                title={title}
+                                isLoading={isLoading}
+                                mediaType={mediaType}
+                            />
                         </div>
                         <div className="column">
-                            {(!isLoading && (
-                                <PostCardContent>
-                                    <div>
-                                        <p className="title is-size-4-mobile">
-                                            {title}
-                                        </p>
-                                        {subtitle && (
-                                            <p className="subtitle is-size-6-mobile">
-                                                {subtitle}
-                                            </p>
-                                        )}
-                                    </div>
-                                    <Content>{children}</Content>
-                                </PostCardContent>
-                            )) || <ContentSkeleton />}
+                            <Content
+                                isLoading={isLoading}
+                                title={title}
+                                subtitle={subtitle}>
+                                {children}
+                            </Content>
                         </div>
                     </React.Fragment>
                 )}

@@ -26,6 +26,11 @@ const Body = styled.div`
     padding-bottom: 6rem;
 `;
 
+const Img = styled.img`
+    height: 100%;
+    object-fit: cover;
+`;
+
 function AstronomyPictureOfTheDayPage() {
     const router = useRouter();
     const { date } = router.query;
@@ -62,8 +67,7 @@ function AstronomyPictureOfTheDayPage() {
             <Content>
                 <div className="columns box is-paddingless is-clipped">
                     <div className="column is-paddingless">
-                        {/* TODO: image should be height: 100%, object-fit:cover */}
-                        <img src={data && data.hdurl} />
+                        <Img src={data && data.hdurl} />
                     </div>
                     <div className="column">
                         <h1 className="title is-size-4-mobile">
