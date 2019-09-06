@@ -3,7 +3,6 @@
  * add validation if date > new Date()
  * add skeleton components
  * add error handling
- * add selectors to view other APODs
  */
 
 import React from "react";
@@ -15,6 +14,7 @@ import base64 from "base-64";
 import Section from "../components/Section";
 import Nav from "../components/Nav";
 import MainLayout from "../containers/MainLayout";
+import ApodReel from "../components/ApodReel";
 import { APOD } from "../api/nasa.api";
 
 const nasaApodApi = new APOD();
@@ -75,7 +75,9 @@ function AstronomyPictureOfTheDayPage() {
             <Content>
                 <div className="columns box is-paddingless is-clipped">
                     <div className="column is-paddingless">
-                        <Img src={data && data.hdurl} />
+                        <figure className="image is-square">
+                            <Img src={data && data.hdurl} />
+                        </figure>
                     </div>
                     <div className="column">
                         <h1 className="title is-size-4-mobile">
@@ -88,6 +90,9 @@ function AstronomyPictureOfTheDayPage() {
                     </div>
                 </div>
             </Content>
+            <Section>
+                <ApodReel />
+            </Section>
         </MainLayout>
     );
 }
