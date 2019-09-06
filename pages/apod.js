@@ -10,7 +10,7 @@ import { useRouter } from "next/router";
 import styled from "styled-components";
 import { to } from "await-to-js";
 import format from "date-fns/format";
-import base64 from "base-64";
+import { Base64 } from "js-base64";
 import Section from "../components/Section";
 import Nav from "../components/Nav";
 import MainLayout from "../containers/MainLayout";
@@ -41,18 +41,20 @@ function AstronomyPictureOfTheDayPage() {
     const [isError, setIsError] = React.useState(false);
 
     React.useEffect(() => {
-        async function getAstronomyPictureOfTheDay() {
-            const [error, response] = await to(
-                nasaApodApi.get(
-                    format(new Date(base64.decode(id)), "YYYY-MM-DD")
-                )
-            );
-            if (error) setIsError(true);
+        if (id) {
+            async function getAstronomyPictureOfTheDay() {
+                const [error, response] = await to(
+                    nasaApodApi.get(
+                        format(new Date(Base64.decode(id)), "YYYY-MM-DD")
+                    )
+                );
+                if (error) setIsError(true);
 
-            setData(response);
-            setIsLoading(false);
+                setData(response);
+                setIsLoading(false);
+            }
+            getAstronomyPictureOfTheDay();
         }
-        getAstronomyPictureOfTheDay();
     }, [id]);
 
     return (
@@ -66,9 +68,14 @@ function AstronomyPictureOfTheDayPage() {
                         <h1 className="is-family-secondary has-text-centered title is-size-4-mobile">
                             Astronomy Picture of the Day
                         </h1>
-                        <h2 className="subtitle has-text-centered title">
-                            {format(new Date(base64.decode(id)), "ddd, MMM Do")}
-                        </h2>
+                        {id && (
+                            <h2 className="subtitle has-text-centered title">
+                                {format(
+                                    new Date(Base64.decode(id)),
+                                    "ddd, MMM Do"
+                                )}
+                            </h2>
+                        )}
                     </div>
                 </Body>
             </div>

@@ -2,7 +2,7 @@ import React from "react";
 import { to } from "await-to-js";
 import format from "date-fns/format";
 import startOfToday from "date-fns/start_of_today";
-import base64 from "base-64";
+import { Base64 } from "js-base64";
 import PostCard from "./PostCard/index";
 import NeoTile from "./NeoTile";
 import FeedCard from "./FeedCard";
@@ -91,7 +91,7 @@ export default function NasaSection() {
                 <div className="columns">
                     <div className="column">
                         <PostCard
-                            link={`/apod?id=${base64.encode(
+                            link={`/apod?id=${Base64.encode(
                                 format(startOfToday(), "YYYY-MM-DDTHH:mm")
                             )}`}
                             mediaType={pictureOfTheDay.media_type}

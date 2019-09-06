@@ -3,7 +3,7 @@ import Link from "next/link";
 import styled from "styled-components";
 import format from "date-fns/format";
 import addDays from "date-fns/add_days";
-import base64 from "base-64";
+import { Base64 } from "js-base64";
 import { APOD } from "../api/nasa.api";
 
 const nasaApodApi = new APOD();
@@ -26,14 +26,12 @@ export default function ApodReel() {
                 .fill(null)
                 .map((item, index) => addDays(new Date(), -1 * index));
 
-            console.log("dates", dates);
             const promises = dates.map(day =>
                 nasaApodApi.get(format(day, "YYYY-MM-DD"))
             );
             const responses = await Promise.all(
                 promises.map(promise => promise.catch(error => error))
             );
-            console.log("responses", responses);
             setReel(responses);
         }
         getApodReel();
@@ -50,7 +48,7 @@ export default function ApodReel() {
                         return (
                             <div key={i} className="column">
                                 <Link
-                                    href={`/apod?id=${base64.encode(
+                                    href={`/apod?id=${Base64.encode(
                                         format(
                                             `${item.date}T00:00`,
                                             "YYYY-MM-DDTHH:mm"
