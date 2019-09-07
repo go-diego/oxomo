@@ -47,9 +47,9 @@ function AstronomyPictureOfTheDayPage() {
                     nasaApodApi.get(
                         format(
                             new Date(
-                                Base64.decode(
-                                    id.replace(/-/g, "/").replace("T", " ")
-                                )
+                                Base64.decode(id)
+                                    .replace(/-/g, "/")
+                                    .replace("T", " ")
                             ),
                             "YYYY-MM-DD"
                         )
