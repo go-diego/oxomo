@@ -1,4 +1,5 @@
 import "isomorphic-unfetch";
+import ky from "ky/umd";
 import format from "date-fns/format";
 
 class Nasa {
@@ -11,17 +12,21 @@ class Nasa {
 export class APOD extends Nasa {
     constructor() {
         super();
-        this.BASE_URL = "https://api.nasa.gov/planetary/apod";
+        // this.api = ky.create({
+        //     prefixUrl: "https://api.nasa.gov/planetary/apod",
+        //     searchParams: { api_key: this.NASA_API_KEY, hd: "true" }
+        // });
     }
 
     /**
      * @param {string} date - defaults to today (YYYY-MM-DD)
      */
-    async get(date = this.TODAY) {
-        const res = await fetch(
-            `${this.BASE_URL}?hd=true&date=${date}&api_key=${this.NASA_API_KEY}`
-        );
-        return await res.json();
+    get(date = this.TODAY) {
+        return ky
+            .get("https://api.nasa.gov/planetary/apod", {
+                searchParams: { api_key: this.NASA_API_KEY, hd: "true", date }
+            })
+            .json();
     }
 }
 
@@ -113,88 +118,49 @@ export class NEO extends Nasa {
 export class SpaceWeather extends Nasa {
     constructor() {
         super();
-        this.BASE_URL = "https://api.nasa.gov/DONKI";
+        this.get = ky.create({
+            prefixUrl: "https://api.nasa.gov/DONKI",
+            searchParams: { api_key: this.NASA_API_KEY }
+        });
     }
 
-    async getCoronalMassEjection(startDate = this.TODAY, endDate = this.TODAY) {
-        const res = await fetch(
-            `${this.BASE_URL}/CME?startDate=${startDate}&endDate=${endDate}&api_key=${this.NASA_API_KEY}`
-        );
-
-        let response = null;
-        try {
-            response = await res.json();
-        } catch (error) {
-            console.log("ERROR");
-        }
-
-        return response;
+    getCoronalMassEjection(startDate = this.TODAY, endDate = this.TODAY) {
+        return this.get("CME", { searchParams: { startDate, endDate } });
     }
 
-    async getGeomagneticStorm(startDate = this.TODAY, endDate = this.TODAY) {
-        const res = await fetch(
-            `${this.BASE_URL}/GMS?startDate=${startDate}&endDate=${endDate}&api_key=${this.NASA_API_KEY}`
-        );
-
-        let response = null;
-        try {
-            response = await res.json();
-        } catch (error) {
-            console.log("ERROR");
-        }
-
-        return response;
+    getGeomagneticStorm(startDate = this.TODAY, endDate = this.TODAY) {
+        return this.get("GMS", { searchParams: { startDate, endDate } });
     }
 
-    async getSolarFlare(startDate = this.TODAY, endDate = this.TODAY) {
-        const res = await fetch(
-            `${this.BASE_URL}/FLR?startDate=${startDate}&endDate=${endDate}&api_key=${this.NASA_API_KEY}`
-        );
-
-        let response = null;
-        try {
-            response = await res.json();
-        } catch (error) {
-            console.log("ERROR");
-        }
-
-        return response;
+    getSolarFlare(startDate = this.TODAY, endDate = this.TODAY) {
+        return this.get("FLR", { searchParams: { startDate, endDate } });
     }
 }
 
 export class Rovers extends Nasa {
     constructor() {
         super();
-        this.BASE_URL = "https://api.nasa.gov/mars-photos/api/v1";
+        this.get = ky.create({
+            prefixUrl: "https://api.nasa.gov/mars-photos/api/v1",
+            searchParams: { api_key: this.NASA_API_KEY }
+        });
     }
 
-    async getAll() {
-        const res = await fetch(
-            `${this.BASE_URL}/rovers?api_key=${this.NASA_API_KEY}`
-        );
-        return await res.json();
+    getAll() {
+        return this.get("rovers").json();
     }
 
-    async getManifest(rover) {
-        const res = await fetch(
-            `${this.BASE_URL}/manifests/${rover}?api_key=${this.NASA_API_KEY}`
-        );
-        return await res.json();
+    getManifest(rover) {
+        return this.get(`manifests/${rover}`).json();
     }
 
-    async getLatestPhotos(rover) {
-        const res = await fetch(
-            `${this.BASE_URL}/rovers/${rover}/latest_photos?api_key=${this.NASA_API_KEY}`
-        );
-        return await res.json();
+    getLatestPhotos(rover) {
+        return this.get(`rovers/${rover}/latest_photos`).json();
     }
 
-    async getPhotos(rover, sol, camera = null) {
-        const res = await fetch(
-            `${this.BASE_URL}/rovers/${rover}/photos?sol=${sol}${
-                camera ? `&camera=${camera}` : ""
-            }&api_key=${this.NASA_API_KEY}`
-        );
-        return await res.json();
+    getPhotos(rover, sol, camera = null) {
+        return this.get(`rovers/${rover}/photos`, {
+            searchParams: { sol, camera }
+        }).json();
     }
 }
