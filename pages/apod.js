@@ -45,7 +45,14 @@ function AstronomyPictureOfTheDayPage() {
             async function getAstronomyPictureOfTheDay() {
                 const [error, response] = await to(
                     nasaApodApi.get(
-                        format(new Date(Base64.decode(id)), "YYYY-MM-DD")
+                        format(
+                            new Date(
+                                Base64.decode(
+                                    id.replace(/-/g, "/").replace("T", " ")
+                                )
+                            ),
+                            "YYYY-MM-DD"
+                        )
                     )
                 );
                 if (error) setIsError(true);
