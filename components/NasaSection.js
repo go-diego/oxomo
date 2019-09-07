@@ -92,7 +92,7 @@ export default function NasaSection() {
                     <div className="column">
                         <PostCard
                             link={`/apod?id=${Base64.encode(
-                                format(startOfToday(), "YYYY-MM-DDTHH:mm")
+                                format(startOfToday(), "YYYY-MM-DDTHH:mm:ss")
                             )}`}
                             mediaType={pictureOfTheDay.media_type}
                             isLoading={isPictureOfTheDayLoading}

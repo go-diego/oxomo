@@ -50,14 +50,16 @@ export default function ApodReel() {
                                 <Link
                                     href={`/apod?id=${Base64.encode(
                                         format(
-                                            `${item.date}T00:00`,
-                                            "YYYY-MM-DDTHH:mm"
+                                            `${item.date}T00:00:00`,
+                                            "YYYY-MM-DDTHH:mm:ss"
                                         )
                                     )}`}>
                                     <a className="has-text-dark">
                                         <small>
                                             {format(
-                                                new Date(`${item.date}T00:00`),
+                                                new Date(
+                                                    `${item.date}T00:00:00`
+                                                ),
                                                 "MMM Do"
                                             )}
                                         </small>
