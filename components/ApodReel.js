@@ -50,7 +50,12 @@ export default function ApodReel() {
                                 <Link
                                     href={`/apod?id=${Base64.encode(
                                         format(
-                                            `${item.date}T00:00:00`,
+                                            new Date(
+                                                `${item.date} 00:00:00`.replace(
+                                                    /-/g,
+                                                    "/"
+                                                )
+                                            ),
                                             "YYYY-MM-DDTHH:mm:ss"
                                         )
                                     )}`}>
@@ -58,7 +63,10 @@ export default function ApodReel() {
                                         <small>
                                             {format(
                                                 new Date(
-                                                    `${item.date}T00:00:00`
+                                                    `${item.date} 00:00:00`.replace(
+                                                        /-/g,
+                                                        "/"
+                                                    )
                                                 ),
                                                 "MMM Do"
                                             )}

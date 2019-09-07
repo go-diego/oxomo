@@ -71,7 +71,11 @@ function AstronomyPictureOfTheDayPage() {
                         {id && (
                             <h2 className="subtitle has-text-centered title">
                                 {format(
-                                    new Date(Base64.decode(id)),
+                                    new Date(
+                                        Base64.decode(id)
+                                            .replace(/-/g, "/")
+                                            .replace("T", " ")
+                                    ),
                                     "ddd, MMM Do"
                                 )}
                             </h2>
