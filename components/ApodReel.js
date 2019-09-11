@@ -4,14 +4,10 @@ import styled from "styled-components";
 import format from "date-fns/format";
 import addDays from "date-fns/add_days";
 import { Base64 } from "js-base64";
+import Image from "../components/Image";
 import { APOD } from "../api/nasa.api";
 
 const nasaApodApi = new APOD();
-
-const Img = styled.img`
-    height: 100% !important;
-    object-fit: cover;
-`;
 
 const Figure = styled.figure`
     width: 100% !important;
@@ -72,7 +68,7 @@ export default function ApodReel() {
                                             )}
                                         </small>
                                         <Figure className="image is-128x128">
-                                            <Img src={item.url} />
+                                            <Image src={item.url} />
                                         </Figure>
                                         <small>{item.title}</small>
                                     </a>

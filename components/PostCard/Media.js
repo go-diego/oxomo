@@ -1,29 +1,20 @@
 import React from "react";
 import Link from "next/link";
 import styled from "styled-components";
-import ContentLoader from "react-content-loader";
-
-const ImageSkeleton = () => (
-    <ContentLoader
-        height={150}
-        width={300}
-        speed={1}
-        primaryColor={"#333"}
-        secondaryColor={"#212121"}>
-        <rect x="3" y="3" rx="0" ry="0" width="98%" height="95%" />
-    </ContentLoader>
-);
+import Image from "../Image";
+import ImageSkeleton from "../ImageSkeleton";
 
 const Figure = styled.figure`
     overflow: hidden;
     height: 300px;
 `;
 
-const Img = styled.img`
+const StyledImageSkeleton = styled(ImageSkeleton)`
+    max-height: 300px;
+`;
+
+const StyledImage = styled(Image)`
     transition: all 0.4s ease;
-    width: 100% !important;
-    height: 100% !important;
-    object-fit: cover;
 `;
 
 const StretchedLink = styled.a`
@@ -75,7 +66,7 @@ export default function Media({
 
     return (
         <React.Fragment>
-            {isLoading && <ImageSkeleton />}
+            {isLoading && <StyledImageSkeleton />}
             {!isLoading && (
                 <React.Fragment>
                     {mediaType === "video" && (
@@ -87,14 +78,22 @@ export default function Media({
                                 title={title}
                                 target={isTargetBlank ? "_blank" : null}>
                                 <Figure className="image">
-                                    <Img alt={alt} src={src} />
+                                    <StyledImage
+                                        isLoading={isLoading}
+                                        alt={alt}
+                                        src={src}
+                                    />
                                 </Figure>
                             </StretchedLinkWithRef>
                         </Link>
                     )}
                     {mediaType !== "video" && !link && (
                         <Figure className="image">
-                            <Img alt={alt} src={src} />
+                            <StyledImage
+                                isLoading={isLoading}
+                                alt={alt}
+                                src={src}
+                            />
                         </Figure>
                     )}
                 </React.Fragment>

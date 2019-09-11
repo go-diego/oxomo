@@ -15,6 +15,7 @@ import Section from "../components/Section";
 import Nav from "../components/Nav";
 import MainLayout from "../containers/MainLayout";
 import ApodReel from "../components/ApodReel";
+import Image from "../components/Image";
 import { APOD } from "../api/nasa.api";
 
 const nasaApodApi = new APOD();
@@ -26,11 +27,6 @@ const Content = styled(Section)`
 const Body = styled.div`
     padding-top: 2.5rem;
     padding-bottom: 6rem;
-`;
-
-const Img = styled.img`
-    height: 100%;
-    object-fit: cover;
 `;
 
 function AstronomyPictureOfTheDayPage() {
@@ -93,8 +89,11 @@ function AstronomyPictureOfTheDayPage() {
             <Content>
                 <div className="columns box is-paddingless is-clipped">
                     <div className="column is-paddingless">
-                        <figure className="image is-square">
-                            <Img src={data && data.hdurl} />
+                        <figure className="image">
+                            <Image
+                                isLoading={isLoading}
+                                src={data && data.hdurl}
+                            />
                         </figure>
                     </div>
                     <div className="column">

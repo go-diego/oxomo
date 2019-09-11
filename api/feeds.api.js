@@ -84,3 +84,13 @@ export function NasaFeed() {
         getJPLNews
     });
 }
+
+export function SpaceComFeed() {
+    function get(isLatest = false) {
+        const url = "https://www.space.com/home/feed/site.xml";
+        return makeParser(url, isLatest);
+    }
+    return Object.freeze({
+        get
+    });
+}

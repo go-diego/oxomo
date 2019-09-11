@@ -3,6 +3,7 @@ import styled from "styled-components";
 import ContentLoader from "react-content-loader";
 import TextTruncate from "react-text-truncate";
 import format from "date-fns/format";
+import Image from "../components/Image";
 
 const Skeleton = () => (
     <ContentLoader
@@ -11,7 +12,7 @@ const Skeleton = () => (
         speed={1}
         primaryColor={"#333"}
         secondaryColor={"#212121"}>
-        <rect x="3" y="3" rx="10" ry="10" width="98%" height="180" />
+        <rect x="3" y="3" rx="0" ry="0" width="98%" height="180" />
         <rect x="6" y="190" rx="0" ry="0" width="98%" height="20" />
         <rect x="4" y="215" rx="0" ry="0" width="98%" height="20" />
         <rect x="4" y="242" rx="0" ry="0" width="98%" height="20" />
@@ -20,14 +21,11 @@ const Skeleton = () => (
 
 const Figure = styled.figure`
     overflow: hidden;
-    height: 200px;
+    height: 300px;
 `;
 
-const Img = styled.img`
+const StyledImage = styled(Image)`
     transition: all 0.4s ease;
-    width: 100% !important;
-    height: 100% !important;
-    object-fit: cover;
 `;
 
 const StretchedLink = styled.a`
@@ -84,7 +82,8 @@ export default function NewsCard({
 }) {
     return (
         <Article className="card box is-paddingless is-clipped">
-            {(!isLoading && (
+            {isLoading && <Skeleton />}
+            {!isLoading && (
                 <React.Fragment>
                     <CardImage className="card-image">
                         {link && (
@@ -93,13 +92,13 @@ export default function NewsCard({
                                 target={isTargetBlank ? "_blank" : null}
                                 href={link}>
                                 <Figure className="image">
-                                    <Img alt={alt} src={src} />
+                                    <StyledImage alt={alt} src={src} />
                                 </Figure>
                             </StretchedLink>
                         )}
                         {!link && (
                             <Figure className="image">
-                                <Img alt={alt} src={src} />
+                                <StyledImage alt={alt} src={src} />
                             </Figure>
                         )}
                     </CardImage>
@@ -129,7 +128,7 @@ export default function NewsCard({
                         </span>
                     </CardFooter>
                 </React.Fragment>
-            )) || <Skeleton />}
+            )}
         </Article>
     );
 }
