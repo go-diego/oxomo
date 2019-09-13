@@ -57,11 +57,15 @@ function WhatIsThisPage() {
                     </p>
                     <h2>Why Oxomo?</h2>
                     <p>
-                        Oxomoco, or Oxomo for short, is the Aztec goddess of
-                        night, who, along with her husband Cipactonal, is in
-                        charge of the Aztec calendar. So, she’s the perfect
-                        figure for a web app that collects daily space news from
-                        across the web seamlessly in one place.
+                        Oxomoco{" "}
+                        <span className="has-text-grey">
+                            (oh&ndash;sho&ndash;mo&ndash;co)
+                        </span>
+                        , or Oxomo for short, is the Aztec goddess of night,
+                        who, along with her husband Cipactonal, is in charge of
+                        the Aztec calendar. So, she’s the perfect figure for a
+                        web app that collects daily space news from across the
+                        web seamlessly in one place.
                     </p>
                 </div>
             </Content>
