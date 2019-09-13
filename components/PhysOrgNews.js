@@ -27,7 +27,8 @@ export default function PhysOrgNews({ type }) {
                         break;
                 }
                 const [error, response] = await to(action(true));
-                if (error) setIsError(true);
+                setIsLoading(false);
+                if (error) return setIsError(true);
 
                 response.items = response.items.map(item => {
                     return {
@@ -39,7 +40,6 @@ export default function PhysOrgNews({ type }) {
                 });
 
                 setFeedData(response);
-                setIsLoading(false);
             }
             getData();
         }

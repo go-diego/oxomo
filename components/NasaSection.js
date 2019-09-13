@@ -7,6 +7,7 @@ import PostCard from "./PostCard/index";
 import NeoTile from "./NeoTile";
 import FeedCard from "./FeedCard";
 import RoverTile from "./RoverTile";
+import ErrorTile from "./ErrorTile";
 import { APOD, NEO, Rovers } from "../api/nasa.api";
 import { NasaFeed } from "../api/feeds.api";
 
@@ -24,22 +25,23 @@ export default function NasaSection() {
     ] = React.useState(true);
     const [nasaNews, setNasaNews] = React.useState(null);
     const [isNasaNewsLoading, setIsNasaNewsLoading] = React.useState(true);
+    const [isErrorNasaNews, setIsErrorNasaNews] = React.useState(false);
     const [nearEarthObject, setNearEarthObject] = React.useState(null);
     const [isNEOLoading, setIsNEOLoading] = React.useState(true);
+    const [isErrorNEO, setIsErrorNEO] = React.useState(false);
     const [rovers, setRovers] = React.useState([]);
     const [isRoversLoading, setIsRoversLoading] = React.useState(true);
+    const [isErrorRovers, setIsErrorRovers] = React.useState(false);
 
     React.useEffect(() => {
         async function getAstronomyPictureOfTheDay() {
             const [error, pictureOfTheDayResponse] = await to(
                 nasaApodApi.get()
             );
-            if (error) {
-                console.log("APOD ERROR", error);
-                setHasErrorApod(true);
-            }
-            setPictureOfTheDay(pictureOfTheDayResponse);
             setIsPictureOfTheDayLoading(false);
+            if (error) return setHasErrorApod(true);
+
+            setPictureOfTheDay(pictureOfTheDayResponse);
             // console.log("pictureOfTheDayResponse", pictureOfTheDayResponse);
         }
         getAstronomyPictureOfTheDay();
@@ -50,9 +52,9 @@ export default function NasaSection() {
             const [error, nasaNewsResponse] = await to(
                 nasaFeedApi.getSolarSystemNews()
             );
-            if (error) console.log("NASA NEWS ERROR", error);
-            setNasaNews(nasaNewsResponse);
             setIsNasaNewsLoading(false);
+            if (error) return setIsErrorNasaNews(true);
+            setNasaNews(nasaNewsResponse);
             //console.log("nasaNewsResponse", nasaNewsResponse);
         }
         getNasaNews();
@@ -63,9 +65,9 @@ export default function NasaSection() {
             const [error, neoResponse] = await to(
                 nasaNeoApi.getClosestApproachToday()
             );
-            if (error) console.log("NEOS ERROR", error);
-            setNearEarthObject(neoResponse);
             setIsNEOLoading(false);
+            if (error) return setIsErrorNEO(true);
+            setNearEarthObject(neoResponse);
             //console.log("neoResponse", neoResponse);
         }
         getNeo();
@@ -74,12 +76,12 @@ export default function NasaSection() {
     React.useEffect(() => {
         async function getRovers() {
             const [error, roversResponse] = await to(roversApi.getAll());
-            if (error) console.log("ROVERS ERROR", error);
+            setIsRoversLoading(false);
+            if (error) return setIsErrorRovers(true);
             const activeRovers = roversResponse.rovers.reduce((acc, rover) => {
                 if (rover.status === "active") acc.push(rover.name);
                 return acc;
             }, []);
-            setIsRoversLoading(false);
             setRovers(activeRovers);
         }
         getRovers();
@@ -117,22 +119,43 @@ export default function NasaSection() {
             )}
             <div className="columns">
                 <div className="column">
-                    <FeedCard isLoading={isNasaNewsLoading} data={nasaNews} />
+                    {isErrorNasaNews && <ErrorTile />}
+                    {!isErrorNasaNews && (
+                        <FeedCard
+                            isLoading={isNasaNewsLoading}
+                            data={nasaNews}
+                        />
+                    )}
                 </div>
                 <div className="column">
-                    <FeedCard
-                        isLoading={isNasaNewsLoading}
-                        data={nasaNews}
-                        index={1}
-                    />
+                    {isErrorNasaNews && <ErrorTile />}
+                    {!isErrorNasaNews && (
+                        <FeedCard
+                            isLoading={isNasaNewsLoading}
+                            data={nasaNews}
+                            index={1}
+                        />
+                    )}
                 </div>
                 <div className="column">
-                    <RoverTile isLoading={isRoversLoading} name={rovers[0]} />
+                    {isErrorRovers && <ErrorTile />}
+                    {!isErrorRovers && (
+                        <RoverTile
+                            isLoading={isRoversLoading}
+                            name={rovers[0]}
+                        />
+                    )}
                 </div>
             </div>
             <div className="columns">
                 <div className="column">
-                    <NeoTile isLoading={isNEOLoading} data={nearEarthObject} />
+                    {isErrorNEO && <ErrorTile />}
+                    {!isErrorNEO && (
+                        <NeoTile
+                            isLoading={isNEOLoading}
+                            data={nearEarthObject}
+                        />
+                    )}
                 </div>
             </div>
         </React.Fragment>
