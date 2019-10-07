@@ -17,6 +17,7 @@ import MainLayout from "../containers/MainLayout";
 import ApodReel from "../components/ApodReel";
 import Image from "../components/Image";
 import Loading from "../components/Loading";
+import Head from "../components/Head";
 import { APOD } from "../api/nasa.api";
 
 const nasaApodApi = new APOD();
@@ -38,6 +39,10 @@ const Hero = styled.section`
 const Figure = styled.figure`
     height: 100%;
 `;
+
+const pageDescription =
+    "Courtesy of NASA, Each day a different image or photograph of our fascinating universe is featured, along with a brief explanation written by a professional astronomer.";
+const pageTitle = "OXOMO | Astronomy Picture of the Day";
 
 function AstronomyPictureOfTheDayPage() {
     const router = useRouter();
@@ -72,6 +77,7 @@ function AstronomyPictureOfTheDayPage() {
 
     return (
         <MainLayout>
+            <Head description={pageDescription} title={pageTitle} />
             <Hero className="hero is-medium is-dark">
                 <div className="hero-head">
                     <Nav />

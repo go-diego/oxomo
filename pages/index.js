@@ -8,6 +8,7 @@ import MarsSection from "../components/MarsSection";
 import SpaceComSection from "../components/SpaceComSection";
 import MainLayout from "../containers/MainLayout";
 import PhysOrgNews from "../components/PhysOrgNews";
+import Head from "../components/Head";
 
 const Content = styled(Section)`
     margin-top: -6rem;
@@ -22,9 +23,13 @@ const Column = styled.div`
     display: flex;
 `;
 
+const pageDescription = "Get your daily dose of space news from Oxomo.";
+const pageTitle = "OXOMO | Space News";
+
 function Home() {
     return (
         <MainLayout description="The latest in space news.">
+            <Head description={pageDescription} title={pageTitle} />
             <Hero />
             <Content>
                 {/* <Nav>
