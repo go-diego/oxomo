@@ -41,7 +41,7 @@ export default function PostCardContent({
             {!isLoading && (
                 <Container>
                     <div>
-                        <p className="title is-size-4-mobile">{title}</p>
+                        <p className="title is-size-4-tablet">{title}</p>
                         {subtitle && (
                             <p className="subtitle is-size-6-mobile">
                                 {subtitle}

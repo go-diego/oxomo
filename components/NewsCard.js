@@ -4,6 +4,7 @@ import ContentLoader from "react-content-loader";
 import TextTruncate from "react-text-truncate";
 import format from "date-fns/format";
 import Image from "../components/Image";
+import Loading from "../components/Loading";
 
 const Skeleton = () => (
     <ContentLoader
@@ -52,6 +53,8 @@ const Article = styled.article`
     height: 100%;
     display: flex;
     flex-direction: column;
+    min-height: 300px;
+    width: 100%;
 `;
 
 const CardImage = styled.div`
@@ -82,23 +85,31 @@ export default function NewsCard({
 }) {
     return (
         <Article className="card box is-paddingless is-clipped">
-            {isLoading && <Skeleton />}
+            {isLoading && <Loading />}
             {!isLoading && (
                 <React.Fragment>
-                    <CardImage className="card-image">
+                    <CardImage className="card-image has-background-dark">
                         {link && (
                             <StretchedLink
                                 title={title}
                                 target={isTargetBlank ? "_blank" : null}
                                 href={link}>
                                 <Figure className="image">
-                                    <StyledImage alt={alt} src={src} />
+                                    <StyledImage
+                                        loaderColor="#33f1ed"
+                                        alt={alt}
+                                        src={src}
+                                    />
                                 </Figure>
                             </StretchedLink>
                         )}
                         {!link && (
                             <Figure className="image">
-                                <StyledImage alt={alt} src={src} />
+                                <StyledImage
+                                    loaderColor="#33f1ed"
+                                    alt={alt}
+                                    src={src}
+                                />
                             </Figure>
                         )}
                     </CardImage>

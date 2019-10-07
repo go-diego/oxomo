@@ -2,15 +2,21 @@ import React from "react";
 import Link from "next/link";
 import styled from "styled-components";
 import Image from "../Image";
-import ImageSkeleton from "../ImageSkeleton";
+import Rings from "../Rings";
 
 const Figure = styled.figure`
     overflow: hidden;
     height: 300px;
 `;
 
-const StyledImageSkeleton = styled(ImageSkeleton)`
+const Loader = styled(Rings)`
     max-height: 300px;
+    height: 100%;
+    width: 100%;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    top: 0;
 `;
 
 const StyledImage = styled(Image)`
@@ -66,7 +72,7 @@ export default function Media({
 
     return (
         <React.Fragment>
-            {isLoading && <StyledImageSkeleton />}
+            {isLoading && <Loader color="#33f1ed" />}
             {!isLoading && (
                 <React.Fragment>
                     {mediaType === "video" && (
@@ -82,6 +88,7 @@ export default function Media({
                                         isLoading={isLoading}
                                         alt={alt}
                                         src={src}
+                                        loaderColor="#33f1ed"
                                     />
                                 </Figure>
                             </StretchedLinkWithRef>
@@ -93,6 +100,7 @@ export default function Media({
                                 isLoading={isLoading}
                                 alt={alt}
                                 src={src}
+                                loaderColor="#33f1ed"
                             />
                         </Figure>
                     )}

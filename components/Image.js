@@ -1,7 +1,7 @@
 import React from "react";
 import styled from "styled-components";
 import ProgressiveImage from "react-progressive-image";
-import ImageSkeleton from "../components/ImageSkeleton";
+import Rings from "../components/Rings";
 
 const Img = styled.img`
     width: 100% !important;
@@ -9,17 +9,27 @@ const Img = styled.img`
     object-fit: cover;
 `;
 
-export default function Image({ src, alt, isLoading, className }) {
+const Loader = styled(Rings)`
+    height: 100%;
+    width: 100%;
+    bottom: 0;
+    left: 0;
+    position: absolute;
+    right: 0;
+    top: 0;
+`;
+
+export default function Image({ src, alt, isLoading, className, loaderColor }) {
     return (
         <React.Fragment>
-            {isLoading && <ImageSkeleton />}
+            {isLoading && <Loader color={loaderColor} />}
             {!isLoading && (
                 <ProgressiveImage src={src} placeholder="">
                     {(src, loading) => {
                         return loading ? (
-                            <ImageSkeleton />
+                            <Loader color={loaderColor} />
                         ) : (
-                            <Img className={className} src={src} alt={alt} />
+                            <Img className={className} src={src} />
                         );
                     }}
                 </ProgressiveImage>

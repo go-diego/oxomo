@@ -2,6 +2,7 @@ import React from "react";
 import styled from "styled-components";
 import Content from "./Content";
 import Media from "./Media";
+import Loading from "../Loading";
 
 const Article = styled.article`
     min-height: 300px;
@@ -34,32 +35,37 @@ export default function PostCard({
 }) {
     return (
         <Article className="box is-paddingless is-clipped">
-            <Row className="columns is-marginless">
-                <Column
-                    className={`column is-paddingless ${
-                        isReversed ? "" : "is-three-fifths"
-                    }`}>
-                    <Media
-                        link={link}
-                        src={src}
-                        alt={alt}
-                        isTargetBlank={isTargetBlank}
-                        title={title}
-                        isLoading={isLoading}
-                        mediaType={mediaType}
-                    />
-                </Column>
-                <Column
-                    isReversed={isReversed}
-                    className={`column ${isReversed ? "is-two-fifths" : ""}`}>
-                    <Content
-                        isLoading={isLoading}
-                        title={title}
-                        subtitle={subtitle}>
-                        {children}
-                    </Content>
-                </Column>
-            </Row>
+            {isLoading && <Loading />}
+            {!isLoading && (
+                <Row className="columns is-marginless">
+                    <Column
+                        className={`has-background-dark column is-paddingless ${
+                            isReversed ? "" : "is-three-fifths"
+                        }`}>
+                        <Media
+                            link={link}
+                            src={src}
+                            alt={alt}
+                            isTargetBlank={isTargetBlank}
+                            title={title}
+                            isLoading={isLoading}
+                            mediaType={mediaType}
+                        />
+                    </Column>
+                    <Column
+                        isReversed={isReversed}
+                        className={`column ${
+                            isReversed ? "is-two-fifths" : ""
+                        }`}>
+                        <Content
+                            isLoading={isLoading}
+                            title={title}
+                            subtitle={subtitle}>
+                            {children}
+                        </Content>
+                    </Column>
+                </Row>
+            )}
         </Article>
     );
 }

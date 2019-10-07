@@ -7,11 +7,13 @@ const img =
 // const copyright = "Petr Horálek";
 
 const Hero = styled.section`
-    background-color: #ffffff;
+    ${"" /* background-color: #ffffff;
     background-image: url(${props => props.backgroundImage}) !important;
     background-position: center;
     background-repeat: no-repeat;
-    background-size: cover;
+    background-size: cover; */}
+    background-color: #101d2e;
+    background-image: url("data:image/svg+xml,%3Csvg width='32' height='64' viewBox='0 0 32 64' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M0 28h20V16h-4v8H4V4h28v28h-4V8H8v12h4v-8h12v20H0v-4zm12 8h20v4H16v24H0v-4h12V36zm16 12h-4v12h8v4H20V44h12v12h-4v-8zM0 36h8v20H0v-4h4V40H0v-4z' fill='%2333f1ed' fill-opacity='0.12' fill-rule='evenodd'/%3E%3C/svg%3E");
 `;
 
 const AttributionWrapper = styled.div`
@@ -39,7 +41,7 @@ export default function HomeHero() {
         <Hero
             backgroundImage={img}
             // backgroundImage={pictureOfTheDay.hdurl || pictureOfTheDay.url}
-            className="hero is-medium is-dark is-bold">
+            className="hero is-medium is-dark">
             <div className="hero-head">
                 <Nav />
             </div>

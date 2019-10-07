@@ -67,8 +67,11 @@ export default function ApodReel() {
                                                 "MMM Do"
                                             )}
                                         </small>
-                                        <Figure className="image is-128x128">
-                                            <Image src={item.url} />
+                                        <Figure className="image is-128x128 has-background-dark">
+                                            <Image
+                                                src={item.url}
+                                                loaderColor="#33f1ed"
+                                            />
                                         </Figure>
                                         <small>{item.title}</small>
                                     </a>
