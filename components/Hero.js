@@ -56,6 +56,7 @@ export default function HomeHero() {
                     <h1 className="title is-1 is-family-secondary has-text-centered">
                         OXOMO
                     </h1>
+                    <h2 className="subtitle has-text-centered">SPACE NEWS</h2>
                 </div>
             </Body>
         </Hero>

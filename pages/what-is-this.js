@@ -36,10 +36,12 @@ function WhatIsThisPage() {
                 <div className="content box">
                     <h2>What is this?</h2>
                     <p>
-                        At the moment, Oxomo is an unofficial side-project. It
-                        serves to experiment with API and data scraping from
-                        these different space news sources as a way to showcase
-                        my skills as a front-end engineer.
+                        At the moment, Oxomo is an unofficial side-project that
+                        gathers daily news articles and posts from various
+                        sources. For me, it serves as experience with API
+                        communication and data scraping from these different
+                        sources and as a way to showcase my skills as a
+                        front-end engineer.
                     </p>
                     <p>
                         Have any feedback? Have any questions? Are you a
@@ -70,7 +72,7 @@ function WhatIsThisPage() {
                         who, along with her husband Cipactonal, is in charge of
                         the Aztec calendar. So, she’s the perfect figure for a
                         web app that collects daily space news from across the
-                        web seamlessly in one place.
+                        web.
                     </p>
                 </div>
             </Content>
