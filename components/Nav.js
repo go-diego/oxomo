@@ -14,18 +14,22 @@ export default function Nav() {
             role="navigation"
             aria-label="main navigation">
             <div className="navbar-brand">
-                <Link href="/">
-                    <a className="navbar-item is-family-secondary has-text-white has-text-weight-bold">
-                        X
-                    </a>
-                </Link>
+                {/* <Link href="/" passHref> */}
+                <a
+                    href="/"
+                    className="navbar-item is-family-secondary has-text-white has-text-weight-bold">
+                    X
+                </a>
+                {/* </Link> */}
             </div>
             <div className="navbar-end">
-                <Link href="/what-is-this">
-                    <a className="navbar-item is-family-secondary">
-                        WHAT IS THIS?
-                    </a>
-                </Link>
+                {/* <Link href="/what-is-this" passHref> */}
+                <a
+                    href="/what-is-this"
+                    className="navbar-item is-family-secondary">
+                    WHAT IS THIS?
+                </a>
+                {/* </Link> */}
             </div>
         </Navbar>
     );
